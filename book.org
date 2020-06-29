@@ -1,0 +1,133 @@
+* shell
+  - https://medium.com/@joydeepubuntu/functional-programming-in-bash-145b6db336b7
+  - https://www.youtube.com/watch?v=yD2ekOEP9sU
+* interactive
+** functions can generate aliases
+   - aliasgen
+   #+begin_src bash
+
+   aliasgen() {
+     for i in ~/workspace/*(/) ; do
+         DIR=$(basename $i) ;
+         eval "alias $DIR='cd $i'";  # probably eval is not needed
+     done
+   }
+   #+end_src
+   - unhist
+   #+begin_src bash
+   unhist () {
+     alias $1=" $1"
+   }
+   unhist unhist
+   #+end_src
+* bash
+* zsh
+** global aliases make a forthy shell
+* debugging
+* patterns
+** append options in an array during the logic of the program
+   And splat them in the cli of the command you're throwing (docker run?)
+** trap
+   - trap "rm $variable"
+** debug by introducing a 'bash'
+   insert =bash=
+** debug with set -xa
+   optargs "V" option; do
+   case $option in
+   V)
+     set -xa
+     ;;
+** DRY_RUN
+   #+begin_src bash
+   if [[-n $DRY_RUN ]]; then
+     curl () {
+       echo curl $@
+     }
+   fi
+   #+end_src
+   use =command curl= to force the command, not the alias or anything
+** structure the app like a normal app
+   #+begin_src bash
+   main() {
+     parse_args()
+     validate_args()
+     do_things()
+     cleanup()
+   }
+
+   main "$@"
+   #+end_src
+** make steps of the process composable
+   #+begin_src bash
+   while [[ $# -gt 0 ]]; do
+    key="$1"
+    $key  # eval $key as a function
+    shift
+   done
+   #+end_src
+** use $@ when you can
+   #+begin_src bash
+
+   compare_outputs() {
+     export DRY_RUN=1
+     $@ 2>/tmp/1.out
+     git checkout -
+     $@ 2>/tmp/2.out
+     git checkout -
+     echo "diffing"
+     diff /tmp/1.out /tmp/2.out
+   }
+
+   compare_outputs ./release.sh -u 1 -k 1 -p rhel:6 -v 1 -e -R 'internal-preview'
+
+   # extra tricky
+   alias -g SPLIT='| tr " " "\n" '
+   alias -g FORI='| while read i ; do '
+   alias -g IROF='; done '
+
+   echo "ga internal-preview rc1 rc2" SPLIT FORI
+     compare_outputs ./release.sh -u 1 -k 1 -p rhel:8 -v 1 -e -R "$i"
+   IROF
+   #+end_src
+   - https://www.oilshell.org/blog/2017/01/13.html
+** source files
+   it's a "require"
+** use files as a lib
+   #+begin_src bash
+    # Allow sourcing of this script
+    if [[ $(basename "$(realpath "$0")") == "package.sh" ]]; then
+      setup
+      parse_args "$@"
+
+      # Only load silent-run functions if silent execution
+      # assure-not-messy-101
+      if [[ $VERBOSE == 0 ]]; then
+        BUILD_LOG=${BUILD_LOG:-$(mktemp /tmp/kong-distributions-build.XXXXX)}
+        source $LOCAL_PATH/silent-run.sh
+      fi
+
+      main
+    fi
+   #+end_src
+** Use tempfile and tmpdirs for EVERYTHING
+   and trap on_exit
+** array of callbacks on_exit
+
+   #+begin_src bash
+
+   ON_EXIT=()
+   EXIT_RES=
+
+   function on_exit_fn {
+     EXIT_RES=$?
+     for cb in "${ON_EXIT[@]}"; do $cb || true; done
+     return $EXIT_RES
+   }
+
+   trap on_exit_fn EXIT SIGINT
+
+   function on_exit {
+     ON_EXIT+=("$@")
+   }
+
+   #+end_src
