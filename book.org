@@ -1,25 +1,68 @@
 * shell
-  - https://medium.com/@joydeepubuntu/functional-programming-in-bash-145b6db336b7
-  - https://www.youtube.com/watch?v=yD2ekOEP9sU
 * interactive
 ** functions can generate aliases
-   - aliasgen
-   #+begin_src bash
+   Well, it's not lexical scope, but using aliases you can sort of
+   create a string that snapshots the procedure and then run it later.
 
+   Some fun stuff:
+   - aliasgen. create an alias for each directory in ~/workspace/
+     . This is superceeded by AUTO_CD, but the trick is still cool
+   #+begin_src bash
    aliasgen() {
      for i in ~/workspace/*(/) ; do
          DIR=$(basename $i) ;
-         eval "alias $DIR='cd $i'";  # probably eval is not needed
+         eval "alias $DIR='cd ~/workspace/$i'";  # probably eval is not needed
      done
    }
    #+end_src
-   - unhist
+   - a. make a shortcut to the current directory.
+     #+begin_src bash
+     function a() { alias $1=cd\ $PWD; }
+     #+end_src
+
+   - unhist. functions can create aliases, and functions can receive
+     function names (as a string).
    #+begin_src bash
    unhist () {
      alias $1=" $1"
    }
    unhist unhist
+   unhist grep
+   unhist rg
+
+   noglobber() {
+       alias $1="noglob $1"
+   }
+   noglobber http
+   noglobber curl
+   noglobber git
+
    #+end_src
+   - Problem: Combination of 2 of those doesn't work.
+     Solution:
+
+     #+begin_src bash
+     alias-to() {
+       alias $1 | sed -e "s/.*='//" -e "s/'\$//"
+     }
+
+     aliasappend() {
+       local cmd
+       if alias $1 >/dev/null; then
+         cmd=$(alias-to $1)
+       else
+         cmd=$1
+       fi
+       echo $cmd
+     }
+
+     muter() {
+       local c
+       c=$(aliasappend $1)
+       alias $1="$c >/dev/null"
+     }
+
+     #+end_src
 * bash
 * zsh
 ** global aliases make a forthy shell
@@ -112,7 +155,6 @@
 ** Use tempfile and tmpdirs for EVERYTHING
    and trap on_exit
 ** array of callbacks on_exit
-
    #+begin_src bash
 
    ON_EXIT=()
@@ -131,3 +173,19 @@
    }
 
    #+end_src
+** pass flags as a splatted array
+** explore what passes through a pipe with
+   - https://stackoverflow.com/questions/17983777/shell-pipe-to-multiple-commands-in-a-file
+   tee >(some_command) |
+** inherit_errcode
+* links
+  - Gary Bernhardt. The Unix Chainsaw
+  - https://news.ycombinator.com/item?id=23765123
+  - https://medium.com/@joydeepubuntu/functional-programming-in-bash-145b6db336b7
+  - https://www.youtube.com/watch?v=yD2ekOEP9sU
+* from shell to lisp and everything in between
+  - https://github.com/oilshell/oil
+  - https://www.eigenbahn.com/2020/07/08/painless-emacs-remote-shells
+  - spencertipping
+  - rash
+  - zsh
