@@ -67,6 +67,7 @@
 * zsh
 ** global aliases make a forthy shell
 * debugging
+** adding =bash= to a script to debug
 * patterns
 ** append options in an array during the logic of the program
    And splat them in the cli of the command you're throwing (docker run?)
@@ -189,3 +190,12 @@
   - spencertipping
   - rash
   - zsh
+
+* make scripts compatible between them
+** create scripts that replace shell commands and do the same.
+   to be able to run a zsh script with noglobs in bash, here's
+   =~/bin/noglob=.
+   #+begin_src bash
+   #!/usr/bin/env bash
+   $*
+   #+end_src
