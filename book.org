@@ -2,7 +2,31 @@
 #+AUTHOR: Raimon Grau
 
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/setup/theme-readtheorg.setup
+
+* Introduction
+  This booklet is intended to be a catalog of tricks and techniques
+  you should be using if you're doing any sort of scripting. I'll try
+  to keep the rethoric to the very minimal because that way you can
+  enjoy the content in less time.
+
+  You probably have some amount of sh/bash/zsh in your stack that
+  probably started as 1 off scripts, and later on started growing and
+  were copypasted everywhere in your pipelines, or your coworkers use
+  for their own use (with some variations), etc. Those scripts are
+  very difficult to kill and they have a very high mutation rate.
 * shell
+  No matter if you use Linux, Mac, or Win, you should be living most
+  of the time in a shell to enjoy the content I'm gonna show
+  here. Some value comes from the automated scripts, and some other
+  value comes from the daily usage and refinement of your helper
+  functions, aliases, etc.
+
+  In general the examples here are ment to run in Bash or Zsh, which
+  are compatible for the most part.
+* Level
+  These examples are based on non-trivial real world code I've written
+  that I haven't seen applied in many places over the net. Some of the
+  snippets are stolen from public repos.
 * interactive
 ** functions can generate aliases
    Well, it's not lexical scope, but using aliases you can sort of
@@ -68,6 +92,7 @@
 
      #+end_src
 * bash
+** use shellcheck
 * zsh
 ** global aliases make a forthy shell
 ** examples of global aliases
@@ -95,8 +120,6 @@
       noglob compare_outputs ./release.sh -u 1 -k 1 -p rhel:8 -v 1 -e -R "$i"
    IROF
    #+end_src
-
-
 
 * debugging
 ** adding =bash= to a script to debug
