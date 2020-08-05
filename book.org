@@ -50,7 +50,7 @@
 
    - unhist. functions can create aliases, and functions can receive
      function names (as a string).
-   #+begin_src bash
+     #+begin_src bash
    unhist () {
      alias $1=" $1"
    }
@@ -65,7 +65,8 @@
    noglobber curl
    noglobber git
 
-   #+end_src
+     #+end_src
+
    - Problem: Combination of 2 of those doesn't work.
      Solution:
 
