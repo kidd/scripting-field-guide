@@ -1,0 +1,780 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-08-05 Wed 00:02 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bash field guide</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Raimon Grau" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Bash field guide</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org779ab25">1. Introduction</a></li>
+<li><a href="#orgbbccdc1">2. shell</a></li>
+<li><a href="#org88e588a">3. Level</a></li>
+<li><a href="#orge32b167">4. interactive</a>
+<ul>
+<li><a href="#orgd365349">4.1. functions can generate aliases</a></li>
+</ul>
+</li>
+<li><a href="#orgb711c41">5. bash</a>
+<ul>
+<li><a href="#orgab21c2d">5.1. use shellcheck</a></li>
+</ul>
+</li>
+<li><a href="#org61d8247">6. zsh</a>
+<ul>
+<li><a href="#orgabb0044">6.1. global aliases make a forthy shell</a></li>
+<li><a href="#orga81c7e4">6.2. examples of global aliases</a></li>
+<li><a href="#orgf74116b">6.3. pass commands around</a></li>
+</ul>
+</li>
+<li><a href="#org701f991">7. debugging</a>
+<ul>
+<li><a href="#orgb28dd8b">7.1. adding <code>bash</code> to a script to debug</a></li>
+</ul>
+</li>
+<li><a href="#org5bab6d0">8. patterns</a>
+<ul>
+<li><a href="#orgc8b59fc">8.1. append options in an array during the logic of the program</a></li>
+<li><a href="#org4f61d4b">8.2. trap</a></li>
+<li><a href="#org7c1b851">8.3. debug by introducing a 'bash'</a></li>
+<li><a href="#org5a819c0">8.4. debug with set -xa</a></li>
+<li><a href="#org90e65c3">8.5. DRY<sub>RUN</sub></a></li>
+<li><a href="#orgf7b4fbd">8.6. structure the app like a normal app</a>
+<ul>
+<li><a href="#org110aa59">8.6.1. Fail Fast</a></li>
+<li><a href="#orgc9c63be">8.6.2. Template</a></li>
+</ul>
+</li>
+<li><a href="#org560b621">8.7. make steps of the process composable</a></li>
+<li><a href="#org5604701">8.8. use $@ when you can</a></li>
+<li><a href="#orgc3283fc">8.9. source files</a></li>
+<li><a href="#org3894e9d">8.10. use files as a lib</a></li>
+<li><a href="#org733cd5c">8.11. Use tempfile and tmpdirs for EVERYTHING</a></li>
+<li><a href="#org6be528d">8.12. array of callbacks on<sub>exit</sub></a></li>
+<li><a href="#orge51da6a">8.13. pass flags as a splatted array</a></li>
+<li><a href="#org5b63800">8.14. explore what passes through a pipe with</a></li>
+<li><a href="#org79fb22b">8.15. inherit<sub>errcode</sub></a></li>
+</ul>
+</li>
+<li><a href="#orgcd0af72">9. links</a></li>
+<li><a href="#org46eff19">10. from shell to lisp and everything in between</a></li>
+<li><a href="#orgdc93f3d">11. make scripts compatible between them</a>
+<ul>
+<li><a href="#org5cc5ecf">11.1. create scripts that replace shell commands and do the same.</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org779ab25" class="outline-2">
+<h2 id="org779ab25"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This booklet is intended to be a catalog of tricks and techniques
+you should be using if you're doing any sort of scripting. I'll try
+to keep the rethoric to the very minimal because that way you can
+enjoy the content in less time.
+</p>
+
+<p>
+You probably have some amount of sh/bash/zsh in your stack that
+probably started as 1 off scripts, and later on started growing and
+were copypasted everywhere in your pipelines, or your coworkers use
+for their own use (with some variations), etc. Those scripts are
+very difficult to kill and they have a very high mutation rate.
+</p>
+</div>
+</div>
+<div id="outline-container-orgbbccdc1" class="outline-2">
+<h2 id="orgbbccdc1"><span class="section-number-2">2</span> shell</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+No matter if you use Linux, Mac, or Win, you should be living most
+of the time in a shell to enjoy the content I'm gonna show
+here. Some value comes from the automated scripts, and some other
+value comes from the daily usage and refinement of your helper
+functions, aliases, etc.
+</p>
+
+<p>
+In general the examples here are ment to run in Bash or Zsh, which
+are compatible for the most part.
+</p>
+</div>
+</div>
+<div id="outline-container-org88e588a" class="outline-2">
+<h2 id="org88e588a"><span class="section-number-2">3</span> Level</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+These examples are based on non-trivial real world code I've written
+that I haven't seen applied in many places over the net. Some of the
+snippets are stolen from public repos.
+</p>
+</div>
+</div>
+<div id="outline-container-orge32b167" class="outline-2">
+<h2 id="orge32b167"><span class="section-number-2">4</span> interactive</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-orgd365349" class="outline-3">
+<h3 id="orgd365349"><span class="section-number-3">4.1</span> functions can generate aliases</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+Well, it's not lexical scope, but using aliases you can sort of
+create a string that snapshots the procedure and then run it later.
+</p>
+
+<p>
+Some fun stuff:
+</p>
+<ul class="org-ul">
+<li>aliasgen. create an alias for each directory in ~/workspace/
+. This is superceeded by AUTO<sub>CD</sub>, but the trick is still cool</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">aliasgen</span>() {
+  <span style="font-weight: bold;">for</span> i<span style="font-weight: bold;"> in</span> ~/workspace/*(/) ; <span style="font-weight: bold;">do</span>
+      <span style="font-weight: bold; font-style: italic;">DIR</span>=$(basename $<span style="font-weight: bold; font-style: italic;">i</span>) ;
+      <span style="font-weight: bold;">eval</span> <span style="font-style: italic;">"alias $DIR='cd ~/workspace/$i'"</span>;  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">probably eval is not needed</span>
+  <span style="font-weight: bold;">done</span>
+}
+</pre>
+</div>
+<ul class="org-ul">
+<li><p>
+a. make a shortcut to the current directory.
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">function</span> <span style="font-weight: bold;">a</span>() { alias $<span style="font-weight: bold; font-style: italic;">1</span>=cd<span style="font-style: italic;">\ </span>$<span style="font-weight: bold; font-style: italic;">PWD</span>; }
+</pre>
+</div></li>
+
+<li>unhist. functions can create aliases, and functions can receive
+function names (as a string).</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">unhist</span> () {
+  alias $<span style="font-weight: bold; font-style: italic;">1</span>=<span style="font-style: italic;">" $1"</span>
+}
+unhist unhist
+unhist grep
+unhist rg
+
+<span style="font-weight: bold;">noglobber</span>() {
+    alias $<span style="font-weight: bold; font-style: italic;">1</span>=<span style="font-style: italic;">"noglob $1"</span>
+}
+noglobber http
+noglobber curl
+noglobber git
+
+</pre>
+</div>
+<ul class="org-ul">
+<li><p>
+Problem: Combination of 2 of those doesn't work.
+Solution:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">alias-to</span>() {
+  alias $<span style="font-weight: bold; font-style: italic;">1</span> | sed -e <span style="font-style: italic;">"s/.*='//"</span> -e <span style="font-style: italic;">"s/'\$//"</span>
+}
+
+<span style="font-weight: bold;">aliasappend</span>() {
+  local cmd
+  <span style="font-weight: bold;">if</span> alias $<span style="font-weight: bold; font-style: italic;">1</span> &gt;/dev/null; <span style="font-weight: bold;">then</span>
+    <span style="font-weight: bold; font-style: italic;">cmd</span>=$(alias-to $<span style="font-weight: bold; font-style: italic;">1</span>)
+  <span style="font-weight: bold;">else</span>
+    <span style="font-weight: bold; font-style: italic;">cmd</span>=$<span style="font-weight: bold; font-style: italic;">1</span>
+  <span style="font-weight: bold;">fi</span>
+  <span style="font-weight: bold;">echo</span> $<span style="font-weight: bold; font-style: italic;">cmd</span>
+}
+
+<span style="font-weight: bold;">muter</span>() {
+  local c
+  <span style="font-weight: bold; font-style: italic;">c</span>=$(aliasappend $<span style="font-weight: bold; font-style: italic;">1</span>)
+  alias $<span style="font-weight: bold; font-style: italic;">1</span>=<span style="font-style: italic;">"$c &gt;/dev/null"</span>
+}
+
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb711c41" class="outline-2">
+<h2 id="orgb711c41"><span class="section-number-2">5</span> bash</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-orgab21c2d" class="outline-3">
+<h3 id="orgab21c2d"><span class="section-number-3">5.1</span> use shellcheck</h3>
+</div>
+</div>
+<div id="outline-container-org61d8247" class="outline-2">
+<h2 id="org61d8247"><span class="section-number-2">6</span> zsh</h2>
+<div class="outline-text-2" id="text-6">
+</div>
+<div id="outline-container-orgabb0044" class="outline-3">
+<h3 id="orgabb0044"><span class="section-number-3">6.1</span> global aliases make a forthy shell</h3>
+</div>
+<div id="outline-container-orga81c7e4" class="outline-3">
+<h3 id="orga81c7e4"><span class="section-number-3">6.2</span> examples of global aliases</h3>
+<div class="outline-text-3" id="text-6-2">
+<ul class="org-ul">
+<li>lspdf -tr TL P XA evince</li>
+<li>docker exec -u root -ti $(docker ps -q H1) bash</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgf74116b" class="outline-3">
+<h3 id="orgf74116b"><span class="section-number-3">6.3</span> pass commands around</h3>
+<div class="outline-text-3" id="text-6-3">
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">compare_outputs</span>() {
+  <span style="font-weight: bold;">export</span> <span style="font-weight: bold; font-style: italic;">DRY_RUN</span>=1
+  $<span style="font-weight: bold; font-style: italic;">@</span> 2&gt;/tmp/1.out
+  git checkout -
+  $<span style="font-weight: bold; font-style: italic;">@</span> 2&gt;/tmp/2.out
+  git checkout -
+  <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"diffing"</span>
+  diff /tmp/1.out /tmp/2.out
+}
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">noglob compare_outputs ./release.sh -u 1 -k 1 -p rhel:6 -v 1 -e -R 'internal-preview'</span>
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">extra tricky</span>
+alias -g <span style="font-weight: bold; font-style: italic;">SPLIT</span>=<span style="font-style: italic;">'| tr " " "\n" '</span>
+alias -g <span style="font-weight: bold; font-style: italic;">FORI</span>=<span style="font-style: italic;">'| while read i ; do '</span>
+alias -g <span style="font-weight: bold; font-style: italic;">IROF</span>=<span style="font-style: italic;">'; done '</span>
+
+<span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"ga internal-preview rc1 rc2"</span> SPLIT FORI
+   noglob compare_outputs ./release.sh -u 1 -k 1 -p rhel:8 -v 1 -e -R <span style="font-style: italic;">"$i"</span>
+IROF
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org701f991" class="outline-2">
+<h2 id="org701f991"><span class="section-number-2">7</span> debugging</h2>
+<div class="outline-text-2" id="text-7">
+</div>
+<div id="outline-container-orgb28dd8b" class="outline-3">
+<h3 id="orgb28dd8b"><span class="section-number-3">7.1</span> adding <code>bash</code> to a script to debug</h3>
+</div>
+</div>
+<div id="outline-container-org5bab6d0" class="outline-2">
+<h2 id="org5bab6d0"><span class="section-number-2">8</span> patterns</h2>
+<div class="outline-text-2" id="text-8">
+</div>
+<div id="outline-container-orgc8b59fc" class="outline-3">
+<h3 id="orgc8b59fc"><span class="section-number-3">8.1</span> append options in an array during the logic of the program</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+And splat them in the cli of the command you're throwing (docker run?)
+</p>
+</div>
+</div>
+<div id="outline-container-org4f61d4b" class="outline-3">
+<h3 id="org4f61d4b"><span class="section-number-3">8.2</span> trap</h3>
+<div class="outline-text-3" id="text-8-2">
+<ul class="org-ul">
+<li>trap "rm $variable"</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org7c1b851" class="outline-3">
+<h3 id="org7c1b851"><span class="section-number-3">8.3</span> debug by introducing a 'bash'</h3>
+<div class="outline-text-3" id="text-8-3">
+<p>
+insert <code>bash</code>
+</p>
+</div>
+</div>
+<div id="outline-container-org5a819c0" class="outline-3">
+<h3 id="org5a819c0"><span class="section-number-3">8.4</span> debug with set -xa</h3>
+<div class="outline-text-3" id="text-8-4">
+<p>
+optargs "V" option; do
+case $option in
+V)
+  set -xa
+  ;;
+</p>
+</div>
+</div>
+<div id="outline-container-org90e65c3" class="outline-3">
+<h3 id="org90e65c3"><span class="section-number-3">8.5</span> DRY<sub>RUN</sub></h3>
+<div class="outline-text-3" id="text-8-5">
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">if</span> [[-n $<span style="font-weight: bold; font-style: italic;">DRY_RUN</span> ]]; <span style="font-weight: bold;">then</span>
+  curl () {
+    <span style="font-weight: bold;">echo</span> curl $<span style="font-weight: bold; font-style: italic;">@</span>
+  }
+<span style="font-weight: bold;">fi</span>
+</pre>
+</div>
+<p>
+use <code>command curl</code> to force the command, not the alias or anything
+</p>
+</div>
+</div>
+<div id="outline-container-orgf7b4fbd" class="outline-3">
+<h3 id="orgf7b4fbd"><span class="section-number-3">8.6</span> structure the app like a normal app</h3>
+<div class="outline-text-3" id="text-8-6">
+<p>
+Shellscripts are thought as quick one-off programs, but the truth
+is that they tend to be useful and sticky, so you better write them
+from the start as if it would be permanent.
+</p>
+</div>
+<div id="outline-container-org110aa59" class="outline-4">
+<h4 id="org110aa59"><span class="section-number-4">8.6.1</span> Fail Fast</h4>
+<div class="outline-text-4" id="text-8-6-1">
+<ul class="org-ul">
+<li><a href="https://dougrichardson.us/2018/08/03/fail-fast-bash-scripting.html">https://dougrichardson.us/2018/08/03/fail-fast-bash-scripting.html</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc9c63be" class="outline-4">
+<h4 id="orgc9c63be"><span class="section-number-4">8.6.2</span> Template</h4>
+<div class="outline-text-4" id="text-8-6-2">
+<p>
+Bash is extremely permissive in what it allows to be coded and
+ran. By default, failures do not make the program exit or throw an
+exeption (no exceptions here).
+</p>
+
+<p>
+A way to improve the defaults, is setting a bunch of flags that
+make the script stricter, so it fails on many red flag situations
+you'd want to stop anyway because something went wrong.
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold; font-style: italic;">#</span><span style="font-weight: bold; font-style: italic;">!/usr/bin/</span><span style="font-weight: bold;">env</span><span style="font-weight: bold; font-style: italic;"> bash</span>
+<span style="font-weight: bold;">set</span> -eEuo pipefail
+shopt -s inherit_errexit
+
+<span style="font-weight: bold;">main</span>() {
+  parse_args()
+  validate_args()
+  do_things()
+  cleanup()
+}
+
+main <span style="font-style: italic;">"$@"</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org560b621" class="outline-3">
+<h3 id="org560b621"><span class="section-number-3">8.7</span> make steps of the process composable</h3>
+<div class="outline-text-3" id="text-8-7">
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">while</span> [[ $<span style="font-weight: bold; font-style: italic;">#</span> -gt 0 ]]; <span style="font-weight: bold;">do</span>
+ <span style="font-weight: bold; font-style: italic;">key</span>=<span style="font-style: italic;">"$1"</span>
+ $<span style="font-weight: bold; font-style: italic;">key</span>  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">eval $key as a function</span>
+ <span style="font-weight: bold;">shift</span>
+<span style="font-weight: bold;">done</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org5604701" class="outline-3">
+<h3 id="org5604701"><span class="section-number-3">8.8</span> use $@ when you can</h3>
+<div class="outline-text-3" id="text-8-8">
+<div class="org-src-container">
+<pre class="src src-bash">
+<span style="font-weight: bold;">compare_outputs</span>() {
+  <span style="font-weight: bold;">export</span> <span style="font-weight: bold; font-style: italic;">DRY_RUN</span>=1
+  $<span style="font-weight: bold; font-style: italic;">@</span> 2&gt;/tmp/1.out
+  git checkout -
+  $<span style="font-weight: bold; font-style: italic;">@</span> 2&gt;/tmp/2.out
+  git checkout -
+  <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"diffing"</span>
+  diff /tmp/1.out /tmp/2.out
+}
+
+compare_outputs ./release.sh -u 1 -k 1 -p rhel:6 -v 1 -e -R <span style="font-style: italic;">'internal-preview'</span>
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">extra tricky</span>
+alias -g <span style="font-weight: bold; font-style: italic;">SPLIT</span>=<span style="font-style: italic;">'| tr " " "\n" '</span>
+alias -g <span style="font-weight: bold; font-style: italic;">FORI</span>=<span style="font-style: italic;">'| while read i ; do '</span>
+alias -g <span style="font-weight: bold; font-style: italic;">IROF</span>=<span style="font-style: italic;">'; done '</span>
+
+<span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"ga internal-preview rc1 rc2"</span> SPLIT FORI
+  compare_outputs ./release.sh -u 1 -k 1 -p rhel:8 -v 1 -e -R <span style="font-style: italic;">"$i"</span>
+IROF
+</pre>
+</div>
+<ul class="org-ul">
+<li><a href="https://www.oilshell.org/blog/2017/01/13.html">https://www.oilshell.org/blog/2017/01/13.html</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc3283fc" class="outline-3">
+<h3 id="orgc3283fc"><span class="section-number-3">8.9</span> source files</h3>
+<div class="outline-text-3" id="text-8-9">
+<p>
+it's a "require"
+</p>
+</div>
+</div>
+<div id="outline-container-org3894e9d" class="outline-3">
+<h3 id="org3894e9d"><span class="section-number-3">8.10</span> use files as a lib</h3>
+<div class="outline-text-3" id="text-8-10">
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Allow sourcing of this script</span>
+<span style="font-weight: bold;">if</span> [[ $(basename <span style="font-style: italic;">"$(realpath "$0")"</span>) == <span style="font-style: italic;">"package.sh"</span> ]]; <span style="font-weight: bold;">then</span>
+  setup
+  parse_args <span style="font-style: italic;">"$@"</span>
+
+  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Only load silent-run functions if silent execution</span>
+  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">assure-not-messy-101</span>
+  <span style="font-weight: bold;">if</span> [[ $<span style="font-weight: bold; font-style: italic;">VERBOSE</span> == 0 ]]; <span style="font-weight: bold;">then</span>
+    <span style="font-weight: bold; font-style: italic;">BUILD_LOG</span>=${<span style="font-weight: bold; font-style: italic;">BUILD_LOG</span>:-$(mktemp /tmp/kong-distributions-build.XXXXX)}
+    source $<span style="font-weight: bold; font-style: italic;">LOCAL_PATH</span>/silent-run.sh
+  <span style="font-weight: bold;">fi</span>
+
+  main
+<span style="font-weight: bold;">fi</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org733cd5c" class="outline-3">
+<h3 id="org733cd5c"><span class="section-number-3">8.11</span> Use tempfile and tmpdirs for EVERYTHING</h3>
+<div class="outline-text-3" id="text-8-11">
+<p>
+and trap on<sub>exit</sub>
+</p>
+</div>
+</div>
+<div id="outline-container-org6be528d" class="outline-3">
+<h3 id="org6be528d"><span class="section-number-3">8.12</span> array of callbacks on<sub>exit</sub></h3>
+<div class="outline-text-3" id="text-8-12">
+<div class="org-src-container">
+<pre class="src src-bash">
+<span style="font-weight: bold; font-style: italic;">ON_EXIT</span>=()
+<span style="font-weight: bold; font-style: italic;">EXIT_RES</span>=
+
+<span style="font-weight: bold;">function</span> <span style="font-weight: bold;">on_exit_fn</span> {
+  <span style="font-weight: bold; font-style: italic;">EXIT_RES</span>=$<span style="font-weight: bold; font-style: italic;">?</span>
+  <span style="font-weight: bold;">for</span> cb<span style="font-weight: bold;"> in</span> <span style="font-style: italic;">"${ON_EXIT[@]}"</span>; <span style="font-weight: bold;">do</span> $<span style="font-weight: bold; font-style: italic;">cb</span> || true; <span style="font-weight: bold;">done</span>
+  <span style="font-weight: bold;">return</span> $<span style="font-weight: bold; font-style: italic;">EXIT_RES</span>
+}
+
+<span style="font-weight: bold;">trap</span> on_exit_fn EXIT SIGINT
+
+<span style="font-weight: bold;">function</span> <span style="font-weight: bold;">on_exit</span> {
+  ON_EXIT+=(<span style="font-style: italic;">"$@"</span>)
+}
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge51da6a" class="outline-3">
+<h3 id="orge51da6a"><span class="section-number-3">8.13</span> pass flags as a splatted array</h3>
+</div>
+<div id="outline-container-org5b63800" class="outline-3">
+<h3 id="org5b63800"><span class="section-number-3">8.14</span> explore what passes through a pipe with</h3>
+<div class="outline-text-3" id="text-8-14">
+<ul class="org-ul">
+<li><a href="https://stackoverflow.com/questions/17983777/shell-pipe-to-multiple-commands-in-a-file">https://stackoverflow.com/questions/17983777/shell-pipe-to-multiple-commands-in-a-file</a></li>
+</ul>
+<p>
+tee &gt;(some<sub>command</sub>) |
+</p>
+</div>
+</div>
+<div id="outline-container-org79fb22b" class="outline-3">
+<h3 id="org79fb22b"><span class="section-number-3">8.15</span> inherit<sub>errcode</sub></h3>
+</div>
+</div>
+<div id="outline-container-orgcd0af72" class="outline-2">
+<h2 id="orgcd0af72"><span class="section-number-2">9</span> links</h2>
+<div class="outline-text-2" id="text-9">
+<ul class="org-ul">
+<li>Gary Bernhardt. The Unix Chainsaw</li>
+<li><a href="https://news.ycombinator.com/item?id=23765123">https://news.ycombinator.com/item?id=23765123</a></li>
+<li><a href="https://medium.com/@joydeepubuntu/functional-programming-in-bash-145b6db336b7">https://medium.com/@joydeepubuntu/functional-programming-in-bash-145b6db336b7</a></li>
+<li><a href="https://www.youtube.com/watch?v=yD2ekOEP9sU">https://www.youtube.com/watch?v=yD2ekOEP9sU</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org46eff19" class="outline-2">
+<h2 id="org46eff19"><span class="section-number-2">10</span> from shell to lisp and everything in between</h2>
+<div class="outline-text-2" id="text-10">
+<ul class="org-ul">
+<li><a href="https://github.com/oilshell/oil">https://github.com/oilshell/oil</a></li>
+<li><a href="https://www.eigenbahn.com/2020/07/08/painless-emacs-remote-shells">https://www.eigenbahn.com/2020/07/08/painless-emacs-remote-shells</a></li>
+<li>spencertipping</li>
+<li>rash</li>
+<li>zsh</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgdc93f3d" class="outline-2">
+<h2 id="orgdc93f3d"><span class="section-number-2">11</span> make scripts compatible between them</h2>
+<div class="outline-text-2" id="text-11">
+</div>
+<div id="outline-container-org5cc5ecf" class="outline-3">
+<h3 id="org5cc5ecf"><span class="section-number-3">11.1</span> create scripts that replace shell commands and do the same.</h3>
+<div class="outline-text-3" id="text-11-1">
+<p>
+to be able to run a zsh script with noglobs in bash, here's
+<code>~/bin/noglob</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold; font-style: italic;">#</span><span style="font-weight: bold; font-style: italic;">!/usr/bin/</span><span style="font-weight: bold;">env</span><span style="font-weight: bold; font-style: italic;"> bash</span>
+$<span style="font-weight: bold; font-style: italic;">*</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Raimon Grau</p>
+<p class="date">Created: 2020-08-05 Wed 00:02</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
