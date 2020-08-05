@@ -33,7 +33,7 @@ jobs:
       run: wget https://raw.githubusercontent.com/hniksic/emacs-htmlize/master/htmlize.el
 
     - name: export
-      run: emacs book.org -Q -batch -l htmlize.el --eval '(org-html-export-to-html)'
+      run: emacs book.org -Q -batch -l htmlize.el -f org-html-export-to-html
     # Runs a set of commands using the runners shell
     - name: rename
       run: mv book.html index.html
