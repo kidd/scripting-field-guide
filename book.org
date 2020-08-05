@@ -27,7 +27,37 @@
   These examples are based on non-trivial real world code I've written
   that I haven't seen applied in many places over the net. Some of the
   snippets are stolen from public repos.
+* bash
+** use shellcheck
+   First, let's start with the low hanging fruit.
+
+   A lot of the most common errors we usually make are well known
+   ones. And in fact, we usually fail in similar ways. Bash is known
+   for being error prone when dealing with testing variable values,
+   string operations, or flaky subshells and pipes.
+
+   Installing [[https://www.shellcheck.net/][shellcheck]] will flag you many of those ticking bombs.
+
+   No matter which editor you are using, but you should be able to
+   install a plugin to do automatic checks while you're editing.
+
+   In emacs' case, the package is called [[https://github.com/federicotdn/flymake-shellcheck][flymake-shellcheck]], and a
+   quick configuration for it is:
+
+   #+begin_src elisp
+   (use-package flymake-shellcheck
+     :ensure t
+     :commands flymake-shellcheck-load
+     :init
+     (add-hook 'sh-mode-hook 'flymake-shellcheck-load))
+   #+end_src
+
+   Shellcheck is available on most distros, so it's just an =apt=,
+   =brew=, or =nix-env= away.
+
 * interactive
+** Save your small scripts
+** increase interactivity
 ** functions can generate aliases
    Well, it's not lexical scope, but using aliases you can sort of
    create a string that snapshots the procedure and then run it later.
@@ -92,8 +122,6 @@
      }
 
      #+end_src
-* bash
-** use shellcheck
 * zsh
 ** global aliases make a forthy shell
 ** examples of global aliases
@@ -125,6 +153,9 @@
 * debugging
 ** adding =bash= to a script to debug
 * patterns
+** undestand <(foo) and >(foo)
+** use xargs
+** use GNU Parallel
 ** append options in an array during the logic of the program
    And splat them in the cli of the command you're throwing (docker run?)
 ** trap
@@ -257,6 +288,7 @@
   - https://news.ycombinator.com/item?id=23765123
   - https://medium.com/@joydeepubuntu/functional-programming-in-bash-145b6db336b7
   - https://www.youtube.com/watch?v=yD2ekOEP9sU
+  - http://catern.com/posts/pipes.html
 * from shell to lisp and everything in between
   - https://github.com/oilshell/oil
   - https://www.eigenbahn.com/2020/07/08/painless-emacs-remote-shells
