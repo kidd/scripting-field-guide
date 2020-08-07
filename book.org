@@ -1,7 +1,20 @@
-#+TITLE: Bash field guide
+#+TITLE: Shell Field Guide
 #+AUTHOR: Raimon Grau
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:nil arch:headline
+#+OPTIONS: author:t c:nil creator:comment d:(not "LOGBOOK") date:nil
+#+OPTIONS: e:t email:nil f:t inline:t p:nil pri:nil stat:t
+#+OPTIONS: tags:t tasks:t tex:t timestamp:t todo:t |:t
+#+EXCLUDE_TAGS: noexport
+#+KEYWORDS: bash zsh shell
+#+LANGUAGE: en
+#+SELECT_TAGS: export
 
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/setup/theme-readtheorg.setup
+
+#+OPTIONS: reveal_center:nil timestamp:nil
+#+REVEAL_THEME: black
+
+# toc:nil num:nil
 
 * Introduction
   This booklet is intended to be a catalog of tricks and techniques
@@ -16,10 +29,9 @@
   very difficult to kill and they have a very high mutation rate.
 * shell
   No matter if you use Linux, Mac, or Win, you should be living most
-  of the time in a shell to enjoy the content I'm gonna show
-  here. Some value comes from the automated scripts, and some other
-  value comes from the daily usage and refinement of your helper
-  functions, aliases, etc.
+  of the time in a shell to enjoy the content shown here. Some value
+  comes from the automated scripts, and some comes from the daily
+  usage and refinement of your helper functions, aliases, etc.
 
   In general the examples here are ment to run in Bash or Zsh, which
   are compatible for the most part.
@@ -28,13 +40,13 @@
   that I haven't seen applied in many places over the net. Some of the
   snippets are stolen from public repos.
 * bash
-** use shellcheck
+** Use Shellcheck
    First, let's start with the low hanging fruit.
 
    A lot of the most common errors we usually make are well known
-   ones. And in fact, we usually fail in similar ways. Bash is known
-   for being error prone when dealing with testing variable values,
-   string operations, or flaky subshells and pipes.
+   ones. And in fact, we all usually fail in similar ways. Bash is
+   known for being error prone when dealing with testing variable
+   values, string operations, or flaky subshells and pipes.
 
    Installing [[https://www.shellcheck.net/][shellcheck]] will flag you many of those ticking bombs.
 
@@ -55,31 +67,140 @@
    Shellcheck is available on most distros, so it's just an =apt=,
    =brew=, or =nix-env= away.
 
+* Basics
+
+** Overview
+   In this section, we're covering the parts of the basics that are
+   not so basic after all, or that are more unique in shellscripting
+   languages.
+
+** Booleans and Conditionals
+   In any shell, =foo && bar= will execute =bar= only if =foo=
+   succeeded. That means that =foo= returned 0. That means that to &&
+   (which you read like "and"), 0 is true. so yes. 0 is true, and
+   other values are false.
+
+** Functions
+   Functions are functions. They receive arguments, and they return a
+   value.
+
+   The special thing about functions in bash is that they also can use
+   the file descriptors of the process. That means that they "inherit"
+   STDIN, STDOUT, STDERR (and maybe more).
+
+   Use them.
+
+   Another point is that function names can be passed as parameters,
+   because they are strings.
+** Variables
+   #+begin_src bash
+   foo=3
+   bar=$foo
+   #+end_src
+
+   You make a variable local to a function with =local=
+
+   #+begin_src bash
+   myfun() {
+     local bar
+     bar=3
+     echo $bar
+   }
+
+   bar=4
+   echo $bar
+   myfun
+   echo $bar
+   #+end_src
+
+   #+RESULTS:
+   | 4 |
+   | 3 |
+   | 4 |
+** Interpolation
+   #+begin_src bash
+   l=l
+   s=s
+   $l$s .
+   #+end_src
+
+   #+RESULTS:
+   | book.html  |
+   | book.html~ |
+   | book.org   |
+   | readme.org |
+
 * interactive
 ** Save your small scripts
-** increase interactivity
+   Rome wasn't built in a day, and like having a journal log, most of
+   the little scripts you create, once you have enough discipline will
+   be useful for some other cases, and your functions will be
+   reusable.
+
+   Save your scripts into files early on, instead of crunching
+   everything in the repl.
+
+** Increased Interactivity
+   Knowing your shell's shortcuts for interactive use is a must. The
+   same way you learned to touchtype and you learned your editor, you
+   should learn all the shortcuts for your shell. Here's some simple
+   ones.
+
+   | key    | action                        |
+   |--------+-------------------------------|
+   | ctrl-r | reverse-history-search        |
+   | c-a    | beginning-of-line             |
+   | c-e    | end-of-line                   |
+   | c-w    | delete-word-backwards         |
+   | c-k    | kill-line (from point to eol) |
+   | c-p    | previous-line                 |
+   | c-n    | next-line                     |
+   | a-.    | insert last agument           |
+   | a-/    | dabbrev-expand                |
+
+
+** Aliases
+   Aliases are very simple substitutions of commands for a sequence of
+   other commands.  Usual example is
+
+   #+begin_src bash
+   alias ls='ls --auto-color'
+   #+end_src
+
+   Now let's move on to the interesting stuff.
+
 ** functions can generate aliases
-   Well, it's not lexical scope, but using aliases you can sort of
-   create a string that snapshots the procedure and then run it later.
+
+   Aliases live in a global namespace for the shell, so no matter
+   where you define them, they take effect globally, possibly
+   overwriting older aliases with the same name.
+
+   Well, it's not lexical scope (far from it), but using aliases you
+   can create a string that snapshots the value you want, and capture
+   it to run it later.
 
    Some fun stuff:
-   - aliasgen. create an alias for each directory in ~/workspace/
-     . This is superceeded by AUTO_CD, but the trick is still cool
-   #+begin_src bash
+
+   - aliasgen. Create an alias for each directory in
+     ~/workspace/. This is superceeded by =CDPATH=, but the trick is
+     still cool.
+   #+begin_src zsh
    aliasgen() {
      for i in ~/workspace/*(/) ; do
          DIR=$(basename $i) ;
-         eval "alias $DIR='cd ~/workspace/$i'";  # probably eval is not needed
+          alias $DIR="cd ~/workspace/$i";
      done
    }
    #+end_src
-   - a. make a shortcut to the current directory.
-     #+begin_src bash
-     function a() { alias $1=cd\ $PWD; }
-     #+end_src
+
+   - a make a shortcut to the current directory.
+   #+begin_src bash
+   function a() { alias $1=cd\ $PWD; }
+   #+end_src
 
    - unhist. functions can create aliases, and functions can receive
-     function names (as a string).
+     function names (as a string), so we can combine them to advise
+     existing functions.
      #+begin_src bash
    unhist () {
      alias $1=" $1"
@@ -97,8 +218,13 @@
 
      #+end_src
 
-   - Problem: Combination of 2 of those doesn't work.
-     Solution:
+     #+RESULTS:
+
+   - Problem: Combination of 2 of those doesn't work, because the
+     second acts just on the textual representation that it received,
+     not the current value of the alias.
+
+   Solution:
 
      #+begin_src bash
      alias-to() {
@@ -122,8 +248,24 @@
      }
 
      #+end_src
-* zsh
+** Override (advise) common functions
+   #+begin_src bash
+
+   DOCKER_ORIG=$(which docker)
+   docker () {
+       if [[ $1 == "run" ]]; then
+           shift
+           $DOCKER_ORIG run -v $HOME/.gojira-kongs/.gojira-home/.bash_history:/root/.bash_history "$@"
+       else
+           $DOCKER_ORIG "$@"
+       fi
+   }
+
+   #+end_src
+* zsh                                                              :noexport:
 ** global aliases make a forthy shell
+** globbing
+   **/*(/)
 ** examples of global aliases
    - lspdf -tr TL P XA evince
    - docker exec -u root -ti $(docker ps -q H1) bash
@@ -149,10 +291,19 @@
       noglob compare_outputs ./release.sh -u 1 -k 1 -p rhel:8 -v 1 -e -R "$i"
    IROF
    #+end_src
-
-* debugging
+** suffix aliases don't have to match a filename
+* debugging                                                        :noexport:
 ** adding =bash= to a script to debug
-* patterns
+** DRY_RUN
+   #+begin_src bash
+   if [[-n $DRY_RUN ]]; then
+     curl () {
+       echo curl $@
+     }
+   fi
+   #+end_src
+   use =command curl= to force the command, not the alias or anything
+* patterns                                                         :noexport:
 ** undestand <(foo) and >(foo)
 ** use xargs
 ** use GNU Parallel
@@ -168,15 +319,6 @@
    V)
      set -xa
      ;;
-** DRY_RUN
-   #+begin_src bash
-   if [[-n $DRY_RUN ]]; then
-     curl () {
-       echo curl $@
-     }
-   fi
-   #+end_src
-   use =command curl= to force the command, not the alias or anything
 ** structure the app like a normal app
    Shellscripts are thought as quick one-off programs, but the truth
    is that they tend to be useful and sticky, so you better write them
@@ -283,20 +425,24 @@
    - https://stackoverflow.com/questions/17983777/shell-pipe-to-multiple-commands-in-a-file
    tee >(some_command) |
 ** inherit_errcode
-* links
+* links                                                            :noexport:
+  - https://tldp.org/LDP/abs/html/
   - Gary Bernhardt. The Unix Chainsaw
   - https://news.ycombinator.com/item?id=23765123
   - https://medium.com/@joydeepubuntu/functional-programming-in-bash-145b6db336b7
   - https://www.youtube.com/watch?v=yD2ekOEP9sU
   - http://catern.com/posts/pipes.html
-* from shell to lisp and everything in between
+* from shell to lisp and everything in between                     :noexport:
   - https://github.com/oilshell/oil
   - https://www.eigenbahn.com/2020/07/08/painless-emacs-remote-shells
   - spencertipping
   - rash
   - zsh
+  - https://github.com/liljencrantz/crush
+  - https://github.com/artyom-poptsov/metabash
+  - perl/python/ruby + foo=`ls`
 
-* make scripts compatible between them
+* make scripts compatible between them                             :noexport:
 ** create scripts that replace shell commands and do the same.
    to be able to run a zsh script with noglobs in bash, here's
    =~/bin/noglob=.
