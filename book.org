@@ -196,6 +196,12 @@
    - a make a shortcut to the current directory.
    #+begin_src bash
    function a() { alias $1=cd\ $PWD; }
+   mkdir -p /tmp/foo
+   cd /tmp/foo
+   a foo
+   cd /
+   foo
+   echo $PWD
    #+end_src
 
    - unhist. functions can create aliases, and functions can receive
@@ -263,13 +269,17 @@
 
    #+end_src
 * zsh                                                              :noexport:
-** global aliases make a forthy shell
+** global aliases make a forth-y shell
 ** globbing
    **/*(/)
 ** examples of global aliases
    - lspdf -tr TL P XA evince
    - docker exec -u root -ti $(docker ps -q H1) bash
 ** pass commands around
+   This one uses [[*DRY_RUN][DRY_RUN]]. While refactoring a script that does some
+   curls, we want to make sure that our refactored version does the
+   exact same calls in the same order.
+
    #+begin_src bash
    compare_outputs() {
      export DRY_RUN=1
@@ -280,18 +290,72 @@
      echo "diffing"
      diff /tmp/1.out /tmp/2.out
    }
-   # noglob compare_outputs ./release.sh -u 1 -k 1 -p rhel:6 -v 1 -e -R 'internal-preview'
+   compare_outputs ./release.sh -u 1 -k 1 -p rhel:6 -v 1 -e -R 'internal-preview'
+   #+end_src
 
-   # extra tricky
+   First we create a function =compare_outputs=, that gets a command
+   to run as parameters. The function will run it once, redirecting
+   the standard error to a file =/tmp/1.out=.
+
+   Then, it checks out the branch that contains our refactored
+   version, and will run the command again, redirecting standard error
+   to =/tmp/2.out=, and will diff the two outputs.
+
+   In case there's a difference between the two, =diff= will output
+   them, and the function will return the non-zero exit value of
+   diff. If everything went fine, =compare_outputs= will succeed.
+
+   Now that we know that for this inputs, the command runs fine, we
+   want to find out if it works for other types of releases, not only
+   internal-preview.
+
+   Here I'm using zsh's global aliases to give a much more fluid
+   interface to the commands:
+
+   #+begin_src shell
    alias -g SPLIT='| tr " " "\n" '
    alias -g FORI='| while read i ; do '
    alias -g IROF='; done '
 
+   set -e
    echo "ga internal-preview rc1 rc2" SPLIT FORI
       noglob compare_outputs ./release.sh -u 1 -k 1 -p rhel:8 -v 1 -e -R "$i"
    IROF
    #+end_src
+
+   So, combining the two, we can have a really smooth way of iterating
+   over the possibilities, without really messing into the details of
+   loops.
+
+   WARNING: This approach is not robust enough to put it anywhere in
+   production, but to write quick one off scripts is a
+
+   #+RESULTS:
+
 ** suffix aliases don't have to match a filename
+   zsh has another type of aliases called "suffix alias". Those alias
+   allow you to define programs to open/run file types.
+   #+begin_src shell
+   alias -s docx="libreoffice"
+   #+end_src
+
+   With this set, if you write a name of a file ending with =docx= as
+   the first token in a command line, it will use libreoffice to open
+   it.
+
+   The trick here is that the parser doesn't check that the file is
+   indeed an existing file. It can be any string.
+
+   Let's look at an example of it.
+
+   #+begin_src shell
+   alias -s git="git clone"
+   #+end_src
+
+   In this case, we can easily copy a =git@github.com:.....git= from a
+   browser, and paste it into a zsh. Then, zsh will run that "file"
+   with the command =git clone=, effectively cloning that repository.
+
 * debugging                                                        :noexport:
 ** adding =bash= to a script to debug
 ** DRY_RUN
