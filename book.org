@@ -67,6 +67,40 @@
    Shellcheck is available on most distros, so it's just an =apt=,
    =brew=, or =nix-env= away.
 
+** use \[\[
+   Unless you want your script to be POSIX compliant, use =[[= instead
+   of =[=. =[= is a normal command. It's like =ls=, or =true=. You can
+   check it by searching for a file named =[= in your path.
+
+   Being a normal command it always evaluates its params, like a
+   normal function. On the other hand though, =[[= is a special bash
+   operator, and it evaluates the parameters lazily.
+
+   #+begin_src bash
+
+   #[[ does lazy evaluation:
+   [[ a = b && $(echo foo >&2) ]]
+
+   #While [ does not:
+   [ a = b -a "$(echo foo >&2)” ]
+   #+end_src
+   Ref: https://lists.gnu.org/archive/html/help-bash/2014-06/msg00013.html
+** eval?
+   When you have mostly small functions that are mostly pure, you
+   compose them like you'd do in any other language.
+
+   In the following snippet, we are in release script. Some step
+   builds a package inside an image, another step tests a package
+   already built.
+
+   Let's pick the same base image we picked to build the package.
+   #+begin_src bash
+   # evaluate the string "centos:$VERSION" (that comes from
+   # centos/Dockerfile) in the current scope
+   local VERSION=$(get_version $DISTRO)
+   run_tests "$PACKAGE_PATH" "$(eval echo $(awk '/^FROM /{print $2; exit}' $LOCAL_PATH/$(get_dockerfile_for $DISTRO)))"
+   #+end_src
+
 * Basics
 
 ** Overview
@@ -367,6 +401,10 @@
    fi
    #+end_src
    use =command curl= to force the command, not the alias or anything
+* Docker                                                           :noexport:
+** Use volumes as a conveyor belt
+** mount .bashrc to have a shared history
+** monkeypatch docker run command to inject .bashrc shared file
 * patterns                                                         :noexport:
 ** undestand <(foo) and >(foo)
 ** use xargs
