@@ -101,6 +101,9 @@
    run_tests "$PACKAGE_PATH" "$(eval echo $(awk '/^FROM /{print $2; exit}' $LOCAL_PATH/$(get_dockerfile_for $DISTRO)))"
    #+end_src
 
+   The usage of eval is there to interpolate the string that we get
+   from the =FROM= in the current environment.
+
 * Basics
 
 ** Overview
@@ -239,8 +242,8 @@
    #+end_src
 
    - unhist. functions can create aliases, and functions can receive
-     function names (as a string), so we can combine them to advise
-     existing functions.
+     functions as parameters (as a string (function name)), so we can
+     combine them to advise existing functions.
      #+begin_src bash
    unhist () {
      alias $1=" $1"
@@ -390,6 +393,29 @@
    browser, and paste it into a zsh. Then, zsh will run that "file"
    with the command =git clone=, effectively cloning that repository.
 
+** noglob
+   zsh has more aggressive parameter expansion, to the level that
+   =[,],...= have special meanings, and will be interpreted and
+   expanded before calling the final commands in your shell.
+
+   There are commands that you don't want ever expanded , for example,
+   when using =curl=, it's much more likely that an open bracket will
+   be ment to be there verbatim rather than expanded.
+
+   Zsh provides a command to quote the following expansions. And it's
+   called noglob.
+   #+begin_src bash
+   noglob curl http://example.com\&a[]=1
+   #+end_src
+
+** make noglob 'transparent' to bash
+   zsh and bash are mostly compatible, but there's a few things not
+   supported in bash. =noglob= is one of them. To do to layer
+   inbetween, an easy way is to just create a =~/bin/noglob= file
+   #+begin_src bash
+   $*
+   #+end_src
+
 * debugging                                                        :noexport:
 ** adding =bash= to a script to debug
 ** DRY_RUN
@@ -405,6 +431,7 @@
 ** Use volumes as a conveyor belt
 ** mount .bashrc to have a shared history
 ** monkeypatch docker run command to inject .bashrc shared file
+** Randomize ports. or use docker port
 * patterns                                                         :noexport:
 ** undestand <(foo) and >(foo)
 ** use xargs
@@ -483,27 +510,103 @@
    #+end_src
    - https://www.oilshell.org/blog/2017/01/13.html
 ** source files
-   it's a "require"
-** use files as a lib
+   =source= is like =require= in most programming languages. It
+   evaluates the sourced file in the context of the currently
+   evaluated script.
+
+   It's simple, but get used to modularize your code into libraries.
+
+   Be careful, it's very rudimentary, and it will be overwriting old
+   vars or functions if names clash. There's no namespacing happening
+   there.
+
+   #+begin_src bash
+
+   source file.sh
+
+   # the same
+   . file.sh
+   #+end_src
+** Dots and colons allowed in function names!
+   A way to split the namespace is to have libs define functions with
+   their own namespace.
+
+   I've gotten used to use dots or colons as namespace separator.
+   #+begin_src bash
+   semver.greater() {
+    # ...
+   }
+   #+end_src
+   or
+   #+begin_src bash
+   semver:greater() {
+    # ...
+   }
+   #+end_src
+** Use Scripts as a Libs
+   A python-inspired way of using scripts as loadable libraries is to
+   check whether the current file was the one that was called
+   originally or it's being just sourced.
+
+   Again, no side effects in load time makes this functionality
+   possible. otherwise, you're on your own.
    #+begin_src bash
     # Allow sourcing of this script
     if [[ $(basename "$(realpath "$0")") == "package.sh" ]]; then
       setup
       parse_args "$@"
-
-      # Only load silent-run functions if silent execution
-      # assure-not-messy-101
-      if [[ $VERBOSE == 0 ]]; then
-        BUILD_LOG=${BUILD_LOG:-$(mktemp /tmp/kong-distributions-build.XXXXX)}
-        source $LOCAL_PATH/silent-run.sh
-      fi
-
       main
     fi
    #+end_src
-** Use tempfile and tmpdirs for EVERYTHING
-   and trap on_exit
+** Use tempfiles everywhere
+   Your script is not going to run alone. Don't assume paths are
+   fixed or known.
+
+   CI/CD Pipelines run many jobs in the same node and files can start
+   clashing.
+
+   Make use of =$(mktemp /tmp/foo-bar.XXXXX)=.
+
+   # #+begin_src bash
+   # git_clone_tmp() {
+   #   local repo=${1:?repo is required}
+   #   local ref=${2:?ref is required}
+   #   tmpath=$(mktemp -d "/tmp/kong-$repo-XXXXX")
+   #   on_exit "rm -rf $tmpath"
+   #   git clone -b ${ref} https://"$GITHUB_TOKEN"@github.com/my-org/${repo}.git $tmpath
+   # }
+   # #+end_src
+** Use tempdirs everywhere
+
+   Your script is not going to run alone. Don't assume paths are
+   fixed or known.
+
+   CI/CD Pipelines run many jobs in the same node and files can start
+   clashing.
+
+   Make use of =$(mktemp -d /tmp/foo-bar.XXXXX)=.  If you have to patch a
+   file, do it in a clean fresh copy. Don't modify files in old paths
+
+   If you HAVE TO modify paths, do it idempotently.  But really, don't do it. aa
+
+   CAVEAT: You have to manually delete the directory if you want it cleaned.
+** Cleanup tasks with trap
+   =trap= is used to 'subscribe' a callback when something happens.
+   Many times it's used on exit. It's a good thing to cleanup tmpdirs after your script
+   exits, so you can use the output of =mktemp -d= and subscribe a cleanup
+   function for it.
+
+   #+begin_src bash
+   on_exit() {
+     rm -rf $1
+   }
+
+   trap "on_exit $(mktemp -d /tmp/foo-bar.XXXXX)" EXIT SIGINT
+   #+end_src
+
 ** array of callbacks on_exit
+   Level upping that pattern, we can have a helper to add callbacks to run on exit.
+
    #+begin_src bash
 
    ON_EXIT=()
