@@ -320,14 +320,14 @@
    #+begin_src bash
    compare_outputs() {
      export DRY_RUN=1
+     git checkout b1
      $@ 2>/tmp/1.out
-     git checkout -
+     git checkout b2
      $@ 2>/tmp/2.out
-     git checkout -
      echo "diffing"
      diff /tmp/1.out /tmp/2.out
    }
-   compare_outputs ./release.sh -u 1 -k 1 -p rhel:6 -v 1 -e -R 'internal-preview'
+   compare_outputs ./release.sh -p rhel:6 -R 'internal-preview'
    #+end_src
 
    First we create a function =compare_outputs=, that gets a command
@@ -356,7 +356,7 @@
 
    set -e
    echo "ga internal-preview rc1 rc2" SPLIT FORI
-      noglob compare_outputs ./release.sh -u 1 -k 1 -p rhel:8 -v 1 -e -R "$i"
+      noglob compare_outputs ./release.sh -p rhel:8 -R "$i"
    IROF
    #+end_src
 
@@ -366,8 +366,10 @@
 
    WARNING: This approach is not robust enough to put it anywhere in
    production, but to write quick one off scripts is a
+   killer. Experimenting in a shell and creating tools and 2nd order
+   tools to make interaction faster builds a language that grows on
+   you, and keeps improving your toolbelt.
 
-   #+RESULTS:
 
 ** suffix aliases don't have to match a filename
    zsh has another type of aliases called "suffix alias". Those alias
@@ -380,6 +382,11 @@
    the first token in a command line, it will use libreoffice to open
    it.
 
+   #+begin_src shell
+   invoice1.docx
+   # will effectively call libreoffice invoice1.docx
+   #+end_src
+
    The trick here is that the parser doesn't check that the file is
    indeed an existing file. It can be any string.
 
@@ -390,8 +397,11 @@
    #+end_src
 
    In this case, we can easily copy a =git@github.com:.....git= from a
-   browser, and paste it into a zsh. Then, zsh will run that "file"
-   with the command =git clone=, effectively cloning that repository.
+   browser, and paste it into a zsh console. Then, zsh will run that
+   "file" with the command =git clone=, effectively cloning that
+   repository.
+
+   Cool, ain't it?
 
 ** noglob
    zsh has more aggressive parameter expansion, to the level that
