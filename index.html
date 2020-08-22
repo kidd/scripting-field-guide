@@ -240,40 +240,42 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgfeb4848">1. Introduction</a></li>
-<li><a href="#orgf676960">2. shell</a></li>
-<li><a href="#orgec37807">3. Level</a></li>
-<li><a href="#org9909f24">4. bash</a>
+<li><a href="#orgef3b8c4">1. Introduction</a></li>
+<li><a href="#orga1d29c1">2. shell</a></li>
+<li><a href="#org7ce769c">3. Level</a></li>
+<li><a href="#org387afeb">4. bash</a>
 <ul>
-<li><a href="#org71000df">4.1. Use Shellcheck</a></li>
-<li><a href="#org49a30e2">4.2. use \[\[</a></li>
-<li><a href="#org59a87f4">4.3. eval?</a></li>
+<li><a href="#orgcf33866">4.1. Use Shellcheck</a></li>
+<li><a href="#orgf744958">4.2. use \[\[</a></li>
+<li><a href="#org0673364">4.3. eval?</a></li>
 </ul>
 </li>
-<li><a href="#orga0833c3">5. Basics</a>
+<li><a href="#orga1ab208">5. Basics</a>
 <ul>
-<li><a href="#org019ae1f">5.1. Overview</a></li>
-<li><a href="#org5340913">5.2. Booleans and Conditionals</a></li>
-<li><a href="#org54e3281">5.3. Functions</a></li>
-<li><a href="#orgde7849b">5.4. Variables</a></li>
-<li><a href="#orgad2f9e2">5.5. Interpolation</a></li>
+<li><a href="#orgf5dd2ce">5.1. Overview</a></li>
+<li><a href="#org89482db">5.2. Booleans and Conditionals</a></li>
+<li><a href="#org014a851">5.3. Functions</a></li>
+<li><a href="#org681b87a">5.4. Variables</a></li>
+<li><a href="#orgfa4fba2">5.5. Interpolation</a></li>
+<li><a href="#org20738fe">5.6. use return values for conditionals</a></li>
+<li><a href="#org34f5f5b">5.7. one branch conditionals</a></li>
 </ul>
 </li>
-<li><a href="#org0c730ae">6. interactive</a>
+<li><a href="#org173f66e">6. interactive</a>
 <ul>
-<li><a href="#orgbbe31c9">6.1. Save your small scripts</a></li>
-<li><a href="#org9234a3f">6.2. Increased Interactivity</a></li>
-<li><a href="#orgd5cafd5">6.3. Aliases</a></li>
-<li><a href="#orga630c57">6.4. functions can generate aliases</a></li>
-<li><a href="#orgca40556">6.5. Override (advise) common functions</a></li>
+<li><a href="#org265af11">6.1. Save your small scripts</a></li>
+<li><a href="#org2ed2dbe">6.2. Increased Interactivity</a></li>
+<li><a href="#orgdb54f04">6.3. Aliases</a></li>
+<li><a href="#org202fd7c">6.4. functions can generate aliases</a></li>
+<li><a href="#orgb9138ab">6.5. Override (advise) common functions</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgfeb4848" class="outline-2">
-<h2 id="orgfeb4848"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-orgef3b8c4" class="outline-2">
+<h2 id="orgef3b8c4"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This booklet is intended to be a catalog of tricks and techniques
@@ -291,8 +293,8 @@ very difficult to kill and they have a very high mutation rate.
 </p>
 </div>
 </div>
-<div id="outline-container-orgf676960" class="outline-2">
-<h2 id="orgf676960"><span class="section-number-2">2</span> shell</h2>
+<div id="outline-container-orga1d29c1" class="outline-2">
+<h2 id="orga1d29c1"><span class="section-number-2">2</span> shell</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 No matter if you use Linux, Mac, or Win, you should be living most
@@ -307,8 +309,8 @@ are compatible for the most part.
 </p>
 </div>
 </div>
-<div id="outline-container-orgec37807" class="outline-2">
-<h2 id="orgec37807"><span class="section-number-2">3</span> Level</h2>
+<div id="outline-container-org7ce769c" class="outline-2">
+<h2 id="org7ce769c"><span class="section-number-2">3</span> Level</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 These examples are based on non-trivial real world code I've written
@@ -317,12 +319,12 @@ snippets are stolen from public repos.
 </p>
 </div>
 </div>
-<div id="outline-container-org9909f24" class="outline-2">
-<h2 id="org9909f24"><span class="section-number-2">4</span> bash</h2>
+<div id="outline-container-org387afeb" class="outline-2">
+<h2 id="org387afeb"><span class="section-number-2">4</span> bash</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org71000df" class="outline-3">
-<h3 id="org71000df"><span class="section-number-3">4.1</span> Use Shellcheck</h3>
+<div id="outline-container-orgcf33866" class="outline-3">
+<h3 id="orgcf33866"><span class="section-number-3">4.1</span> Use Shellcheck</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 First, let's start with the low hanging fruit.
@@ -365,8 +367,8 @@ Shellcheck is available on most distros, so it's just an <code>apt</code>,
 </div>
 </div>
 
-<div id="outline-container-org49a30e2" class="outline-3">
-<h3 id="org49a30e2"><span class="section-number-3">4.2</span> use \[\[</h3>
+<div id="outline-container-orgf744958" class="outline-3">
+<h3 id="orgf744958"><span class="section-number-3">4.2</span> use \[\[</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 Unless you want your script to be POSIX compliant, use <code>[[</code> instead
@@ -394,8 +396,8 @@ Ref: <a href="https://lists.gnu.org/archive/html/help-bash/2014-06/msg00013.html
 </p>
 </div>
 </div>
-<div id="outline-container-org59a87f4" class="outline-3">
-<h3 id="org59a87f4"><span class="section-number-3">4.3</span> eval?</h3>
+<div id="outline-container-org0673364" class="outline-3">
+<h3 id="org0673364"><span class="section-number-3">4.3</span> eval?</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 When you have mostly small functions that are mostly pure, you
@@ -427,12 +429,12 @@ from the <code>FROM</code> in the current environment.
 </div>
 </div>
 
-<div id="outline-container-orga0833c3" class="outline-2">
-<h2 id="orga0833c3"><span class="section-number-2">5</span> Basics</h2>
+<div id="outline-container-orga1ab208" class="outline-2">
+<h2 id="orga1ab208"><span class="section-number-2">5</span> Basics</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-org019ae1f" class="outline-3">
-<h3 id="org019ae1f"><span class="section-number-3">5.1</span> Overview</h3>
+<div id="outline-container-orgf5dd2ce" class="outline-3">
+<h3 id="orgf5dd2ce"><span class="section-number-3">5.1</span> Overview</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 In this section, we're covering the parts of the basics that are
@@ -442,8 +444,8 @@ languages.
 </div>
 </div>
 
-<div id="outline-container-org5340913" class="outline-3">
-<h3 id="org5340913"><span class="section-number-3">5.2</span> Booleans and Conditionals</h3>
+<div id="outline-container-org89482db" class="outline-3">
+<h3 id="org89482db"><span class="section-number-3">5.2</span> Booleans and Conditionals</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 In any shell, <code>foo &amp;&amp; bar</code> will execute <code>bar</code> only if <code>foo</code>
@@ -454,8 +456,8 @@ other values are false.
 </div>
 </div>
 
-<div id="outline-container-org54e3281" class="outline-3">
-<h3 id="org54e3281"><span class="section-number-3">5.3</span> Functions</h3>
+<div id="outline-container-org014a851" class="outline-3">
+<h3 id="org014a851"><span class="section-number-3">5.3</span> Functions</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 Functions are functions. They receive arguments, and they return a
@@ -478,8 +480,8 @@ because they are strings.
 </p>
 </div>
 </div>
-<div id="outline-container-orgde7849b" class="outline-3">
-<h3 id="orgde7849b"><span class="section-number-3">5.4</span> Variables</h3>
+<div id="outline-container-org681b87a" class="outline-3">
+<h3 id="org681b87a"><span class="section-number-3">5.4</span> Variables</h3>
 <div class="outline-text-3" id="text-5-4">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="font-weight: bold; font-style: italic;">foo</span>=3
@@ -506,8 +508,8 @@ myfun
 </div>
 </div>
 </div>
-<div id="outline-container-orgad2f9e2" class="outline-3">
-<h3 id="orgad2f9e2"><span class="section-number-3">5.5</span> Interpolation</h3>
+<div id="outline-container-orgfa4fba2" class="outline-3">
+<h3 id="orgfa4fba2"><span class="section-number-3">5.5</span> Interpolation</h3>
 <div class="outline-text-3" id="text-5-5">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="font-weight: bold; font-style: italic;">l</span>=l
@@ -517,14 +519,95 @@ $<span style="font-weight: bold; font-style: italic;">l</span>$<span style="font
 </div>
 </div>
 </div>
+<div id="outline-container-org20738fe" class="outline-3">
+<h3 id="org20738fe"><span class="section-number-3">5.6</span> use return values for conditionals</h3>
+<div class="outline-text-3" id="text-5-6">
+<p>
+<code>if</code> 's conditions can be bound to the return values of
+commands. That's a known thing, but lots of code you see around
+rely on <code>[[]]=</code> to test the return values of commands/functions
+anyway.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">if </span><span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"foo"</span> | grep <span style="font-style: italic;">"bar"</span> ; <span style="font-weight: bold;">then</span>
+  <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"found!"</span>
+<span style="font-weight: bold;">fi</span>
+</pre>
 </div>
 
-<div id="outline-container-org0c730ae" class="outline-2">
-<h2 id="org0c730ae"><span class="section-number-2">6</span> interactive</h2>
+<p>
+This is much clearer than
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">if</span> [[ 0 == $(<span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"foo"</span> |grep <span style="font-style: italic;">"bar"</span>) ]]; <span style="font-weight: bold;">then</span>
+  <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"found!"</span>
+<span style="font-weight: bold;">fi</span>
+</pre>
+</div>
+
+<p>
+As easy and trivial as it seems, this way of thinking pushes you
+forward to thinking on creating smaller functions that check the
+conditions and <code>return</code> 0 or 1.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">if</span> less_than $<span style="font-weight: bold; font-style: italic;">package</span> <span style="font-style: italic;">"1.3.2"</span>; <span style="font-weight: bold;">then</span>
+  die <span style="font-style: italic;">"can't proceed"</span>
+<span style="font-weight: bold;">fi</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org34f5f5b" class="outline-3">
+<h3 id="org34f5f5b"><span class="section-number-3">5.7</span> one branch conditionals</h3>
+<div class="outline-text-3" id="text-5-7">
+<p>
+The usual conditionals one sees everywher is <code>if</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">if</span> [[ some-condition ]]; <span style="font-weight: bold;">then</span>
+  <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"yes"</span>
+<span style="font-weight: bold;">fi</span>
+</pre>
+</div>
+
+<p>
+This is all good and fine, but in the same vein of using the least
+powerful construct for each task, it's nice to think of the one way
+conditionals in the form of <code>&amp;&amp;</code> and <code>||</code> as a way to explicitly
+say that we don't want to do anything else when the condition is
+not met.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">some-condition &amp;&amp; {
+   <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"log: warning!"</span>
+}
+</pre>
+</div>
+
+<p>
+This conveys the desire of doing something <b>just</b> in one case, and
+that the negation of this is not interesting at all.
+</p>
+
+<p>
+There are lots of references to this, but I like this recent post
+where it explains it for arrays in higher level languages like ruby:
+<a href="https://jesseduffield.com/array-functions-and-the-rule-of-least-power/">https://jesseduffield.com/array-functions-and-the-rule-of-least-power/</a>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org173f66e" class="outline-2">
+<h2 id="org173f66e"><span class="section-number-2">6</span> interactive</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-orgbbe31c9" class="outline-3">
-<h3 id="orgbbe31c9"><span class="section-number-3">6.1</span> Save your small scripts</h3>
+<div id="outline-container-org265af11" class="outline-3">
+<h3 id="org265af11"><span class="section-number-3">6.1</span> Save your small scripts</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 Rome wasn't built in a day, and like having a journal log, most of
@@ -540,8 +623,8 @@ everything in the repl.
 </div>
 </div>
 
-<div id="outline-container-org9234a3f" class="outline-3">
-<h3 id="org9234a3f"><span class="section-number-3">6.2</span> Increased Interactivity</h3>
+<div id="outline-container-org2ed2dbe" class="outline-3">
+<h3 id="org2ed2dbe"><span class="section-number-3">6.2</span> Increased Interactivity</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 Knowing your shell's shortcuts for interactive use is a must. The
@@ -615,8 +698,8 @@ ones.
 </div>
 
 
-<div id="outline-container-orgd5cafd5" class="outline-3">
-<h3 id="orgd5cafd5"><span class="section-number-3">6.3</span> Aliases</h3>
+<div id="outline-container-orgdb54f04" class="outline-3">
+<h3 id="orgdb54f04"><span class="section-number-3">6.3</span> Aliases</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
 Aliases are very simple substitutions of commands for a sequence of
@@ -634,8 +717,8 @@ Now let's move on to the interesting stuff.
 </div>
 </div>
 
-<div id="outline-container-orga630c57" class="outline-3">
-<h3 id="orga630c57"><span class="section-number-3">6.4</span> functions can generate aliases</h3>
+<div id="outline-container-org202fd7c" class="outline-3">
+<h3 id="org202fd7c"><span class="section-number-3">6.4</span> functions can generate aliases</h3>
 <div class="outline-text-3" id="text-6-4">
 <p>
 Aliases live in a global namespace for the shell, so no matter
@@ -740,8 +823,8 @@ Solution:
 </div>
 </div>
 </div>
-<div id="outline-container-orgca40556" class="outline-3">
-<h3 id="orgca40556"><span class="section-number-3">6.5</span> Override (advise) common functions</h3>
+<div id="outline-container-orgb9138ab" class="outline-3">
+<h3 id="orgb9138ab"><span class="section-number-3">6.5</span> Override (advise) common functions</h3>
 <div class="outline-text-3" id="text-6-5">
 <div class="org-src-container">
 <pre class="src src-bash">
