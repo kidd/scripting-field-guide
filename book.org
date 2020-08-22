@@ -166,6 +166,60 @@
    | book.html~ |
    | book.org   |
    | readme.org |
+** use return values for conditionals
+   =if= 's conditions can be bound to the return values of
+   commands. That's a known thing, but lots of code you see around
+   rely on =[[]]== to test the return values of commands/functions
+   anyway.
+
+   #+begin_src bash
+   if echo "foo" | grep "bar" ; then
+     echo "found!"
+   fi
+   #+end_src
+
+   This is much clearer than
+   #+begin_src bash
+   if [[ 0 == $(echo "foo" |grep "bar") ]]; then
+     echo "found!"
+   fi
+   #+end_src
+
+   As easy and trivial as it seems, this way of thinking pushes you
+   forward to thinking on creating smaller functions that check the
+   conditions and =return= 0 or 1.
+
+   #+begin_src bash
+   if less_than $package "1.3.2"; then
+     die "can't proceed"
+   fi
+   #+end_src
+** one branch conditionals
+   The usual conditionals one sees everywher is =if=.
+   #+begin_src bash
+   if [[ some-condition ]]; then
+     echo "yes"
+   fi
+   #+end_src
+
+   This is all good and fine, but in the same vein of using the least
+   powerful construct for each task, it's nice to think of the one way
+   conditionals in the form of =&&= and =||= as a way to explicitly
+   say that we don't want to do anything else when the condition is
+   not met.
+
+   #+begin_src bash
+   some-condition && {
+      echo "log: warning!"
+   }
+   #+end_src
+
+   This conveys the desire of doing something *just* in one case, and
+   that the negation of this is not interesting at all.
+
+   There are lots of references to this, but I like this recent post
+   where it explains it for arrays in higher level languages like ruby:
+   https://jesseduffield.com/array-functions-and-the-rule-of-least-power/
 
 * interactive
 ** Save your small scripts
