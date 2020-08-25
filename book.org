@@ -694,6 +694,30 @@
    - https://stackoverflow.com/questions/17983777/shell-pipe-to-multiple-commands-in-a-file
    tee >(some_command) |
 ** inherit_errcode
+** redirects
+   - https://catonmat.net/ftp/bash-redirections-cheat-sheet.pdf
+   - https://catonmat.net/bash-one-liners-explained-part-three
+** pushd/popd
+   pushd and popd are used to move to some directory and go back to it
+   in a stack fashion, so nesting can happen and you never lose track.
+   #+begin_src bash
+   pushd /tmp/my-dir
+     echo $PWD
+   popd
+   #+end_src
+
+   Here's an alternative way, that at least makes sure that you close
+   all pushd with a popd.
+
+   Starting a new shell and cd-ing , will make all commands in that
+   subshell be in that directory, and will come back to the old
+   directory after closing the new spawned shell.
+
+   #+begin_src bash
+   (cd /tmp/my-dir
+     ls
+   )
+   #+end_src
 * links                                                            :noexport:
   - https://tldp.org/LDP/abs/html/
   - Gary Bernhardt. The Unix Chainsaw
@@ -711,6 +735,7 @@
   - https://github.com/liljencrantz/crush
   - https://github.com/artyom-poptsov/metabash
   - perl/python/ruby and migrate from bash to X using backticks
+  - https://www.nushell.sh/
 * make scripts compatible between them                             :noexport:
 ** create scripts that replace shell commands and do the same.
    to be able to run a zsh script with noglobs in bash, here's
