@@ -23,10 +23,11 @@
   enjoy the content in less time.
 
   You probably have some amount of sh/bash/zsh in your stack that
-  probably started as 1 off scripts, and later on started growing and
-  were copypasted everywhere in your pipelines, or your coworkers use
-  for their own use (with some variations), etc. Those scripts are
-  very difficult to kill and they have a very high mutation rate.
+  probably started as 1 off scripts, and probably later on started
+  growing and being copypasted everywhere in your pipelines, or your
+  coworkers use for their own use (with some variations), etc. Those
+  scripts are very difficult to kill and they have a very high
+  mutation rate.
 * shell
   No matter if you use Linux, Mac, or Win, you should be living most
   of the time in a shell to enjoy the content shown here. Some value
@@ -41,7 +42,8 @@
   snippets are stolen from public repos.
 * bash
 ** Use Shellcheck
-   First, let's start with the low hanging fruit.
+   First, let's get that out of the way. This is low hanging
+   fruit. And you will get the most of this booklet by following it.
 
    A lot of the most common errors we usually make are well known
    ones. And in fact, we all usually fail in similar ways. Bash is
@@ -207,6 +209,27 @@
      die "can't proceed"
    fi
    #+end_src
+** Do work on loop conditions
+   Although not commonly seen, =while= conditions are just plain
+   commands, so you can put other stuff than =[]= tests there.
+
+   Heres's an idiomatic way to iterate through all the arguments of a
+   function while consuming the =$*= array.
+
+   #+begin_src bash
+   while(($#)) ; do
+     #...
+     shift
+   done
+   #+end_src
+
+   And here's a pseudo-repl that keeps shooting one-off commands.
+
+   #+begin_src bash
+   while rlwrap -o -S'>> ' kong runner; do :; done
+   #+end_src
+
+   Note: =:= is a nop builtin in bash.
 ** One Branch Conditionals
    The usual conditionals one sees everywher is =if=.
    #+begin_src bash
