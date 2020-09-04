@@ -240,43 +240,45 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org99ca859">1. Introduction</a></li>
-<li><a href="#org9c45200">2. shell</a></li>
-<li><a href="#org3762e7d">3. Level</a></li>
-<li><a href="#orgcba71f3">4. bash</a>
+<li><a href="#org609484c">1. Introduction</a></li>
+<li><a href="#org6ba40b5">2. shell</a></li>
+<li><a href="#org10abb57">3. Level</a></li>
+<li><a href="#org4a83269">4. bash</a>
 <ul>
-<li><a href="#orgc2e4081">4.1. Use Shellcheck</a></li>
-<li><a href="#org78831a9">4.2. use [[</a></li>
-<li><a href="#org66b0e68">4.3. eval?</a></li>
+<li><a href="#orgc98f508">4.1. Use Shellcheck</a></li>
+<li><a href="#orge7744e2">4.2. use [[</a></li>
+<li><a href="#org1fcf986">4.3. eval?</a></li>
 </ul>
 </li>
-<li><a href="#orgaeb9c89">5. Basics</a>
+<li><a href="#org07b301a">5. Basics</a>
 <ul>
-<li><a href="#org60ce426">5.1. Overview</a></li>
-<li><a href="#org9079075">5.2. Booleans and Conditionals</a></li>
-<li><a href="#org794c31a">5.3. Functions</a></li>
-<li><a href="#org5fc1b8f">5.4. Variables</a></li>
-<li><a href="#orgfc58474">5.5. Interpolation</a></li>
-<li><a href="#org79cfb81">5.6. use return values for conditionals</a></li>
-<li><a href="#orgaa06b71">5.7. Do work on loop conditions</a></li>
-<li><a href="#orgd810073">5.8. One Branch Conditionals</a></li>
+<li><a href="#org5b8d650">5.1. Overview</a></li>
+<li><a href="#org0f4c356">5.2. Booleans and Conditionals</a></li>
+<li><a href="#org7222980">5.3. Functions</a></li>
+<li><a href="#orge75c3b5">5.4. Variables</a></li>
+<li><a href="#orgb239faa">5.5. Interpolation</a></li>
+<li><a href="#orgd35ea51">5.6. dispatch functions using args</a></li>
+<li><a href="#org5399fd6">5.7. command_not_found_handle</a></li>
+<li><a href="#org5e5488c">5.8. Return Values for Conditionals</a></li>
+<li><a href="#org3d0ae7c">5.9. Do work on loop conditions</a></li>
+<li><a href="#orgfe5ce72">5.10. One Branch Conditionals</a></li>
 </ul>
 </li>
-<li><a href="#orge4f68c0">6. interactive</a>
+<li><a href="#org8291ed7">6. interactive</a>
 <ul>
-<li><a href="#orgd1e0d69">6.1. Save your small scripts</a></li>
-<li><a href="#org6a5f27f">6.2. Increased Interactivity</a></li>
-<li><a href="#org26c1609">6.3. Aliases</a></li>
-<li><a href="#org0829f7d">6.4. functions can generate aliases</a></li>
-<li><a href="#org048e1d6">6.5. Override (advise) common functions</a></li>
+<li><a href="#orgb67c762">6.1. Save your small scripts</a></li>
+<li><a href="#orgfbc4e7b">6.2. Increased Interactivity</a></li>
+<li><a href="#org2d4334f">6.3. Aliases</a></li>
+<li><a href="#orga9a56e2">6.4. functions can generate aliases</a></li>
+<li><a href="#org08da3fa">6.5. Override (advise?) common functions</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org99ca859" class="outline-2">
-<h2 id="org99ca859"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-org609484c" class="outline-2">
+<h2 id="org609484c"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This booklet is intended to be a catalog of tricks and techniques
@@ -295,8 +297,8 @@ mutation rate.
 </p>
 </div>
 </div>
-<div id="outline-container-org9c45200" class="outline-2">
-<h2 id="org9c45200"><span class="section-number-2">2</span> shell</h2>
+<div id="outline-container-org6ba40b5" class="outline-2">
+<h2 id="org6ba40b5"><span class="section-number-2">2</span> shell</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 No matter if you use Linux, Mac, or Win, you should be living most
@@ -311,8 +313,8 @@ are compatible for the most part.
 </p>
 </div>
 </div>
-<div id="outline-container-org3762e7d" class="outline-2">
-<h2 id="org3762e7d"><span class="section-number-2">3</span> Level</h2>
+<div id="outline-container-org10abb57" class="outline-2">
+<h2 id="org10abb57"><span class="section-number-2">3</span> Level</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 These examples are based on non-trivial real world code I've written
@@ -321,12 +323,12 @@ snippets are stolen from public repos.
 </p>
 </div>
 </div>
-<div id="outline-container-orgcba71f3" class="outline-2">
-<h2 id="orgcba71f3"><span class="section-number-2">4</span> bash</h2>
+<div id="outline-container-org4a83269" class="outline-2">
+<h2 id="org4a83269"><span class="section-number-2">4</span> bash</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-orgc2e4081" class="outline-3">
-<h3 id="orgc2e4081"><span class="section-number-3">4.1</span> Use Shellcheck</h3>
+<div id="outline-container-orgc98f508" class="outline-3">
+<h3 id="orgc98f508"><span class="section-number-3">4.1</span> Use Shellcheck</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 First, let's get that out of the way. This is low hanging
@@ -370,8 +372,8 @@ Shellcheck is available on most distros, so it's just an <code>apt</code>,
 </div>
 </div>
 
-<div id="outline-container-org78831a9" class="outline-3">
-<h3 id="org78831a9"><span class="section-number-3">4.2</span> use [[</h3>
+<div id="outline-container-orge7744e2" class="outline-3">
+<h3 id="orge7744e2"><span class="section-number-3">4.2</span> use [[</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 Unless you want your script to be POSIX compliant, use <code>[[</code> instead
@@ -399,8 +401,9 @@ Ref: <a href="https://lists.gnu.org/archive/html/help-bash/2014-06/msg00013.html
 </p>
 </div>
 </div>
-<div id="outline-container-org66b0e68" class="outline-3">
-<h3 id="org66b0e68"><span class="section-number-3">4.3</span> eval?</h3>
+
+<div id="outline-container-org1fcf986" class="outline-3">
+<h3 id="org1fcf986"><span class="section-number-3">4.3</span> eval?</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 When you have mostly small functions that are mostly pure, you
@@ -408,9 +411,39 @@ compose them like you'd do in any other language.
 </p>
 
 <p>
-In the following snippet, we are in release script. Some step
+In the following snippet, we are in a release script. Some step
 builds a package inside an image, another step tests a package
 already built.
+</p>
+
+<p>
+A nice way to build ubuntus, for example, is to add an ARG to the
+Dockerfile so we can build several ubuntu versions using the same
+file.
+</p>
+
+<p>
+It'd look something like this:
+</p>
+<div class="org-src-container">
+<pre class="src src-Dockerfile">ARG VERSION
+FROM ubuntu:$VERSION
+
+RUN apt-get ...
+...
+</pre>
+</div>
+
+<p>
+We build that image and do all the building inside it, mounting a
+volume shared with our host, so we can extract our <code>.deb</code> file
+easily.
+</p>
+
+<p>
+After that, you probably want to do some smoke tests on the
+package, so the idea would be to install the <code>.deb</code> file in a fresh
+ubuntu image.
 </p>
 
 <p>
@@ -439,19 +472,19 @@ in a sed.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash">test_kong <span style="font-style: italic;">"$PACKAGE_PATH"</span> $(awk <span style="font-style: italic;">'/^FROM /{print $2; exit}'</span> $<span style="font-weight: bold; font-style: italic;">LOCAL_PATH</span>/$(get_dockerfile_for $<span style="font-weight: bold; font-style: italic;">DISTRO</span>) | sed -e <span style="font-style: italic;">"s/\$VERSION/$VERSION/"</span>)
+<pre class="src src-bash">test_release <span style="font-style: italic;">"$PACKAGE_PATH"</span> $(awk <span style="font-style: italic;">'/^FROM /{print $2; exit}'</span> $<span style="font-weight: bold; font-style: italic;">LOCAL_PATH</span>/$(get_dockerfile_for $<span style="font-weight: bold; font-style: italic;">DISTRO</span>) | sed -e <span style="font-style: italic;">"s/\$VERSION/$VERSION/"</span>)
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgaeb9c89" class="outline-2">
-<h2 id="orgaeb9c89"><span class="section-number-2">5</span> Basics</h2>
+<div id="outline-container-org07b301a" class="outline-2">
+<h2 id="org07b301a"><span class="section-number-2">5</span> Basics</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-org60ce426" class="outline-3">
-<h3 id="org60ce426"><span class="section-number-3">5.1</span> Overview</h3>
+<div id="outline-container-org5b8d650" class="outline-3">
+<h3 id="org5b8d650"><span class="section-number-3">5.1</span> Overview</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 In this section, we're covering the parts of the basics that are
@@ -461,8 +494,8 @@ languages.
 </div>
 </div>
 
-<div id="outline-container-org9079075" class="outline-3">
-<h3 id="org9079075"><span class="section-number-3">5.2</span> Booleans and Conditionals</h3>
+<div id="outline-container-org0f4c356" class="outline-3">
+<h3 id="org0f4c356"><span class="section-number-3">5.2</span> Booleans and Conditionals</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 In any shell, <code>foo &amp;&amp; bar</code> will execute <code>bar</code> only if <code>foo</code>
@@ -473,8 +506,8 @@ other values are false.
 </div>
 </div>
 
-<div id="outline-container-org794c31a" class="outline-3">
-<h3 id="org794c31a"><span class="section-number-3">5.3</span> Functions</h3>
+<div id="outline-container-org7222980" class="outline-3">
+<h3 id="org7222980"><span class="section-number-3">5.3</span> Functions</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 Functions are functions. They receive arguments, and they return a
@@ -482,7 +515,7 @@ value.
 </p>
 
 <p>
-The special thing about functions in bash is that they also can use
+The special thing about functions in shell is that they also can use
 the file descriptors of the process. That means that they "inherit"
 STDIN, STDOUT, STDERR (and maybe more).
 </p>
@@ -493,23 +526,52 @@ Use them.
 
 <p>
 Another point is that function names can be passed as parameters,
-because they are strings.
+because they are passed as strings, but you can call them inside as
+functions again.
 </p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">f</span>() {
+  $<span style="font-weight: bold; font-style: italic;">1</span> hi
+}
+
+f echo
+f touch <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">will create a file 'hi'</span>
+</pre>
 </div>
 </div>
-<div id="outline-container-org5fc1b8f" class="outline-3">
-<h3 id="org5fc1b8f"><span class="section-number-3">5.4</span> Variables</h3>
+</div>
+
+<div id="outline-container-orge75c3b5" class="outline-3">
+<h3 id="orge75c3b5"><span class="section-number-3">5.4</span> Variables</h3>
 <div class="outline-text-3" id="text-5-4">
+<p>
+By default variables are global, to a file. No matter if you assign
+them for the first time inside a function, or at the top leve.
+</p>
 <div class="org-src-container">
 <pre class="src src-bash"><span style="font-weight: bold; font-style: italic;">foo</span>=3
 <span style="font-weight: bold; font-style: italic;">bar</span>=$<span style="font-weight: bold; font-style: italic;">foo</span>
+<span style="font-weight: bold;">f</span>() {
+  <span style="font-weight: bold;">echo</span> $<span style="font-weight: bold; font-style: italic;">foo</span>
+}
+f
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">f</span>() {
+  <span style="font-weight: bold; font-style: italic;">bar</span>=1
+}
+f
+<span style="font-weight: bold;">echo</span> $<span style="font-weight: bold; font-style: italic;">bar</span>
 </pre>
 </div>
 
 <p>
-You make a variable local to a function with <code>local</code>
+You make a variable local to a function with <code>local</code>. Use it as
+much as you can (kinda obvious).
 </p>
-
 <div class="org-src-container">
 <pre class="src src-bash"><span style="font-weight: bold;">myfun</span>() {
   local bar
@@ -525,9 +587,21 @@ myfun
 </div>
 </div>
 </div>
-<div id="outline-container-orgfc58474" class="outline-3">
-<h3 id="orgfc58474"><span class="section-number-3">5.5</span> Interpolation</h3>
+<div id="outline-container-orgb239faa" class="outline-3">
+<h3 id="orgb239faa"><span class="section-number-3">5.5</span> Interpolation</h3>
 <div class="outline-text-3" id="text-5-5">
+<p>
+We previously saw that functions can be passed around as strings,
+and be called later on.
+</p>
+
+<p>
+Something that might not be obvious is that the string can be
+created from shorter strings, and that allows for an extra
+flexibility, that comes with its own dangers, but it's a very
+useful pattern to dispatch functions based on user input or
+function outputs.
+</p>
 <div class="org-src-container">
 <pre class="src src-bash"><span style="font-weight: bold; font-style: italic;">l</span>=l
 <span style="font-weight: bold; font-style: italic;">s</span>=s
@@ -536,9 +610,105 @@ $<span style="font-weight: bold; font-style: italic;">l</span>$<span style="font
 </div>
 </div>
 </div>
-<div id="outline-container-org79cfb81" class="outline-3">
-<h3 id="org79cfb81"><span class="section-number-3">5.6</span> use return values for conditionals</h3>
+
+<div id="outline-container-orgd35ea51" class="outline-3">
+<h3 id="orgd35ea51"><span class="section-number-3">5.6</span> dispatch functions using args</h3>
 <div class="outline-text-3" id="text-5-6">
+<p>
+A nice usage of the previous technique is using user's input as a
+dispatching method.
+</p>
+
+<p>
+You've probably seen this pattern already:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">while</span> [[ $<span style="font-weight: bold; font-style: italic;">#</span> -gt 0 ]]; <span style="font-weight: bold;">do</span>
+
+<span style="font-weight: bold;">case</span> $<span style="font-weight: bold; font-style: italic;">1</span><span style="font-weight: bold;"> in</span>
+  foo)
+    foo
+    ;;
+  *)
+    <span style="font-weight: bold;">exit</span> 1
+    ;;
+<span style="font-weight: bold;">esac</span>
+<span style="font-weight: bold;">shift</span>
+<span style="font-weight: bold;">done</span>
+</pre>
+</div>
+
+<p>
+And it is useful for its own good, and flexible.
+</p>
+
+<p>
+But for some simpler cases, we can dispatch based on the variable
+itself:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">cmd_foo</span>() {
+ do-something
+}
+
+cmd_$<span style="font-weight: bold; font-style: italic;">1</span>
+</pre>
+</div>
+
+<p>
+The problem with this is that in case we supply a <code>$1</code> that doesn't
+map to any <code>cmd_$1</code> we'll get something like
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">bash: cmd_notexisting: command not found
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5399fd6" class="outline-3">
+<h3 id="org5399fd6"><span class="section-number-3">5.7</span> command_not_found_handle</h3>
+<div class="outline-text-3" id="text-5-7">
+<p>
+Here's a detail on a kinda obscure bash (only bash) feature.
+</p>
+
+<p>
+You can set a hook that will be called when bash tries to run a
+command and it doesn't find it.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">command_not_found_handle</span>() {
+  <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"$1 is not a correct command. Cmds allowed:"</span>
+  <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"$(typeset -F | grep cmd_ | sed -e 's/.*cmd_/cmd_/')"</span>
+}
+
+<span style="font-weight: bold;">cmd_foo</span>() {
+  <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"foo"</span>
+}
+
+<span style="font-weight: bold;">cmd_baz</span>() {
+  <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"baz"</span>
+}
+cmd_bar
+</pre>
+</div>
+
+<p>
+you can unset the function <code>command_not_found_handle</code> to go back to
+the normal behavior.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org5e5488c" class="outline-3">
+<h3 id="org5e5488c"><span class="section-number-3">5.8</span> Return Values for Conditionals</h3>
+<div class="outline-text-3" id="text-5-8">
 <p>
 <code>if</code> 's conditions can be bound to the return values of
 commands. That's a known thing, but lots of code you see around
@@ -579,12 +749,14 @@ finding your way around the output strings.
 </div>
 </div>
 </div>
-<div id="outline-container-orgaa06b71" class="outline-3">
-<h3 id="orgaa06b71"><span class="section-number-3">5.7</span> Do work on loop conditions</h3>
-<div class="outline-text-3" id="text-5-7">
+
+<div id="outline-container-org3d0ae7c" class="outline-3">
+<h3 id="org3d0ae7c"><span class="section-number-3">5.9</span> Do work on loop conditions</h3>
+<div class="outline-text-3" id="text-5-9">
 <p>
-Although not commonly seen, <code>while</code> conditions are just plain
-commands, so you can put other stuff than <code>[]</code> tests there.
+Although not commonly seen used (and there might be a reason for
+it, who knows), <code>while</code> conditions are just plain commands, so you
+can put other stuff than <code>[]</code> tests there.
 </p>
 
 <p>
@@ -614,11 +786,11 @@ Note: <code>:</code> is a nop builtin in bash.
 </p>
 </div>
 </div>
-<div id="outline-container-orgd810073" class="outline-3">
-<h3 id="orgd810073"><span class="section-number-3">5.8</span> One Branch Conditionals</h3>
-<div class="outline-text-3" id="text-5-8">
+<div id="outline-container-orgfe5ce72" class="outline-3">
+<h3 id="orgfe5ce72"><span class="section-number-3">5.10</span> One Branch Conditionals</h3>
+<div class="outline-text-3" id="text-5-10">
 <p>
-The usual conditionals one sees everywher is <code>if</code>.
+The usual conditionals one sees everywhere look like <code>if</code>.
 </p>
 <div class="org-src-container">
 <pre class="src src-bash"><span style="font-weight: bold;">if</span> [[ some-condition ]]; <span style="font-weight: bold;">then</span>
@@ -632,7 +804,7 @@ This is all good and fine, but in the same vein of using the least
 powerful construct for each task, it's nice to think of the one way
 conditionals in the form of <code>&amp;&amp;</code> and <code>||</code> as a way to explicitly
 say that we don't want to do anything else when the condition is
-not met.
+not met. It's a hint to the reader.
 </p>
 
 <div class="org-src-container">
@@ -660,12 +832,12 @@ where it explains it for arrays in higher level languages like ruby:
 </div>
 </div>
 
-<div id="outline-container-orge4f68c0" class="outline-2">
-<h2 id="orge4f68c0"><span class="section-number-2">6</span> interactive</h2>
+<div id="outline-container-org8291ed7" class="outline-2">
+<h2 id="org8291ed7"><span class="section-number-2">6</span> interactive</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-orgd1e0d69" class="outline-3">
-<h3 id="orgd1e0d69"><span class="section-number-3">6.1</span> Save your small scripts</h3>
+<div id="outline-container-orgb67c762" class="outline-3">
+<h3 id="orgb67c762"><span class="section-number-3">6.1</span> Save your small scripts</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 Rome wasn't built in a day, and like having a journal log, most of
@@ -676,13 +848,14 @@ reusable.
 
 <p>
 Save your scripts into files early on, instead of crunching
-everything in the repl.
+everything in the repl. learn how to use a decent editor that
+shortens the feedback cycle as much as possible.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org6a5f27f" class="outline-3">
-<h3 id="org6a5f27f"><span class="section-number-3">6.2</span> Increased Interactivity</h3>
+<div id="outline-container-orgfbc4e7b" class="outline-3">
+<h3 id="orgfbc4e7b"><span class="section-number-3">6.2</span> Increased Interactivity</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 Knowing your shell's shortcuts for interactive use is a must. The
@@ -755,9 +928,8 @@ ones.
 </div>
 </div>
 
-
-<div id="outline-container-org26c1609" class="outline-3">
-<h3 id="org26c1609"><span class="section-number-3">6.3</span> Aliases</h3>
+<div id="outline-container-org2d4334f" class="outline-3">
+<h3 id="org2d4334f"><span class="section-number-3">6.3</span> Aliases</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
 Aliases are very simple substitutions of commands for a sequence of
@@ -775,8 +947,8 @@ Now let's move on to the interesting stuff.
 </div>
 </div>
 
-<div id="outline-container-org0829f7d" class="outline-3">
-<h3 id="org0829f7d"><span class="section-number-3">6.4</span> functions can generate aliases</h3>
+<div id="outline-container-orga9a56e2" class="outline-3">
+<h3 id="orga9a56e2"><span class="section-number-3">6.4</span> functions can generate aliases</h3>
 <div class="outline-text-3" id="text-6-4">
 <p>
 Aliases live in a global namespace for the shell, so no matter
@@ -859,12 +1031,29 @@ alias.</li>
 </p>
 </div>
 </div>
-<div id="outline-container-org048e1d6" class="outline-3">
-<h3 id="org048e1d6"><span class="section-number-3">6.5</span> Override (advise) common functions</h3>
+<div id="outline-container-org08da3fa" class="outline-3">
+<h3 id="org08da3fa"><span class="section-number-3">6.5</span> Override (advise?) common functions</h3>
 <div class="outline-text-3" id="text-6-5">
+<p>
+Overriding commands is generally a bad practice as it violates the
+principle of least surprise, but there might be occasions (mostly
+in your local machine) where you can integrate awesome finetunnings
+to your toolbelt.
+</p>
+
+<p>
+Here we're going to get the original docker binary file
+location. After that we declare a function called <code>docker</code> that
+will proxy the parameters to the original <code>docker</code> program UNLESS
+you're calling <code>docker run</code>. In that case, we're injecting a mouted
+volume that mounts <code>/root/.bash_history</code> of the container to a file
+hosted in the host (duh). That's a pretty cool way of keeping a
+history of your recent commands in your containers, no matter how
+many times you start and kill them.
+</p>
+
 <div class="org-src-container">
-<pre class="src src-bash">
-<span style="font-weight: bold; font-style: italic;">DOCKER_ORIG</span>=$(which docker)
+<pre class="src src-bash"><span style="font-weight: bold; font-style: italic;">DOCKER_ORIG</span>=$(which docker)
 <span style="font-weight: bold;">docker</span> () {
     <span style="font-weight: bold;">if</span> [[ $<span style="font-weight: bold; font-style: italic;">1</span> == <span style="font-style: italic;">"run"</span> ]]; <span style="font-weight: bold;">then</span>
         <span style="font-weight: bold;">shift</span>
@@ -873,9 +1062,17 @@ alias.</li>
         $<span style="font-weight: bold; font-style: italic;">DOCKER_ORIG</span> <span style="font-style: italic;">"$@"</span>
     <span style="font-weight: bold;">fi</span>
 }
-
 </pre>
 </div>
+
+<p>
+I'm particularly fond of this trick, as it saved me tons of
+typing. But at a personal level, it was mindblowing that sharing
+this around the internet caused the most disparity of opinions.
+Also, I recently read the greate book "Docker in Practice" by <a href="https://github.com/ianmiell">Ian
+Miell</a> and there's a snippet that is 99.9% like the one I
+created myself. That was a very cool moment.
+</p>
 </div>
 </div>
 </div>
