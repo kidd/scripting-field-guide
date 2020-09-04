@@ -87,13 +87,35 @@
    [ a = b -a "$(echo foo >&2)” ]
    #+end_src
    Ref: https://lists.gnu.org/archive/html/help-bash/2014-06/msg00013.html
+
 ** eval?
    When you have mostly small functions that are mostly pure, you
    compose them like you'd do in any other language.
 
-   In the following snippet, we are in release script. Some step
+   In the following snippet, we are in a release script. Some step
    builds a package inside an image, another step tests a package
    already built.
+
+   A nice way to build ubuntus, for example, is to add an ARG to the
+   Dockerfile so we can build several ubuntu versions using the same
+   file.
+
+   It'd look something like this:
+   #+begin_src Dockerfile
+   ARG VERSION
+   FROM ubuntu:$VERSION
+
+   RUN apt-get ...
+   ...
+   #+end_src
+
+   We build that image and do all the building inside it, mounting a
+   volume shared with our host, so we can extract our =.deb= file
+   easily.
+
+   After that, you probably want to do some smoke tests on the
+   package, so the idea would be to install the =.deb= file in a fresh
+   ubuntu image.
 
    Let's pick the same base image we picked to build the package.
    #+begin_src bash
@@ -114,7 +136,7 @@
    in a sed.
 
    #+begin_src bash
-    test_kong "$PACKAGE_PATH" $(awk '/^FROM /{print $2; exit}' $LOCAL_PATH/$(get_dockerfile_for $DISTRO) | sed -e "s/\$VERSION/$VERSION/")
+    test_release "$PACKAGE_PATH" $(awk '/^FROM /{print $2; exit}' $LOCAL_PATH/$(get_dockerfile_for $DISTRO) | sed -e "s/\$VERSION/$VERSION/")
    #+end_src
 
 * Basics
@@ -134,22 +156,56 @@
    Functions are functions. They receive arguments, and they return a
    value.
 
-   The special thing about functions in bash is that they also can use
+   The special thing about functions in shell is that they also can use
    the file descriptors of the process. That means that they "inherit"
    STDIN, STDOUT, STDERR (and maybe more).
 
    Use them.
 
    Another point is that function names can be passed as parameters,
-   because they are strings.
+   because they are passed as strings, but you can call them inside as
+   functions again.
+
+   #+begin_src bash
+   f() {
+     $1 hi
+   }
+
+   f echo
+   f touch # will create a file 'hi'
+   #+end_src
+
+   #+RESULTS:
+   : hi
+
 ** Variables
+   By default variables are global, to a file. No matter if you assign
+   them for the first time inside a function, or at the top leve.
    #+begin_src bash
    foo=3
    bar=$foo
+   f() {
+     echo $foo
+   }
+   f
    #+end_src
 
-   You make a variable local to a function with =local=
+   #+RESULTS:
+   : 3
 
+   #+begin_src bash
+   f() {
+     bar=1
+   }
+   f
+   echo $bar
+   #+end_src
+
+   #+RESULTS:
+   : 1
+
+   You make a variable local to a function with =local=. Use it as
+   much as you can (kinda obvious).
    #+begin_src bash
    myfun() {
      local bar
@@ -168,6 +224,14 @@
    | 3 |
    | 4 |
 ** Interpolation
+   We previously saw that functions can be passed around as strings,
+   and be called later on.
+
+   Something that might not be obvious is that the string can be
+   created from shorter strings, and that allows for an extra
+   flexibility, that comes with its own dangers, but it's a very
+   useful pattern to dispatch functions based on user input or
+   function outputs.
    #+begin_src bash
    l=l
    s=s
@@ -179,7 +243,75 @@
    | book.html~ |
    | book.org   |
    | readme.org |
-** use return values for conditionals
+
+** dispatch functions using args
+   A nice usage of the previous technique is using user's input as a
+   dispatching method.
+
+   You've probably seen this pattern already:
+
+   #+begin_src bash
+   while [[ $# -gt 0 ]]; do
+
+   case $1 in
+     foo)
+       foo
+       ;;
+     *)
+       exit 1
+       ;;
+   esac
+   shift
+   done
+   #+end_src
+
+   And it is useful for its own good, and flexible.
+
+   But for some simpler cases, we can dispatch based on the variable
+   itself:
+
+   #+begin_src bash
+   cmd_foo() {
+    do-something
+   }
+
+   cmd_$1
+   #+end_src
+
+   The problem with this is that in case we supply a =$1= that doesn't
+   map to any =cmd_$1= we'll get something like
+
+   #+begin_src bash
+   bash: cmd_notexisting: command not found
+   #+end_src
+
+** command_not_found_handle
+   Here's a detail on a kinda obscure bash (only bash) feature.
+
+   You can set a hook that will be called when bash tries to run a
+   command and it doesn't find it.
+
+   #+begin_src bash
+   command_not_found_handle() {
+     echo "$1 is not a correct command. Cmds allowed:"
+     echo "$(typeset -F | grep cmd_ | sed -e 's/.*cmd_/cmd_/')"
+   }
+
+   cmd_foo() {
+     echo "foo"
+   }
+
+   cmd_baz() {
+     echo "baz"
+   }
+   cmd_bar
+   #+end_src
+
+   you can unset the function =command_not_found_handle= to go back to
+   the normal behavior.
+
+
+** Return Values for Conditionals
    =if= 's conditions can be bound to the return values of
    commands. That's a known thing, but lots of code you see around
    rely on =[[]]== to test the return values of commands/functions
@@ -209,9 +341,11 @@
      die "can't proceed"
    fi
    #+end_src
+
 ** Do work on loop conditions
-   Although not commonly seen, =while= conditions are just plain
-   commands, so you can put other stuff than =[]= tests there.
+   Although not commonly seen used (and there might be a reason for
+   it, who knows), =while= conditions are just plain commands, so you
+   can put other stuff than =[]= tests there.
 
    Heres's an idiomatic way to iterate through all the arguments of a
    function while consuming the =$*= array.
@@ -231,7 +365,7 @@
 
    Note: =:= is a nop builtin in bash.
 ** One Branch Conditionals
-   The usual conditionals one sees everywher is =if=.
+   The usual conditionals one sees everywhere look like =if=.
    #+begin_src bash
    if [[ some-condition ]]; then
      echo "yes"
@@ -242,7 +376,7 @@
    powerful construct for each task, it's nice to think of the one way
    conditionals in the form of =&&= and =||= as a way to explicitly
    say that we don't want to do anything else when the condition is
-   not met.
+   not met. It's a hint to the reader.
 
    #+begin_src bash
    some-condition || {
@@ -269,7 +403,8 @@
    reusable.
 
    Save your scripts into files early on, instead of crunching
-   everything in the repl.
+   everything in the repl. learn how to use a decent editor that
+   shortens the feedback cycle as much as possible.
 
 ** Increased Interactivity
    Knowing your shell's shortcuts for interactive use is a must. The
@@ -288,7 +423,6 @@
    | c-n    | next-line                     |
    | a-.    | insert last agument           |
    | a-/    | dabbrev-expand                |
-
 
 ** Aliases
    Aliases are very simple substitutions of commands for a sequence of
@@ -399,9 +533,22 @@
    #   ls
 
      #+end_src
-** Override (advise) common functions
-   #+begin_src bash
+** Override (advise?) common functions
+   Overriding commands is generally a bad practice as it violates the
+   principle of least surprise, but there might be occasions (mostly
+   in your local machine) where you can integrate awesome finetunnings
+   to your toolbelt.
 
+   Here we're going to get the original docker binary file
+   location. After that we declare a function called =docker= that
+   will proxy the parameters to the original =docker= program UNLESS
+   you're calling =docker run=. In that case, we're injecting a mouted
+   volume that mounts =/root/.bash_history= of the container to a file
+   hosted in the host (duh). That's a pretty cool way of keeping a
+   history of your recent commands in your containers, no matter how
+   many times you start and kill them.
+
+   #+begin_src bash
    DOCKER_ORIG=$(which docker)
    docker () {
        if [[ $1 == "run" ]]; then
@@ -411,8 +558,15 @@
            $DOCKER_ORIG "$@"
        fi
    }
-
    #+end_src
+
+   I'm particularly fond of this trick, as it saved me tons of
+   typing. But at a personal level, it was mindblowing that sharing
+   this around the internet caused the most disparity of opinions.
+   Also, I recently read the greate book "Docker in Practice" by [[https://github.com/ianmiell][Ian
+   Miell]] and there's a snippet that is 99.9% like the one I
+   created myself. That was a very cool moment.
+
 * zsh                                                              :noexport:
 ** global aliases make a forth-y shell
 ** globbing
@@ -802,6 +956,7 @@
   - https://github.com/artyom-poptsov/metabash
   - perl/python/ruby and migrate from bash to X using backticks
   - https://www.nushell.sh/
+  - bocker
 * make scripts compatible between them                             :noexport:
 ** create scripts that replace shell commands and do the same.
    to be able to run a zsh script with noglobs in bash, here's
