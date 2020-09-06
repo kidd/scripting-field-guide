@@ -461,17 +461,15 @@
 
    - a make a shortcut to the current directory.
    #+begin_src bash
-   function a() { alias $1=cd\ $PWD; }
-   mkdir -p /tmp/foo
-   cd /tmp/my-very-long-thing
-   a foo
-   cd /
-   foo
-   echo $PWD
-   #+end_src
+     function a() { alias $1=cd\ $PWD; }
 
-   #+RESULTS:
-   : /tmp/my-very-long-thing
+     mkdir -p /tmp/foo
+     cd /tmp/my-very-long-thing
+     a vlt
+     cd /
+     vlt
+     echo $PWD   # /tmp/my-very-long-thing
+   #+end_src
 
    - unhist. functions can create aliases, and functions can receive
      functions as parameters (as a string (function name)), so we can
@@ -531,8 +529,7 @@
    #   unhist ls
    #   muter ls
    #   ls
-
-     #+end_src
+   # #+end_src
 ** Override (advise?) common functions
    Overriding commands is generally a bad practice as it violates the
    principle of least surprise, but there might be occasions (mostly
@@ -699,11 +696,7 @@
    fi
    #+end_src
    use =command curl= to force the command, not the alias or anything
-* Docker                                                           :noexport:
-** Use volumes as a conveyor belt
-** mount .bashrc to have a shared history
-** monkeypatch docker run command to inject .bashrc shared file
-** Randomize ports. or use docker port
+
 * patterns                                                         :noexport:
 ** undestand <(foo) and >(foo)
 ** use xargs
@@ -945,6 +938,7 @@
   - https://www.youtube.com/watch?v=yD2ekOEP9sU
   - http://catern.com/posts/pipes.html
   - https://ebzzry.io/en/zsh-tips-1/
+  - https://github.com/ssledz/bash-fun
 * from shell to lisp and everything in between                     :noexport:
   - https://github.com/oilshell/oil
   - https://www.eigenbahn.com/2020/07/08/painless-emacs-remote-shells
