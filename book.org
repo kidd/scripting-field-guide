@@ -357,10 +357,12 @@
    done
    #+end_src
 
-   And here's a pseudo-repl that keeps shooting one-off commands.
+   And here's a pseudo-repl that keeps shooting one-off commands. This
+   will keep shooting =tr= commands to whatever strings you give it,
+   with the usual rlwrap goodies.
 
    #+begin_src bash
-   while rlwrap -o -S'>> ' kong runner; do :; done
+   while rlwrap -o -S'>> ' tr a-z A-Z ; do :; done
    #+end_src
 
    Note: =:= is a nop builtin in bash.
@@ -550,7 +552,7 @@
    docker () {
        if [[ $1 == "run" ]]; then
            shift
-           $DOCKER_ORIG run -v $HOME/.gojira-kongs/.gojira-home/.bash_history:/root/.bash_history "$@"
+           $DOCKER_ORIG run -v $HOME/.shared_bash_history:/root/.bash_history "$@"
        else
            $DOCKER_ORIG "$@"
        fi
@@ -836,7 +838,7 @@
    # git_clone_tmp() {
    #   local repo=${1:?repo is required}
    #   local ref=${2:?ref is required}
-   #   tmpath=$(mktemp -d "/tmp/kong-$repo-XXXXX")
+   #   tmpath=$(mktemp -d "/tmp/cloned-$repo-XXXXX")
    #   on_exit "rm -rf $tmpath"
    #   git clone -b ${ref} https://"$GITHUB_TOKEN"@github.com/my-org/${repo}.git $tmpath
    # }
@@ -930,7 +932,8 @@
 
    mute ls
    #+end_src
-* links                                                            :noexport:
+* links
+  - https://mywiki.wooledge.org/BashPitfalls
   - https://tldp.org/LDP/abs/html/
   - Gary Bernhardt. The Unix Chainsaw
   - https://news.ycombinator.com/item?id=23765123
