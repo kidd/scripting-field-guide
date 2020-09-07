@@ -20,7 +20,8 @@
   This booklet is intended to be a catalog of tricks and techniques
   you should be using if you're doing any sort of scripting. I'll try
   to keep the rethoric to the very minimal because that way you can
-  enjoy the content in less time.
+  enjoy the content in less time. The git repo is at
+  https://github.com/kidd/scripting-field-guide/.
 
   You probably have some amount of sh/bash/zsh in your stack that
   probably started as 1 off scripts, and probably later on started
