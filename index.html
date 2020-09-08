@@ -240,46 +240,99 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3182671">1. Introduction</a></li>
-<li><a href="#org52728d3">2. shell</a></li>
-<li><a href="#orgdca7c4e">3. Level</a></li>
-<li><a href="#orgcab1cf2">4. bash</a>
+<li><a href="#org032e6ff">1. Introduction</a></li>
+<li><a href="#org24c7002">2. shell</a></li>
+<li><a href="#org86b29f7">3. Level</a></li>
+<li><a href="#org9a42cf6">4. bash</a>
 <ul>
-<li><a href="#org5c11d09">4.1. Use Shellcheck</a></li>
-<li><a href="#org9686d13">4.2. use [[</a></li>
-<li><a href="#orgcbaa38b">4.3. eval?</a></li>
+<li><a href="#org908abd7">4.1. Use Shellcheck</a></li>
+<li><a href="#orgaa2dd9e">4.2. use [[</a></li>
+<li><a href="#org90f94a3">4.3. eval?</a></li>
 </ul>
 </li>
-<li><a href="#org5ab6fd5">5. Basics</a>
+<li><a href="#org8ade7b2">5. Basics</a>
 <ul>
-<li><a href="#org3cc93ab">5.1. Overview</a></li>
-<li><a href="#org751f979">5.2. Booleans and Conditionals</a></li>
-<li><a href="#org8d368e0">5.3. Functions</a></li>
-<li><a href="#org3842de6">5.4. Variables</a></li>
-<li><a href="#orgbdbe715">5.5. Interpolation</a></li>
-<li><a href="#orgbd0e7ba">5.6. dispatch functions using args</a></li>
-<li><a href="#org36f832a">5.7. command_not_found_handle</a></li>
-<li><a href="#orgdc8a23e">5.8. Return Values for Conditionals</a></li>
-<li><a href="#orga0fad46">5.9. Do work on loop conditions</a></li>
-<li><a href="#org61bfd81">5.10. One Branch Conditionals</a></li>
+<li><a href="#org006284d">5.1. Overview</a></li>
+<li><a href="#org12cd846">5.2. Booleans and Conditionals</a></li>
+<li><a href="#org06a189c">5.3. Functions</a></li>
+<li><a href="#orgbbd6f61">5.4. Variables</a></li>
+<li><a href="#org77170ff">5.5. Interpolation</a></li>
+<li><a href="#org0b0ac10">5.6. dispatch functions using args</a></li>
+<li><a href="#org579f5ea">5.7. command_not_found_handle</a></li>
+<li><a href="#org397a06c">5.8. Return Values for Conditionals</a></li>
+<li><a href="#org951b29c">5.9. Do work on loop conditions</a></li>
+<li><a href="#org810d4e7">5.10. One Branch Conditionals</a></li>
 </ul>
 </li>
-<li><a href="#org205284a">6. interactive</a>
+<li><a href="#orgf239c68">6. interactive</a>
 <ul>
-<li><a href="#org3a26b1b">6.1. Save your small scripts</a></li>
-<li><a href="#org62df11f">6.2. Increased Interactivity</a></li>
-<li><a href="#orge265138">6.3. Aliases</a></li>
-<li><a href="#org3aad77f">6.4. functions can generate aliases</a></li>
-<li><a href="#org553c843">6.5. Override (advise?) common functions</a></li>
+<li><a href="#org4c30eb6">6.1. Save your small scripts</a></li>
+<li><a href="#org6e313ad">6.2. Increased Interactivity</a></li>
+<li><a href="#orgb55e48c">6.3. Aliases</a></li>
+<li><a href="#org5e7aa56">6.4. functions can generate aliases</a></li>
+<li><a href="#orge3d1992">6.5. Override (advise?) common functions</a></li>
 </ul>
 </li>
-<li><a href="#orga0d9d96">7. links</a></li>
+<li><a href="#org53bbe21">7. zsh</a>
+<ul>
+<li><a href="#org54c6b5b">7.1. examples of global aliases</a></li>
+<li><a href="#org20a3ba2">7.2. pass commands around</a></li>
+<li><a href="#orgb9dcaf1">7.3. suffix aliases don't have to match a filename</a></li>
+<li><a href="#org5ee6ad2">7.4. noglob</a></li>
+<li><a href="#org13ee665">7.5. make noglob 'transparent' to bash</a></li>
+</ul>
+</li>
+<li><a href="#orgc54939f">8. debugging</a>
+<ul>
+<li><a href="#org9f1c731">8.1. adding <code>bash</code> to a script to debug</a></li>
+<li><a href="#org73ed1a7">8.2. DRY_RUN</a></li>
+</ul>
+</li>
+<li><a href="#org1a58085">9. patterns</a>
+<ul>
+<li><a href="#orgce53b11">9.1. undestand &lt;(foo) and &gt;(foo)</a></li>
+<li><a href="#org2502bab">9.2. use xargs</a></li>
+<li><a href="#org12728a1">9.3. use GNU Parallel</a></li>
+<li><a href="#org01c8db8">9.4. append options in an array during the logic of the program</a></li>
+<li><a href="#org8aa2dc9">9.5. trap</a></li>
+<li><a href="#org7ae5738">9.6. debug by introducing a 'bash'</a></li>
+<li><a href="#orgdd73289">9.7. debug with set -xa</a></li>
+<li><a href="#org7d31c88">9.8. structure the app like a normal app</a>
+<ul>
+<li><a href="#org7073c1c">9.8.1. Fail Fast</a></li>
+<li><a href="#org5dace12">9.8.2. Template</a></li>
+</ul>
+</li>
+<li><a href="#org2ee66c1">9.9. make steps of the process composable</a></li>
+<li><a href="#org158184e">9.10. use $@ when you can</a></li>
+<li><a href="#orgf923348">9.11. source files</a></li>
+<li><a href="#orgf3db497">9.12. Dots and colons allowed in function names!</a></li>
+<li><a href="#org5860b71">9.13. Use Scripts as a Libs</a></li>
+<li><a href="#orgf50726b">9.14. Use tempfiles everywhere</a></li>
+<li><a href="#orgd513113">9.15. Use tempdirs everywhere</a></li>
+<li><a href="#org265026e">9.16. Cleanup tasks with trap</a></li>
+<li><a href="#orge052379">9.17. array of callbacks on_exit</a></li>
+<li><a href="#org4ee1e05">9.18. pass flags as a splatted array</a></li>
+<li><a href="#org061229b">9.19. explore what passes through a pipe with</a></li>
+<li><a href="#org87b84a1">9.20. inherit_errcode</a></li>
+<li><a href="#org225c52f">9.21. redirects</a></li>
+<li><a href="#orgf777f16">9.22. pushd/popd</a></li>
+<li><a href="#org02052a9">9.23. wrap functions</a></li>
+</ul>
+</li>
+<li><a href="#orga3f2e57">10. links</a></li>
+<li><a href="#orge01154a">11. from shell to lisp and everything in between</a></li>
+<li><a href="#orgba41eed">12. make scripts compatible between them</a>
+<ul>
+<li><a href="#orge574e3f">12.1. create scripts that replace shell commands and do the same.</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org3182671" class="outline-2">
-<h2 id="org3182671"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-org032e6ff" class="outline-2">
+<h2 id="org032e6ff"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This booklet is intended to be a catalog of tricks and techniques
@@ -307,14 +360,15 @@ mutation rate.
 </p>
 </div>
 </div>
-<div id="outline-container-org52728d3" class="outline-2">
-<h2 id="org52728d3"><span class="section-number-2">2</span> shell</h2>
+<div id="outline-container-org24c7002" class="outline-2">
+<h2 id="org24c7002"><span class="section-number-2">2</span> shell</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-No matter if you use Linux, Mac, or Win, you should be living most
-of the time in a shell to enjoy the content shown here. Some value
-comes from the automated scripts, and some comes from the daily
-usage and refinement of your helper functions, aliases, etc.
+No matter if you use Linux, Mac, or Windows, you should be living
+most of the time in a shell to enjoy the content shown here. Some
+value comes from the automated scripts, and some comes from the
+daily usage and refinement of your helper functions, aliases,
+etc. in interactive mode.
 </p>
 
 <p>
@@ -323,22 +377,24 @@ are compatible for the most part.
 </p>
 </div>
 </div>
-<div id="outline-container-orgdca7c4e" class="outline-2">
-<h2 id="orgdca7c4e"><span class="section-number-2">3</span> Level</h2>
+<div id="outline-container-org86b29f7" class="outline-2">
+<h2 id="org86b29f7"><span class="section-number-2">3</span> Level</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 These examples are based on non-trivial real world code I've written
 that I haven't seen applied in many places over the net. Some of the
-snippets are stolen from public repos.
+snippets are stolen from public repos and some important stuff might
+be missing if I don't feel I have anything to add to the generally
+available info around.
 </p>
 </div>
 </div>
-<div id="outline-container-orgcab1cf2" class="outline-2">
-<h2 id="orgcab1cf2"><span class="section-number-2">4</span> bash</h2>
+<div id="outline-container-org9a42cf6" class="outline-2">
+<h2 id="org9a42cf6"><span class="section-number-2">4</span> bash</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org5c11d09" class="outline-3">
-<h3 id="org5c11d09"><span class="section-number-3">4.1</span> Use Shellcheck</h3>
+<div id="outline-container-org908abd7" class="outline-3">
+<h3 id="org908abd7"><span class="section-number-3">4.1</span> Use Shellcheck</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 First, let's get that out of the way. This is low hanging
@@ -382,8 +438,8 @@ Shellcheck is available on most distros, so it's just an <code>apt</code>,
 </div>
 </div>
 
-<div id="outline-container-org9686d13" class="outline-3">
-<h3 id="org9686d13"><span class="section-number-3">4.2</span> use [[</h3>
+<div id="outline-container-orgaa2dd9e" class="outline-3">
+<h3 id="orgaa2dd9e"><span class="section-number-3">4.2</span> use [[</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 Unless you want your script to be POSIX compliant, use <code>[[</code> instead
@@ -412,8 +468,8 @@ Ref: <a href="https://lists.gnu.org/archive/html/help-bash/2014-06/msg00013.html
 </div>
 </div>
 
-<div id="outline-container-orgcbaa38b" class="outline-3">
-<h3 id="orgcbaa38b"><span class="section-number-3">4.3</span> eval?</h3>
+<div id="outline-container-org90f94a3" class="outline-3">
+<h3 id="org90f94a3"><span class="section-number-3">4.3</span> eval?</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 When you have mostly small functions that are mostly pure, you
@@ -489,12 +545,12 @@ in a sed.
 </div>
 </div>
 
-<div id="outline-container-org5ab6fd5" class="outline-2">
-<h2 id="org5ab6fd5"><span class="section-number-2">5</span> Basics</h2>
+<div id="outline-container-org8ade7b2" class="outline-2">
+<h2 id="org8ade7b2"><span class="section-number-2">5</span> Basics</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-org3cc93ab" class="outline-3">
-<h3 id="org3cc93ab"><span class="section-number-3">5.1</span> Overview</h3>
+<div id="outline-container-org006284d" class="outline-3">
+<h3 id="org006284d"><span class="section-number-3">5.1</span> Overview</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 In this section, we're covering the parts of the basics that are
@@ -504,8 +560,8 @@ languages.
 </div>
 </div>
 
-<div id="outline-container-org751f979" class="outline-3">
-<h3 id="org751f979"><span class="section-number-3">5.2</span> Booleans and Conditionals</h3>
+<div id="outline-container-org12cd846" class="outline-3">
+<h3 id="org12cd846"><span class="section-number-3">5.2</span> Booleans and Conditionals</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 In any shell, <code>foo &amp;&amp; bar</code> will execute <code>bar</code> only if <code>foo</code>
@@ -516,8 +572,8 @@ other values are false.
 </div>
 </div>
 
-<div id="outline-container-org8d368e0" class="outline-3">
-<h3 id="org8d368e0"><span class="section-number-3">5.3</span> Functions</h3>
+<div id="outline-container-org06a189c" class="outline-3">
+<h3 id="org06a189c"><span class="section-number-3">5.3</span> Functions</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 Functions are functions. They receive arguments, and they return a
@@ -552,8 +608,8 @@ f touch <span style="font-weight: bold; font-style: italic;"># </span><span styl
 </div>
 </div>
 
-<div id="outline-container-org3842de6" class="outline-3">
-<h3 id="org3842de6"><span class="section-number-3">5.4</span> Variables</h3>
+<div id="outline-container-orgbbd6f61" class="outline-3">
+<h3 id="orgbbd6f61"><span class="section-number-3">5.4</span> Variables</h3>
 <div class="outline-text-3" id="text-5-4">
 <p>
 By default variables are global, to a file. No matter if you assign
@@ -597,8 +653,8 @@ myfun
 </div>
 </div>
 </div>
-<div id="outline-container-orgbdbe715" class="outline-3">
-<h3 id="orgbdbe715"><span class="section-number-3">5.5</span> Interpolation</h3>
+<div id="outline-container-org77170ff" class="outline-3">
+<h3 id="org77170ff"><span class="section-number-3">5.5</span> Interpolation</h3>
 <div class="outline-text-3" id="text-5-5">
 <p>
 We previously saw that functions can be passed around as strings,
@@ -621,8 +677,8 @@ $<span style="font-weight: bold; font-style: italic;">l</span>$<span style="font
 </div>
 </div>
 
-<div id="outline-container-orgbd0e7ba" class="outline-3">
-<h3 id="orgbd0e7ba"><span class="section-number-3">5.6</span> dispatch functions using args</h3>
+<div id="outline-container-org0b0ac10" class="outline-3">
+<h3 id="org0b0ac10"><span class="section-number-3">5.6</span> dispatch functions using args</h3>
 <div class="outline-text-3" id="text-5-6">
 <p>
 A nice usage of the previous technique is using user's input as a
@@ -679,8 +735,8 @@ map to any <code>cmd_$1</code> we'll get something like
 </div>
 </div>
 
-<div id="outline-container-org36f832a" class="outline-3">
-<h3 id="org36f832a"><span class="section-number-3">5.7</span> command_not_found_handle</h3>
+<div id="outline-container-org579f5ea" class="outline-3">
+<h3 id="org579f5ea"><span class="section-number-3">5.7</span> command_not_found_handle</h3>
 <div class="outline-text-3" id="text-5-7">
 <p>
 Here's a detail on a kinda obscure bash (only bash) feature.
@@ -716,8 +772,8 @@ the normal behavior.
 </div>
 
 
-<div id="outline-container-orgdc8a23e" class="outline-3">
-<h3 id="orgdc8a23e"><span class="section-number-3">5.8</span> Return Values for Conditionals</h3>
+<div id="outline-container-org397a06c" class="outline-3">
+<h3 id="org397a06c"><span class="section-number-3">5.8</span> Return Values for Conditionals</h3>
 <div class="outline-text-3" id="text-5-8">
 <p>
 <code>if</code> 's conditions can be bound to the return values of
@@ -760,8 +816,8 @@ finding your way around the output strings.
 </div>
 </div>
 
-<div id="outline-container-orga0fad46" class="outline-3">
-<h3 id="orga0fad46"><span class="section-number-3">5.9</span> Do work on loop conditions</h3>
+<div id="outline-container-org951b29c" class="outline-3">
+<h3 id="org951b29c"><span class="section-number-3">5.9</span> Do work on loop conditions</h3>
 <div class="outline-text-3" id="text-5-9">
 <p>
 Although not commonly seen used (and there might be a reason for
@@ -798,8 +854,8 @@ Note: <code>:</code> is a nop builtin in bash.
 </p>
 </div>
 </div>
-<div id="outline-container-org61bfd81" class="outline-3">
-<h3 id="org61bfd81"><span class="section-number-3">5.10</span> One Branch Conditionals</h3>
+<div id="outline-container-org810d4e7" class="outline-3">
+<h3 id="org810d4e7"><span class="section-number-3">5.10</span> One Branch Conditionals</h3>
 <div class="outline-text-3" id="text-5-10">
 <p>
 The usual conditionals one sees everywhere look like <code>if</code>.
@@ -844,12 +900,12 @@ where it explains it for arrays in higher level languages like ruby:
 </div>
 </div>
 
-<div id="outline-container-org205284a" class="outline-2">
-<h2 id="org205284a"><span class="section-number-2">6</span> interactive</h2>
+<div id="outline-container-orgf239c68" class="outline-2">
+<h2 id="orgf239c68"><span class="section-number-2">6</span> interactive</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-org3a26b1b" class="outline-3">
-<h3 id="org3a26b1b"><span class="section-number-3">6.1</span> Save your small scripts</h3>
+<div id="outline-container-org4c30eb6" class="outline-3">
+<h3 id="org4c30eb6"><span class="section-number-3">6.1</span> Save your small scripts</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 Rome wasn't built in a day, and like having a journal log, most of
@@ -866,8 +922,8 @@ shortens the feedback cycle as much as possible.
 </div>
 </div>
 
-<div id="outline-container-org62df11f" class="outline-3">
-<h3 id="org62df11f"><span class="section-number-3">6.2</span> Increased Interactivity</h3>
+<div id="outline-container-org6e313ad" class="outline-3">
+<h3 id="org6e313ad"><span class="section-number-3">6.2</span> Increased Interactivity</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 Knowing your shell's shortcuts for interactive use is a must. The
@@ -940,8 +996,8 @@ ones.
 </div>
 </div>
 
-<div id="outline-container-orge265138" class="outline-3">
-<h3 id="orge265138"><span class="section-number-3">6.3</span> Aliases</h3>
+<div id="outline-container-orgb55e48c" class="outline-3">
+<h3 id="orgb55e48c"><span class="section-number-3">6.3</span> Aliases</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
 Aliases are very simple substitutions of commands for a sequence of
@@ -959,8 +1015,8 @@ Now let's move on to the interesting stuff.
 </div>
 </div>
 
-<div id="outline-container-org3aad77f" class="outline-3">
-<h3 id="org3aad77f"><span class="section-number-3">6.4</span> functions can generate aliases</h3>
+<div id="outline-container-org5e7aa56" class="outline-3">
+<h3 id="org5e7aa56"><span class="section-number-3">6.4</span> functions can generate aliases</h3>
 <div class="outline-text-3" id="text-6-4">
 <p>
 Aliases live in a global namespace for the shell, so no matter
@@ -1040,8 +1096,8 @@ alias.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org553c843" class="outline-3">
-<h3 id="org553c843"><span class="section-number-3">6.5</span> Override (advise?) common functions</h3>
+<div id="outline-container-orge3d1992" class="outline-3">
+<h3 id="orge3d1992"><span class="section-number-3">6.5</span> Override (advise?) common functions</h3>
 <div class="outline-text-3" id="text-6-5">
 <p>
 Overriding commands is generally a bad practice as it violates the
@@ -1086,9 +1142,625 @@ created myself. That was a very cool moment.
 </div>
 </div>
 
-<div id="outline-container-orga0d9d96" class="outline-2">
-<h2 id="orga0d9d96"><span class="section-number-2">7</span> links</h2>
+<div id="outline-container-org53bbe21" class="outline-2">
+<h2 id="org53bbe21"><span class="section-number-2">7</span> zsh</h2>
 <div class="outline-text-2" id="text-7">
+</div>
+<div id="outline-container-org54c6b5b" class="outline-3">
+<h3 id="org54c6b5b"><span class="section-number-3">7.1</span> examples of global aliases</h3>
+<div class="outline-text-3" id="text-7-1">
+<ul class="org-ul">
+<li>lspdf -tr TL P XA evince</li>
+<li>docker exec -u root -ti $(docker ps -q H1) bash</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org20a3ba2" class="outline-3">
+<h3 id="org20a3ba2"><span class="section-number-3">7.2</span> pass commands around</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+This one uses <a href="#org73ed1a7">DRY_RUN</a>. While refactoring a script that does some
+curls, we want to make sure that our refactored version does the
+exact same calls in the same order.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">compare_outputs</span>() {
+  <span style="font-weight: bold;">export</span> <span style="font-weight: bold; font-style: italic;">DRY_RUN</span>=1
+  git checkout b1
+  $<span style="font-weight: bold; font-style: italic;">@</span> 2&gt;/tmp/1.out
+  git checkout b2
+  $<span style="font-weight: bold; font-style: italic;">@</span> 2&gt;/tmp/2.out
+  <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"diffing"</span>
+  diff /tmp/1.out /tmp/2.out
+}
+compare_outputs ./release.sh -p rhel:6 -R <span style="font-style: italic;">'internal-preview'</span>
+</pre>
+</div>
+
+<p>
+First we create a function <code>compare_outputs</code>, that gets a command
+to run as parameters. The function will run it once, redirecting
+the standard error to a file <code>/tmp/1.out</code>.
+</p>
+
+<p>
+Then, it checks out the branch that contains our refactored
+version, and will run the command again, redirecting standard error
+to <code>/tmp/2.out</code>, and will diff the two outputs.
+</p>
+
+<p>
+In case there's a difference between the two, <code>diff</code> will output
+them, and the function will return the non-zero exit value of
+diff. If everything went fine, <code>compare_outputs</code> will succeed.
+</p>
+
+<p>
+Now that we know that for this inputs, the command runs fine, we
+want to find out if it works for other types of releases, not only
+internal-preview.
+</p>
+
+<p>
+Here I'm using zsh's global aliases to give a much more fluid
+interface to the commands:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">alias -g <span style="font-weight: bold; font-style: italic;">SPLIT</span>=<span style="font-style: italic;">'| tr " " "\n" '</span>
+alias -g <span style="font-weight: bold; font-style: italic;">FORI</span>=<span style="font-style: italic;">'| while read i ; do '</span>
+alias -g <span style="font-weight: bold; font-style: italic;">IROF</span>=<span style="font-style: italic;">'; done '</span>
+
+<span style="font-weight: bold;">set</span> -e
+<span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"ga internal-preview rc1 rc2"</span> SPLIT FORI
+   noglob compare_outputs ./release.sh -p rhel:8 -R <span style="font-style: italic;">"$i"</span>
+IROF
+</pre>
+</div>
+
+<p>
+So, combining the two, we can have a really smooth way of iterating
+over the possibilities, without really messing into the details of
+loops.
+</p>
+
+<p>
+WARNING: This approach is not robust enough to put it anywhere in
+production, but to write quick one off scripts is a
+killer. Experimenting in a shell and creating tools and 2nd order
+tools to make interaction faster builds a language that grows on
+you, and keeps improving your toolbelt.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgb9dcaf1" class="outline-3">
+<h3 id="orgb9dcaf1"><span class="section-number-3">7.3</span> suffix aliases don't have to match a filename</h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+zsh has another type of aliases called "suffix alias". Those alias
+allow you to define programs to open/run file types.
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">alias -s <span style="font-weight: bold; font-style: italic;">docx</span>=<span style="font-style: italic;">"libreoffice"</span>
+</pre>
+</div>
+
+<p>
+With this set, if you write a name of a file ending with <code>docx</code> as
+the first token in a command line, it will use libreoffice to open
+it.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">invoice1.docx
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">will effectively call libreoffice invoice1.docx</span>
+</pre>
+</div>
+
+<p>
+The trick here is that the parser doesn't check that the file is
+indeed an existing file. It can be any string.
+</p>
+
+<p>
+Let's look at an example of it.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">alias -s <span style="font-weight: bold; font-style: italic;">git</span>=<span style="font-style: italic;">"git clone"</span>
+</pre>
+</div>
+
+<p>
+In this case, we can easily copy a <code>git@github.com:.....git</code> from a
+browser, and paste it into a zsh console. Then, zsh will run that
+"file" with the command <code>git clone</code>, effectively cloning that
+repository.
+</p>
+
+<p>
+Cool, ain't it?
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5ee6ad2" class="outline-3">
+<h3 id="org5ee6ad2"><span class="section-number-3">7.4</span> noglob</h3>
+<div class="outline-text-3" id="text-7-4">
+<p>
+zsh has more aggressive parameter expansion, to the level that
+<code>[,],...</code> have special meanings, and will be interpreted and
+expanded before calling the final commands in your shell.
+</p>
+
+<p>
+There are commands that you don't want ever expanded , for example,
+when using <code>curl</code>, it's much more likely that an open bracket will
+be ment to be there verbatim rather than expanded.
+</p>
+
+<p>
+Zsh provides a command to quote the following expansions. And it's
+called noglob.
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">noglob curl http://example.com<span style="font-style: italic;">\&amp;</span>a[]=1
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org13ee665" class="outline-3">
+<h3 id="org13ee665"><span class="section-number-3">7.5</span> make noglob 'transparent' to bash</h3>
+<div class="outline-text-3" id="text-7-5">
+<p>
+zsh and bash are mostly compatible, but there's a few things not
+supported in bash. <code>noglob</code> is one of them. To do to layer
+inbetween, an easy way is to just create a <code>~/bin/noglob</code> file
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">$<span style="font-weight: bold; font-style: italic;">*</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc54939f" class="outline-2">
+<h2 id="orgc54939f"><span class="section-number-2">8</span> debugging</h2>
+<div class="outline-text-2" id="text-8">
+</div>
+<div id="outline-container-org9f1c731" class="outline-3">
+<h3 id="org9f1c731"><span class="section-number-3">8.1</span> adding <code>bash</code> to a script to debug</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+You can add <code>bash</code> inside any script, and it will add as a
+breakpoint, allowing you to check the state of the env and manually
+call functions around.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org73ed1a7" class="outline-3">
+<h3 id="org73ed1a7"><span class="section-number-3">8.2</span> DRY_RUN</h3>
+<div class="outline-text-3" id="text-8-2">
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">if</span> [[-n $<span style="font-weight: bold; font-style: italic;">DRY_RUN</span> ]]; <span style="font-weight: bold;">then</span>
+  curl () {
+    <span style="font-weight: bold;">echo</span> curl $<span style="font-weight: bold; font-style: italic;">@</span>
+  }
+<span style="font-weight: bold;">fi</span>
+</pre>
+</div>
+<p>
+use <code>command curl</code> to force the command, not the alias or anything
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1a58085" class="outline-2">
+<h2 id="org1a58085"><span class="section-number-2">9</span> patterns</h2>
+<div class="outline-text-2" id="text-9">
+</div>
+<div id="outline-container-orgce53b11" class="outline-3">
+<h3 id="orgce53b11"><span class="section-number-3">9.1</span> undestand &lt;(foo) and &gt;(foo)</h3>
+</div>
+<div id="outline-container-org2502bab" class="outline-3">
+<h3 id="org2502bab"><span class="section-number-3">9.2</span> use xargs</h3>
+</div>
+<div id="outline-container-org12728a1" class="outline-3">
+<h3 id="org12728a1"><span class="section-number-3">9.3</span> use GNU Parallel</h3>
+</div>
+<div id="outline-container-org01c8db8" class="outline-3">
+<h3 id="org01c8db8"><span class="section-number-3">9.4</span> append options in an array during the logic of the program</h3>
+<div class="outline-text-3" id="text-9-4">
+<p>
+And splat them in the cli of the command you're throwing (docker run?)
+</p>
+</div>
+</div>
+<div id="outline-container-org8aa2dc9" class="outline-3">
+<h3 id="org8aa2dc9"><span class="section-number-3">9.5</span> trap</h3>
+<div class="outline-text-3" id="text-9-5">
+<ul class="org-ul">
+<li>trap "rm $variable"</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org7ae5738" class="outline-3">
+<h3 id="org7ae5738"><span class="section-number-3">9.6</span> debug by introducing a 'bash'</h3>
+<div class="outline-text-3" id="text-9-6">
+<p>
+insert <code>bash</code>
+</p>
+</div>
+</div>
+<div id="outline-container-orgdd73289" class="outline-3">
+<h3 id="orgdd73289"><span class="section-number-3">9.7</span> debug with set -xa</h3>
+<div class="outline-text-3" id="text-9-7">
+<p>
+optargs "V" option; do
+case $option in
+V)
+  set -xa
+  ;;
+</p>
+</div>
+</div>
+<div id="outline-container-org7d31c88" class="outline-3">
+<h3 id="org7d31c88"><span class="section-number-3">9.8</span> structure the app like a normal app</h3>
+<div class="outline-text-3" id="text-9-8">
+<p>
+Shellscripts are thought as quick one-off programs, but the truth
+is that they tend to be useful and sticky, so you better write them
+from the start as if it would be permanent.
+</p>
+</div>
+<div id="outline-container-org7073c1c" class="outline-4">
+<h4 id="org7073c1c"><span class="section-number-4">9.8.1</span> Fail Fast</h4>
+<div class="outline-text-4" id="text-9-8-1">
+<ul class="org-ul">
+<li><a href="https://dougrichardson.us/2018/08/03/fail-fast-bash-scripting.html">https://dougrichardson.us/2018/08/03/fail-fast-bash-scripting.html</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org5dace12" class="outline-4">
+<h4 id="org5dace12"><span class="section-number-4">9.8.2</span> Template</h4>
+<div class="outline-text-4" id="text-9-8-2">
+<p>
+Bash is extremely permissive in what it allows to be coded and
+ran. By default, failures do not make the program exit or throw an
+exeption (no exceptions here).
+</p>
+
+<p>
+A way to improve the defaults, is setting a bunch of flags that
+make the script stricter, so it fails on many red flag situations
+you'd want to stop anyway because something went wrong.
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold; font-style: italic;">#</span><span style="font-weight: bold; font-style: italic;">!/usr/bin/</span><span style="font-weight: bold;">env</span><span style="font-weight: bold; font-style: italic;"> bash</span>
+<span style="font-weight: bold;">set</span> -eEuo pipefail
+shopt -s inherit_errexit
+
+<span style="font-weight: bold;">main</span>() {
+  parse_args()
+  validate_args()
+  do_things()
+  cleanup()
+}
+
+main <span style="font-style: italic;">"$@"</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org2ee66c1" class="outline-3">
+<h3 id="org2ee66c1"><span class="section-number-3">9.9</span> make steps of the process composable</h3>
+<div class="outline-text-3" id="text-9-9">
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">while</span> [[ $<span style="font-weight: bold; font-style: italic;">#</span> -gt 0 ]]; <span style="font-weight: bold;">do</span>
+ <span style="font-weight: bold; font-style: italic;">key</span>=<span style="font-style: italic;">"$1"</span>
+ $<span style="font-weight: bold; font-style: italic;">key</span>  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">eval $key as a function</span>
+ <span style="font-weight: bold;">shift</span>
+<span style="font-weight: bold;">done</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org158184e" class="outline-3">
+<h3 id="org158184e"><span class="section-number-3">9.10</span> use $@ when you can</h3>
+<div class="outline-text-3" id="text-9-10">
+<div class="org-src-container">
+<pre class="src src-bash">
+<span style="font-weight: bold;">compare_outputs</span>() {
+  <span style="font-weight: bold;">export</span> <span style="font-weight: bold; font-style: italic;">DRY_RUN</span>=1
+  $<span style="font-weight: bold; font-style: italic;">@</span> 2&gt;/tmp/1.out
+  git checkout -
+  $<span style="font-weight: bold; font-style: italic;">@</span> 2&gt;/tmp/2.out
+  git checkout -
+  <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"diffing"</span>
+  diff /tmp/1.out /tmp/2.out
+}
+
+compare_outputs ./release.sh -u 1 -k 1 -p rhel:6 -v 1 -e -R <span style="font-style: italic;">'internal-preview'</span>
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">extra tricky</span>
+alias -g <span style="font-weight: bold; font-style: italic;">SPLIT</span>=<span style="font-style: italic;">'| tr " " "\n" '</span>
+alias -g <span style="font-weight: bold; font-style: italic;">FORI</span>=<span style="font-style: italic;">'| while read i ; do '</span>
+alias -g <span style="font-weight: bold; font-style: italic;">IROF</span>=<span style="font-style: italic;">'; done '</span>
+
+<span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"ga internal-preview rc1 rc2"</span> SPLIT FORI
+  compare_outputs ./release.sh -u 1 -k 1 -p rhel:8 -v 1 -e -R <span style="font-style: italic;">"$i"</span>
+IROF
+</pre>
+</div>
+<ul class="org-ul">
+<li><a href="https://www.oilshell.org/blog/2017/01/13.html">https://www.oilshell.org/blog/2017/01/13.html</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgf923348" class="outline-3">
+<h3 id="orgf923348"><span class="section-number-3">9.11</span> source files</h3>
+<div class="outline-text-3" id="text-9-11">
+<p>
+<code>source</code> is like <code>require</code> in most programming languages. It
+evaluates the sourced file in the context of the currently
+evaluated script.
+</p>
+
+<p>
+It's simple, but get used to modularize your code into libraries.
+</p>
+
+<p>
+Be careful, it's very rudimentary, and it will be overwriting old
+vars or functions if names clash. There's no namespacing happening
+there.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">
+source file.sh
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">the same</span>
+. file.sh
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf3db497" class="outline-3">
+<h3 id="orgf3db497"><span class="section-number-3">9.12</span> Dots and colons allowed in function names!</h3>
+<div class="outline-text-3" id="text-9-12">
+<p>
+A way to split the namespace is to have libs define functions with
+their own namespace.
+</p>
+
+<p>
+I've gotten used to use dots or colons as namespace separator.
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">semver.greater</span>() {
+ <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">...</span>
+}
+</pre>
+</div>
+<p>
+or
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">semver:greater() {
+ <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">...</span>
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org5860b71" class="outline-3">
+<h3 id="org5860b71"><span class="section-number-3">9.13</span> Use Scripts as a Libs</h3>
+<div class="outline-text-3" id="text-9-13">
+<p>
+A python-inspired way of using scripts as loadable libraries is to
+check whether the current file was the one that was called
+originally or it's being just sourced.
+</p>
+
+<p>
+Again, no side effects in load time makes this functionality
+possible. otherwise, you're on your own.
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Allow sourcing of this script</span>
+<span style="font-weight: bold;">if</span> [[ $(basename <span style="font-style: italic;">"$(realpath "$0")"</span>) == <span style="font-style: italic;">"package.sh"</span> ]]; <span style="font-weight: bold;">then</span>
+  setup
+  parse_args <span style="font-style: italic;">"$@"</span>
+  main
+<span style="font-weight: bold;">fi</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf50726b" class="outline-3">
+<h3 id="orgf50726b"><span class="section-number-3">9.14</span> Use tempfiles everywhere</h3>
+<div class="outline-text-3" id="text-9-14">
+<p>
+Your script is not going to run alone. Don't assume paths are
+fixed or known.
+</p>
+
+<p>
+CI/CD Pipelines run many jobs in the same node and files can start
+clashing.
+</p>
+
+<p>
+Make use of <code>$(mktemp /tmp/foo-bar.XXXXX)</code>.
+</p>
+</div>
+</div>
+<div id="outline-container-orgd513113" class="outline-3">
+<h3 id="orgd513113"><span class="section-number-3">9.15</span> Use tempdirs everywhere</h3>
+<div class="outline-text-3" id="text-9-15">
+<p>
+Your script is not going to run alone. Don't assume paths are
+fixed or known.
+</p>
+
+<p>
+CI/CD Pipelines run many jobs in the same node and files can start
+clashing.
+</p>
+
+<p>
+Make use of <code>$(mktemp -d /tmp/foo-bar.XXXXX)</code>.  If you have to patch a
+file, do it in a clean fresh copy. Don't modify files in old paths
+</p>
+
+<p>
+If you HAVE TO modify paths, do it idempotently.  But really, don't do it. aa
+</p>
+
+<p>
+CAVEAT: You have to manually delete the directory if you want it cleaned.
+</p>
+</div>
+</div>
+<div id="outline-container-org265026e" class="outline-3">
+<h3 id="org265026e"><span class="section-number-3">9.16</span> Cleanup tasks with trap</h3>
+<div class="outline-text-3" id="text-9-16">
+<p>
+<code>trap</code> is used to 'subscribe' a callback when something happens.
+Many times it's used on exit. It's a good thing to cleanup tmpdirs after your script
+exits, so you can use the output of <code>mktemp -d</code> and subscribe a cleanup
+function for it.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">on_exit</span>() {
+  rm -rf $<span style="font-weight: bold; font-style: italic;">1</span>
+}
+
+<span style="font-weight: bold;">trap</span> <span style="font-style: italic;">"on_exit $(mktemp -d /tmp/foo-bar.XXXXX)"</span> EXIT SIGINT
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge052379" class="outline-3">
+<h3 id="orge052379"><span class="section-number-3">9.17</span> array of callbacks on_exit</h3>
+<div class="outline-text-3" id="text-9-17">
+<p>
+Level upping that pattern, we can have a helper to add callbacks to run on exit.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">
+<span style="font-weight: bold; font-style: italic;">ON_EXIT</span>=()
+<span style="font-weight: bold; font-style: italic;">EXIT_RES</span>=
+
+<span style="font-weight: bold;">function</span> <span style="font-weight: bold;">on_exit_fn</span> {
+  <span style="font-weight: bold; font-style: italic;">EXIT_RES</span>=$<span style="font-weight: bold; font-style: italic;">?</span>
+  <span style="font-weight: bold;">for</span> cb<span style="font-weight: bold;"> in</span> <span style="font-style: italic;">"${ON_EXIT[@]}"</span>; <span style="font-weight: bold;">do</span> $<span style="font-weight: bold; font-style: italic;">cb</span> || true; <span style="font-weight: bold;">done</span>
+  <span style="font-weight: bold;">return</span> $<span style="font-weight: bold; font-style: italic;">EXIT_RES</span>
+}
+
+<span style="font-weight: bold;">trap</span> on_exit_fn EXIT SIGINT
+
+<span style="font-weight: bold;">function</span> <span style="font-weight: bold;">on_exit</span> {
+  ON_EXIT+=(<span style="font-style: italic;">"$@"</span>)
+}
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org4ee1e05" class="outline-3">
+<h3 id="org4ee1e05"><span class="section-number-3">9.18</span> pass flags as a splatted array</h3>
+</div>
+<div id="outline-container-org061229b" class="outline-3">
+<h3 id="org061229b"><span class="section-number-3">9.19</span> explore what passes through a pipe with</h3>
+<div class="outline-text-3" id="text-9-19">
+<ul class="org-ul">
+<li><a href="https://stackoverflow.com/questions/17983777/shell-pipe-to-multiple-commands-in-a-file">https://stackoverflow.com/questions/17983777/shell-pipe-to-multiple-commands-in-a-file</a></li>
+</ul>
+<p>
+tee &gt;(some_command) |
+</p>
+</div>
+</div>
+<div id="outline-container-org87b84a1" class="outline-3">
+<h3 id="org87b84a1"><span class="section-number-3">9.20</span> inherit_errcode</h3>
+</div>
+<div id="outline-container-org225c52f" class="outline-3">
+<h3 id="org225c52f"><span class="section-number-3">9.21</span> redirects</h3>
+<div class="outline-text-3" id="text-9-21">
+<ul class="org-ul">
+<li><a href="https://catonmat.net/ftp/bash-redirections-cheat-sheet.pdf">https://catonmat.net/ftp/bash-redirections-cheat-sheet.pdf</a></li>
+<li><a href="https://catonmat.net/bash-one-liners-explained-part-three">https://catonmat.net/bash-one-liners-explained-part-three</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgf777f16" class="outline-3">
+<h3 id="orgf777f16"><span class="section-number-3">9.22</span> pushd/popd</h3>
+<div class="outline-text-3" id="text-9-22">
+<p>
+pushd and popd are used to move to some directory and go back to it
+in a stack fashion, so nesting can happen and you never lose track.
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">pushd /tmp/my-dir
+  <span style="font-weight: bold;">echo</span> $<span style="font-weight: bold; font-style: italic;">PWD</span>
+popd
+</pre>
+</div>
+
+<p>
+Here's an alternative way, that at least makes sure that you close
+all pushd with a popd.
+</p>
+
+<p>
+Starting a new shell and cd-ing , will make all commands in that
+subshell be in that directory, and will come back to the old
+directory after closing the new spawned shell.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">(<span style="font-weight: bold;">cd</span> /tmp/my-dir
+  ls
+)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org02052a9" class="outline-3">
+<h3 id="org02052a9"><span class="section-number-3">9.23</span> wrap functions</h3>
+<div class="outline-text-3" id="text-9-23">
+<p>
+Bash can't pass blocks of code around, but the alternative is to
+pass functions.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold;">mute</span>() {
+  $<span style="font-weight: bold; font-style: italic;">@</span> &gt;/dev/null
+}
+
+mute ls
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orga3f2e57" class="outline-2">
+<h2 id="orga3f2e57"><span class="section-number-2">10</span> links</h2>
+<div class="outline-text-2" id="text-10">
 <ul class="org-ul">
 <li><a href="https://mywiki.wooledge.org/BashPitfalls">https://mywiki.wooledge.org/BashPitfalls</a></li>
 <li><a href="https://tldp.org/LDP/abs/html/">https://tldp.org/LDP/abs/html/</a></li>
@@ -1100,6 +1772,43 @@ created myself. That was a very cool moment.
 <li><a href="https://ebzzry.io/en/zsh-tips-1/">https://ebzzry.io/en/zsh-tips-1/</a></li>
 <li><a href="https://github.com/ssledz/bash-fun">https://github.com/ssledz/bash-fun</a></li>
 </ul>
+</div>
+</div>
+<div id="outline-container-orge01154a" class="outline-2">
+<h2 id="orge01154a"><span class="section-number-2">11</span> from shell to lisp and everything in between</h2>
+<div class="outline-text-2" id="text-11">
+<ul class="org-ul">
+<li><a href="https://github.com/oilshell/oil">https://github.com/oilshell/oil</a></li>
+<li><a href="https://www.eigenbahn.com/2020/07/08/painless-emacs-remote-shells">https://www.eigenbahn.com/2020/07/08/painless-emacs-remote-shells</a></li>
+<li><a href="https://news.ycombinator.com/item?id=24249646">https://news.ycombinator.com/item?id=24249646</a> rust</li>
+<li>spencertipping @github</li>
+<li>rash (racket shell)</li>
+<li>zsh</li>
+<li><a href="https://github.com/liljencrantz/crush">https://github.com/liljencrantz/crush</a></li>
+<li><a href="https://github.com/artyom-poptsov/metabash">https://github.com/artyom-poptsov/metabash</a></li>
+<li>perl/python/ruby and migrate from bash to X using backticks</li>
+<li><a href="https://www.nushell.sh/">https://www.nushell.sh/</a></li>
+<li>bocker</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgba41eed" class="outline-2">
+<h2 id="orgba41eed"><span class="section-number-2">12</span> make scripts compatible between them</h2>
+<div class="outline-text-2" id="text-12">
+</div>
+<div id="outline-container-orge574e3f" class="outline-3">
+<h3 id="orge574e3f"><span class="section-number-3">12.1</span> create scripts that replace shell commands and do the same.</h3>
+<div class="outline-text-3" id="text-12-1">
+<p>
+to be able to run a zsh script with noglobs in bash, here's
+<code>~/bin/noglob</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span style="font-weight: bold; font-style: italic;">#</span><span style="font-weight: bold; font-style: italic;">!/usr/bin/</span><span style="font-weight: bold;">env</span><span style="font-weight: bold; font-style: italic;"> bash</span>
+$<span style="font-weight: bold; font-style: italic;">*</span>
+</pre>
+</div>
+</div>
 </div>
 </div>
 </div>

@@ -36,17 +36,20 @@
   scripts are very difficult to kill and they have a very high
   mutation rate.
 * shell
-  No matter if you use Linux, Mac, or Win, you should be living most
-  of the time in a shell to enjoy the content shown here. Some value
-  comes from the automated scripts, and some comes from the daily
-  usage and refinement of your helper functions, aliases, etc.
+  No matter if you use Linux, Mac, or Windows, you should be living
+  most of the time in a shell to enjoy the content shown here. Some
+  value comes from the automated scripts, and some comes from the
+  daily usage and refinement of your helper functions, aliases,
+  etc. in interactive mode.
 
   In general the examples here are ment to run in Bash or Zsh, which
   are compatible for the most part.
 * Level
   These examples are based on non-trivial real world code I've written
   that I haven't seen applied in many places over the net. Some of the
-  snippets are stolen from public repos.
+  snippets are stolen from public repos and some important stuff might
+  be missing if I don't feel I have anything to add to the generally
+  available info around.
 * bash
 ** Use Shellcheck
    First, let's get that out of the way. This is low hanging
@@ -573,9 +576,9 @@
    Miell]] and there's a snippet that is 99.9% like the one I
    created myself. That was a very cool moment.
 
-* zsh                                                              :noexport:
-** global aliases make a forth-y shell
-** globbing
+* zsh
+** global aliases make a forth-y shell                                                   :noexport:
+** globbing                                                   :noexport:
    **/*(/)
 ** examples of global aliases
    - lspdf -tr TL P XA evince
@@ -694,8 +697,12 @@
    $*
    #+end_src
 
-* debugging                                                        :noexport:
+* debugging
 ** adding =bash= to a script to debug
+   You can add =bash= inside any script, and it will add as a
+   breakpoint, allowing you to check the state of the env and manually
+   call functions around.
+
 ** DRY_RUN
    #+begin_src bash
    if [[-n $DRY_RUN ]]; then
@@ -706,7 +713,7 @@
    #+end_src
    use =command curl= to force the command, not the alias or anything
 
-* patterns                                                         :noexport:
+* patterns
 ** undestand <(foo) and >(foo)
 ** use xargs
 ** use GNU Parallel
@@ -949,7 +956,7 @@
   - http://catern.com/posts/pipes.html
   - https://ebzzry.io/en/zsh-tips-1/
   - https://github.com/ssledz/bash-fun
-* from shell to lisp and everything in between                     :noexport:
+* from shell to lisp and everything in between
   - https://github.com/oilshell/oil
   - https://www.eigenbahn.com/2020/07/08/painless-emacs-remote-shells
   - https://news.ycombinator.com/item?id=24249646 rust
@@ -961,7 +968,7 @@
   - perl/python/ruby and migrate from bash to X using backticks
   - https://www.nushell.sh/
   - bocker
-* make scripts compatible between them                             :noexport:
+* make scripts compatible between them
 ** create scripts that replace shell commands and do the same.
    to be able to run a zsh script with noglobs in bash, here's
    =~/bin/noglob=.
