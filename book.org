@@ -50,7 +50,7 @@
   snippets are stolen from public repos and some important stuff might
   be missing if I don't feel I have anything to add to the generally
   available info around.
-* bash
+* Basics
 ** Use Shellcheck
    First, let's get that out of the way. This is low hanging
    fruit. And you will get the most of this booklet by following it.
@@ -78,78 +78,6 @@
 
    Shellcheck is available on most distros, so it's just an =apt=,
    =brew=, or =nix-env= away.
-
-** use [[
-   Unless you want your script to be POSIX compliant, use =[[= instead
-   of =[=. =[= is a regular command. It's like =ls=, or =true=. You can
-   check it by searching for a file named =[= in your path.
-
-   Being a normal command it always evaluates its params, like a
-   regular function. On the other hand though, =[[= is a special bash
-   operator, and it evaluates the parameters lazily.
-
-   #+begin_src bash
-
-   # [[ does lazy evaluation:
-   [[ a = b && $(echo foo >&2) ]]
-
-   # [ does not:
-   [ a = b -a "$(echo foo >&2)” ]
-   #+end_src
-   Ref: https://lists.gnu.org/archive/html/help-bash/2014-06/msg00013.html
-
-** eval?
-   When you have mostly small functions that are mostly pure, you
-   compose them like you'd do in any other language.
-
-   In the following snippet, we are in a release script. Some step
-   builds a package inside an image, another step tests a package
-   already built.
-
-   A nice way to build ubuntus, for example, is to add an ARG to the
-   Dockerfile so we can build several ubuntu versions using the same
-   file.
-
-   It'd look something like this:
-   #+begin_src Dockerfile
-   ARG VERSION
-   FROM ubuntu:$VERSION
-
-   RUN apt-get ...
-   ...
-   #+end_src
-
-   We build that image and do all the building inside it, mounting a
-   volume shared with our host, so we can extract our =.deb= file
-   easily.
-
-   After that, you probably want to do some smoke tests on the
-   package, so the idea would be to install the =.deb= file in a fresh
-   ubuntu image.
-
-   Let's pick the same base image we picked to build the package.
-   #+begin_src bash
-   # evaluate the string "centos:$VERSION" (that comes from
-   # centos/Dockerfile) in the current scope
-   local VERSION=$(get_version $DISTRO)
-   run_tests "$PACKAGE_PATH" "$(eval echo $(awk '/^FROM /{print $2; exit}' $LOCAL_PATH/$(get_dockerfile_for $DISTRO)))"
-   #+end_src
-
-   The usage of eval is there to interpolate the string that we get
-   from the =FROM= in the current environment.
-
-   WARNING: You know, anything that uses =eval= is dangerous per
-   se. Do not use it unless you know very well what you're doing AND
-   the input is 100% under your control. Usually, more restricted
-   commands can achieve what you want to do. In this particular case,
-   you could use =envsubst=, or just manually replace =$\{?VERSION\}?=
-   in a sed.
-
-   #+begin_src bash
-    test_release "$PACKAGE_PATH" $(awk '/^FROM /{print $2; exit}' $LOCAL_PATH/$(get_dockerfile_for $DISTRO) | sed -e "s/\$VERSION/$VERSION/")
-   #+end_src
-
-* Basics
 
 ** Overview
    In this section, we're covering the parts of the basics that are
@@ -320,7 +248,6 @@
    you can unset the function =command_not_found_handle= to go back to
    the normal behavior.
 
-
 ** Return Values for Conditionals
    =if= 's conditions can be bound to the return values of
    commands. That's a known thing, but lots of code you see around
@@ -406,6 +333,353 @@
    There are lots of references to this, but I like this recent post
    where it explains it for arrays in higher level languages like ruby:
    https://jesseduffield.com/array-functions-and-the-rule-of-least-power/
+
+** pushd/popd
+   pushd and popd are used to move to some directory and go back to it
+   in a stack fashion, so nesting can happen and you never lose track.
+   #+begin_src bash
+   pushd /tmp/my-dir
+     echo $PWD
+   popd
+   #+end_src
+
+   Here's an alternative way, that at least makes sure that you close
+   all pushd with a popd.
+
+   Starting a new shell and cd-ing , will make all commands in that
+   subshell be in that directory, and will come back to the old
+   directory after closing the new spawned shell.
+
+   #+begin_src bash
+   (cd /tmp/my-dir
+     ls
+   )
+   #+end_src
+** wrap functions
+   Bash can't pass blocks of code around, but the alternative is to
+   pass functions.  More on that later.
+
+   #+begin_src bash
+   mute() {
+     $@ >/dev/null
+   }
+
+   mute ls
+   #+end_src
+** use [[
+   Unless you want your script to be POSIX compliant, use =[[= instead
+   of =[=.  =[= is a regular command. It's like =ls=, or =true=. You can
+   check it by searching for a file named =[= in your path.
+
+   Being a normal command it always evaluates its params, like a
+   regular function. On the other hand though, =[[= is a special bash
+   operator, and it evaluates the parameters lazily.
+
+   #+begin_src bash
+
+   # [[ does lazy evaluation:
+   [[ a = b && $(echo foo >&2) ]]
+
+   # [ does not:
+   [ a = b -a "$(echo foo >&2)” ]
+   #+end_src
+   Ref: https://lists.gnu.org/archive/html/help-bash/2014-06/msg00013.html
+
+** eval?
+   When you have mostly small functions that are mostly pure, you
+   compose them like you'd do in any other language.
+
+   In the following snippet, we are in a release script. Some step
+   builds a package inside an image, another step tests a package
+   already built.
+
+   A nice way to build ubuntus, for example, is to add an ARG to the
+   Dockerfile so we can build several ubuntu versions using the same
+   file.
+
+   It'd look something like this:
+   #+begin_src Dockerfile
+   ARG VERSION
+   FROM ubuntu:$VERSION
+
+   RUN apt-get ...
+   ...
+   #+end_src
+
+   We build that image and do all the building inside it, mounting a
+   volume shared with our host, so we can extract our =.deb= file
+   easily.
+
+   After that, you probably want to do some smoke tests on the
+   package, so the idea would be to install the =.deb= file in a fresh
+   ubuntu image.
+
+   Let's pick the same base image we picked to build the package.
+   #+begin_src bash
+   # evaluate the string "centos:$VERSION" (that comes from
+   # centos/Dockerfile) in the current scope
+   local VERSION=$(get_version $DISTRO)
+   run_tests "$PACKAGE_PATH" "$(eval echo $(awk '/^FROM /{print $2; exit}' $LOCAL_PATH/$(get_dockerfile_for $DISTRO)))"
+   #+end_src
+
+   The usage of eval is there to interpolate the string that we get
+   from the =FROM= in the current environment.
+
+   WARNING: You know, anything that uses =eval= is dangerous per
+   se. Do not use it unless you know very well what you're doing AND
+   the input is 100% under your control. Usually, more restricted
+   commands can achieve what you want to do. In this particular case,
+   you could use =envsubst=, or just manually replace =$\{?VERSION\}?=
+   in a sed.
+
+   #+begin_src bash
+    test_release "$PACKAGE_PATH" $(awk '/^FROM /{print $2; exit}' $LOCAL_PATH/$(get_dockerfile_for $DISTRO) | sed -e "s/\$VERSION/$VERSION/")
+   #+end_src
+
+** pass commands around
+   This one uses [[*DRY_RUN][DRY_RUN]]. While refactoring a script that does some
+   curls, we want to make sure that our refactored version does the
+   exact same calls in the same order.
+
+   #+begin_src bash
+   compare_outputs() {
+     export DRY_RUN=1
+     git checkout b1
+     $@ 2>/tmp/1.out
+     git checkout b2
+     $@ 2>/tmp/2.out
+     echo "diffing"
+     diff /tmp/1.out /tmp/2.out
+   }
+   compare_outputs ./release.sh -p rhel:6 -R 'internal-preview'
+   #+end_src
+
+   First we create a function =compare_outputs=, that gets a command
+   to run as parameters. The function will run it once, redirecting
+   the standard error to a file =/tmp/1.out=.
+
+   Then, it checks out the branch that contains our refactored
+   version, and will run the command again, redirecting standard error
+   to =/tmp/2.out=, and will diff the two outputs.
+
+   In case there's a difference between the two, =diff= will output
+   them, and the function will return the non-zero exit value of
+   diff. If everything went fine, =compare_outputs= will succeed.
+
+   Now that we know that for this inputs, the command runs fine, we
+   want to find out if it works for other types of releases, not only
+   internal-preview.
+
+   Here I'm using zsh's global aliases to give a much more fluid
+   interface to the commands:
+
+   #+begin_src shell
+   alias -g SPLIT='| tr " " "\n" '
+   alias -g FORI='| while read i ; do '
+   alias -g IROF='; done '
+
+   set -e
+   echo "ga internal-preview rc1 rc2" SPLIT FORI
+      noglob compare_outputs ./release.sh -p rhel:8 -R "$i"
+   IROF
+   #+end_src
+
+   So, combining the two, we can have a really smooth way of iterating
+   over the possibilities, without really messing into the details of
+   loops.
+
+   WARNING: This approach is not robust enough to put it anywhere in
+   production, but to write quick one off scripts is a
+   killer. Experimenting in a shell and creating tools and 2nd order
+   tools to make interaction faster builds a language that grows on
+   you, and keeps improving your toolbelt.
+
+** structure the app like a normal app
+   Shellscripts are thought as quick one-off programs, but the truth
+   is that they tend to be useful and sticky, so you better write them
+   from the start as if it would be permanent.
+*** Fail Fast
+    - https://dougrichardson.us/2018/08/03/fail-fast-bash-scripting.html
+*** Template
+    Bash is extremely permissive in what it allows to be coded and
+    ran. By default, failures do not make the program exit or throw an
+    exeption (no exceptions here).
+
+    A way to improve the defaults, is setting a bunch of flags that
+    make the script stricter, so it fails on many red flag situations
+    you'd want to stop anyway because something went wrong.
+    #+begin_src bash
+    #!/usr/bin/env bash
+    set -eEuo pipefail
+    shopt -s inherit_errexit
+
+    main() {
+      parse_args()
+      validate_args()
+      do_things()
+      cleanup()
+    }
+
+    main "$@"
+    #+end_src
+** Use tempfiles everywhere
+   Your script is not going to run alone. Don't assume paths are
+   fixed or known.
+
+   CI/CD Pipelines run many jobs in the same node and files can start
+   clashing.
+
+   Make use of =$(mktemp /tmp/foo-bar.XXXXX)=.
+
+   # #+begin_src bash
+   # git_clone_tmp() {
+   #   local repo=${1:?repo is required}
+   #   local ref=${2:?ref is required}
+   #   tmpath=$(mktemp -d "/tmp/cloned-$repo-XXXXX")
+   #   on_exit "rm -rf $tmpath"
+   #   git clone -b ${ref} https://"$GITHUB_TOKEN"@github.com/my-org/${repo}.git $tmpath
+   # }
+   # #+end_src
+** source files
+   =source= is like =require= in most programming languages. It
+   evaluates the sourced file in the context of the currently
+   evaluated script.
+
+   It's simple, but get used to modularize your code into libraries.
+
+   Be careful, it's very rudimentary, and it will be overwriting old
+   vars or functions if names clash. There's no namespacing happening
+   there.
+
+   #+begin_src bash
+
+   source file.sh
+
+   # the same
+   . file.sh
+   #+end_src
+** Use Scripts as a Libs
+   A python-inspired way of using scripts as loadable libraries is to
+   check whether the current file was the one that was called
+   originally or it's being just sourced.
+
+   Again, no side effects in load time makes this functionality
+   possible. otherwise, you're on your own.
+   #+begin_src bash
+    # Allow sourcing of this script
+    if [[ $(basename "$(realpath "$0")") == "package.sh" ]]; then
+      setup
+      parse_args "$@"
+      main
+    fi
+   #+end_src
+** Use tempdirs everywhere
+
+   Your script is not going to run alone. Don't assume paths are
+   fixed or known.
+
+   CI/CD Pipelines run many jobs in the same node and files can start
+   clashing.
+
+   Make use of =$(mktemp -d /tmp/foo-bar.XXXXX)=.  If you have to patch a
+   file, do it in a clean fresh copy. Don't modify files in old paths
+
+   If you HAVE TO modify paths, do it idempotently.  But really, don't do it. aa
+
+   CAVEAT: You have to manually delete the directory if you want it cleaned.
+** Cleanup tasks with trap
+   =trap= is used to 'subscribe' a callback when something happens.
+   Many times it's used on exit. It's a good thing to cleanup tmpdirs after your script
+   exits, so you can use the output of =mktemp -d= and subscribe a cleanup
+   function for it.
+
+   #+begin_src bash
+   on_exit() {
+     rm -rf $1
+   }
+
+   trap "on_exit $(mktemp -d /tmp/foo-bar.XXXXX)" EXIT SIGINT
+   #+end_src
+
+** array of callbacks on_exit
+   Level upping that pattern, we can have a helper to add callbacks to run on exit.
+
+   #+begin_src bash
+
+   ON_EXIT=()
+   EXIT_RES=
+
+   function on_exit_fn {
+     EXIT_RES=$?
+     for cb in "${ON_EXIT[@]}"; do $cb || true; done
+     return $EXIT_RES
+   }
+
+   trap on_exit_fn EXIT SIGINT
+
+   function on_exit {
+     ON_EXIT+=("$@")
+   }
+
+   #+end_src
+** Dots and colons allowed in function names!
+   A way to split the namespace is to have libs define functions with
+   their own namespace.
+
+   I've gotten used to use dots or colons as namespace separator.
+   #+begin_src bash
+   semver.greater() {
+    # ...
+   }
+   #+end_src
+   or
+   #+begin_src bash
+   semver:greater() {
+    # ...
+   }
+   #+end_src
+** make steps of the process as composable as possible by using "$@"
+   By using =$@= to pass commands as parameters around you can get to
+   a degree of composability that allows for a nice chaining of
+   commands.
+
+   here's a very simple version of =watch=. See how you can =every 2
+   ls -la=. I think that style is called Bernstein Chaining. But I'm
+   not sure. It also looks like currying to me if you squint a little
+   bit.
+
+   #+begin_src bash
+   every() {
+      secs=$1
+      shift
+      while true; do
+        "$@"
+          sleep $secs;
+      done
+    }
+
+   #+end_src
+
+
+   As you know by now, bash doesn't pass blocks of code around, but
+   the alternative is to pass function names.
+
+   #+begin_src bash
+   mute() {
+     $@ >/dev/null
+   }
+   mute ls
+   #+end_src
+
+   So now we can create the most stupid command composition ever:
+
+   #+begin_src bash
+   every 1 mute echo hi
+   #or
+   mute every 1 echo hi
+   #+end_src
+
+   - https://www.oilshell.org/blog/2017/01/13.html
 
 * interactive
 ** Save your small scripts
@@ -576,72 +850,41 @@
    Miell]] and there's a snippet that is 99.9% like the one I
    created myself. That was a very cool moment.
 
-* zsh
-** global aliases make a forth-y shell                                                   :noexport:
-** globbing                                                   :noexport:
+* debugging
+** adding =bash= to a script to debug
+   You can add =bash= inside any script, and it will add as a
+   breakpoint, allowing you to check the state of the env and manually
+   call functions around.
+
+** DRY_RUN
+   #+begin_src bash
+   if [[-n $DRY_RUN ]]; then
+     curl () {
+       echo curl $@
+     }
+   fi
+   #+end_src
+   use =command curl= to force the command, not the alias or anything
+
+** Cheap debugging flag
+
+   #+begin_src bash
+   optargs "V" option; do
+   case $option in
+     V)
+       set -xa
+     ;;
+   #+end_src
+
+** explore what passes through a pipe with
+   - https://stackoverflow.com/questions/17983777/shell-pipe-to-multiple-commands-in-a-file
+   tee >(some_command) |
+* zsh-only
+** globbing                                                        :noexport:
    **/*(/)
 ** examples of global aliases
    - lspdf -tr TL P XA evince
    - docker exec -u root -ti $(docker ps -q H1) bash
-** pass commands around
-   This one uses [[*DRY_RUN][DRY_RUN]]. While refactoring a script that does some
-   curls, we want to make sure that our refactored version does the
-   exact same calls in the same order.
-
-   #+begin_src bash
-   compare_outputs() {
-     export DRY_RUN=1
-     git checkout b1
-     $@ 2>/tmp/1.out
-     git checkout b2
-     $@ 2>/tmp/2.out
-     echo "diffing"
-     diff /tmp/1.out /tmp/2.out
-   }
-   compare_outputs ./release.sh -p rhel:6 -R 'internal-preview'
-   #+end_src
-
-   First we create a function =compare_outputs=, that gets a command
-   to run as parameters. The function will run it once, redirecting
-   the standard error to a file =/tmp/1.out=.
-
-   Then, it checks out the branch that contains our refactored
-   version, and will run the command again, redirecting standard error
-   to =/tmp/2.out=, and will diff the two outputs.
-
-   In case there's a difference between the two, =diff= will output
-   them, and the function will return the non-zero exit value of
-   diff. If everything went fine, =compare_outputs= will succeed.
-
-   Now that we know that for this inputs, the command runs fine, we
-   want to find out if it works for other types of releases, not only
-   internal-preview.
-
-   Here I'm using zsh's global aliases to give a much more fluid
-   interface to the commands:
-
-   #+begin_src shell
-   alias -g SPLIT='| tr " " "\n" '
-   alias -g FORI='| while read i ; do '
-   alias -g IROF='; done '
-
-   set -e
-   echo "ga internal-preview rc1 rc2" SPLIT FORI
-      noglob compare_outputs ./release.sh -p rhel:8 -R "$i"
-   IROF
-   #+end_src
-
-   So, combining the two, we can have a really smooth way of iterating
-   over the possibilities, without really messing into the details of
-   loops.
-
-   WARNING: This approach is not robust enough to put it anywhere in
-   production, but to write quick one off scripts is a
-   killer. Experimenting in a shell and creating tools and 2nd order
-   tools to make interaction faster builds a language that grows on
-   you, and keeps improving your toolbelt.
-
-
 ** suffix aliases don't have to match a filename
    zsh has another type of aliases called "suffix alias". Those alias
    allow you to define programs to open/run file types.
@@ -697,23 +940,7 @@
    $*
    #+end_src
 
-* debugging
-** adding =bash= to a script to debug
-   You can add =bash= inside any script, and it will add as a
-   breakpoint, allowing you to check the state of the env and manually
-   call functions around.
-
-** DRY_RUN
-   #+begin_src bash
-   if [[-n $DRY_RUN ]]; then
-     curl () {
-       echo curl $@
-     }
-   fi
-   #+end_src
-   use =command curl= to force the command, not the alias or anything
-
-* patterns
+* TODO patterns
 ** undestand <(foo) and >(foo)
 ** use xargs
 ** use GNU Parallel
@@ -721,231 +948,11 @@
    And splat them in the cli of the command you're throwing (docker run?)
 ** trap
    - trap "rm $variable"
-** debug by introducing a 'bash'
-   insert =bash=
-** debug with set -xa
-   optargs "V" option; do
-   case $option in
-   V)
-     set -xa
-     ;;
-** structure the app like a normal app
-   Shellscripts are thought as quick one-off programs, but the truth
-   is that they tend to be useful and sticky, so you better write them
-   from the start as if it would be permanent.
-*** Fail Fast
-    - https://dougrichardson.us/2018/08/03/fail-fast-bash-scripting.html
-*** Template
-    Bash is extremely permissive in what it allows to be coded and
-    ran. By default, failures do not make the program exit or throw an
-    exeption (no exceptions here).
-
-    A way to improve the defaults, is setting a bunch of flags that
-    make the script stricter, so it fails on many red flag situations
-    you'd want to stop anyway because something went wrong.
-    #+begin_src bash
-    #!/usr/bin/env bash
-    set -eEuo pipefail
-    shopt -s inherit_errexit
-
-    main() {
-      parse_args()
-      validate_args()
-      do_things()
-      cleanup()
-    }
-
-    main "$@"
-    #+end_src
-** make steps of the process composable
-   #+begin_src bash
-   while [[ $# -gt 0 ]]; do
-    key="$1"
-    $key  # eval $key as a function
-    shift
-   done
-   #+end_src
-** use $@ when you can
-   #+begin_src bash
-
-   compare_outputs() {
-     export DRY_RUN=1
-     $@ 2>/tmp/1.out
-     git checkout -
-     $@ 2>/tmp/2.out
-     git checkout -
-     echo "diffing"
-     diff /tmp/1.out /tmp/2.out
-   }
-
-   compare_outputs ./release.sh -u 1 -k 1 -p rhel:6 -v 1 -e -R 'internal-preview'
-
-   # extra tricky
-   alias -g SPLIT='| tr " " "\n" '
-   alias -g FORI='| while read i ; do '
-   alias -g IROF='; done '
-
-   echo "ga internal-preview rc1 rc2" SPLIT FORI
-     compare_outputs ./release.sh -u 1 -k 1 -p rhel:8 -v 1 -e -R "$i"
-   IROF
-   #+end_src
-   - https://www.oilshell.org/blog/2017/01/13.html
-** source files
-   =source= is like =require= in most programming languages. It
-   evaluates the sourced file in the context of the currently
-   evaluated script.
-
-   It's simple, but get used to modularize your code into libraries.
-
-   Be careful, it's very rudimentary, and it will be overwriting old
-   vars or functions if names clash. There's no namespacing happening
-   there.
-
-   #+begin_src bash
-
-   source file.sh
-
-   # the same
-   . file.sh
-   #+end_src
-** Dots and colons allowed in function names!
-   A way to split the namespace is to have libs define functions with
-   their own namespace.
-
-   I've gotten used to use dots or colons as namespace separator.
-   #+begin_src bash
-   semver.greater() {
-    # ...
-   }
-   #+end_src
-   or
-   #+begin_src bash
-   semver:greater() {
-    # ...
-   }
-   #+end_src
-** Use Scripts as a Libs
-   A python-inspired way of using scripts as loadable libraries is to
-   check whether the current file was the one that was called
-   originally or it's being just sourced.
-
-   Again, no side effects in load time makes this functionality
-   possible. otherwise, you're on your own.
-   #+begin_src bash
-    # Allow sourcing of this script
-    if [[ $(basename "$(realpath "$0")") == "package.sh" ]]; then
-      setup
-      parse_args "$@"
-      main
-    fi
-   #+end_src
-** Use tempfiles everywhere
-   Your script is not going to run alone. Don't assume paths are
-   fixed or known.
-
-   CI/CD Pipelines run many jobs in the same node and files can start
-   clashing.
-
-   Make use of =$(mktemp /tmp/foo-bar.XXXXX)=.
-
-   # #+begin_src bash
-   # git_clone_tmp() {
-   #   local repo=${1:?repo is required}
-   #   local ref=${2:?ref is required}
-   #   tmpath=$(mktemp -d "/tmp/cloned-$repo-XXXXX")
-   #   on_exit "rm -rf $tmpath"
-   #   git clone -b ${ref} https://"$GITHUB_TOKEN"@github.com/my-org/${repo}.git $tmpath
-   # }
-   # #+end_src
-** Use tempdirs everywhere
-
-   Your script is not going to run alone. Don't assume paths are
-   fixed or known.
-
-   CI/CD Pipelines run many jobs in the same node and files can start
-   clashing.
-
-   Make use of =$(mktemp -d /tmp/foo-bar.XXXXX)=.  If you have to patch a
-   file, do it in a clean fresh copy. Don't modify files in old paths
-
-   If you HAVE TO modify paths, do it idempotently.  But really, don't do it. aa
-
-   CAVEAT: You have to manually delete the directory if you want it cleaned.
-** Cleanup tasks with trap
-   =trap= is used to 'subscribe' a callback when something happens.
-   Many times it's used on exit. It's a good thing to cleanup tmpdirs after your script
-   exits, so you can use the output of =mktemp -d= and subscribe a cleanup
-   function for it.
-
-   #+begin_src bash
-   on_exit() {
-     rm -rf $1
-   }
-
-   trap "on_exit $(mktemp -d /tmp/foo-bar.XXXXX)" EXIT SIGINT
-   #+end_src
-
-** array of callbacks on_exit
-   Level upping that pattern, we can have a helper to add callbacks to run on exit.
-
-   #+begin_src bash
-
-   ON_EXIT=()
-   EXIT_RES=
-
-   function on_exit_fn {
-     EXIT_RES=$?
-     for cb in "${ON_EXIT[@]}"; do $cb || true; done
-     return $EXIT_RES
-   }
-
-   trap on_exit_fn EXIT SIGINT
-
-   function on_exit {
-     ON_EXIT+=("$@")
-   }
-
-   #+end_src
 ** pass flags as a splatted array
-** explore what passes through a pipe with
-   - https://stackoverflow.com/questions/17983777/shell-pipe-to-multiple-commands-in-a-file
-   tee >(some_command) |
 ** inherit_errcode
 ** redirects
    - https://catonmat.net/ftp/bash-redirections-cheat-sheet.pdf
    - https://catonmat.net/bash-one-liners-explained-part-three
-** pushd/popd
-   pushd and popd are used to move to some directory and go back to it
-   in a stack fashion, so nesting can happen and you never lose track.
-   #+begin_src bash
-   pushd /tmp/my-dir
-     echo $PWD
-   popd
-   #+end_src
-
-   Here's an alternative way, that at least makes sure that you close
-   all pushd with a popd.
-
-   Starting a new shell and cd-ing , will make all commands in that
-   subshell be in that directory, and will come back to the old
-   directory after closing the new spawned shell.
-
-   #+begin_src bash
-   (cd /tmp/my-dir
-     ls
-   )
-   #+end_src
-** wrap functions
-   Bash can't pass blocks of code around, but the alternative is to
-   pass functions.
-
-   #+begin_src bash
-   mute() {
-     $@ >/dev/null
-   }
-
-   mute ls
-   #+end_src
 * links
   - https://mywiki.wooledge.org/BashPitfalls
   - https://tldp.org/LDP/abs/html/
@@ -968,7 +975,7 @@
   - perl/python/ruby and migrate from bash to X using backticks
   - https://www.nushell.sh/
   - bocker
-* make scripts compatible between them
+* make zsh/bash scripts more compatible
 ** create scripts that replace shell commands and do the same.
    to be able to run a zsh script with noglobs in bash, here's
    =~/bin/noglob=.
@@ -976,3 +983,9 @@
    #!/usr/bin/env bash
    $*
    #+end_src
+
+* Credits
+  Raimon Grau <raimonster@gmail.com> did the writing and most examples
+  with some help and inspiration from Lluís Eskerda
+  <eskerda@gmail.com>. nikisweeting provided some very nice examples
+  in this HN therad https://news.ycombinator.com/item?id=24402571.
