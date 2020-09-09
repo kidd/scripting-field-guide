@@ -946,8 +946,6 @@
 ** use GNU Parallel
 ** append options in an array during the logic of the program
    And splat them in the cli of the command you're throwing (docker run?)
-** trap
-   - trap "rm $variable"
 ** pass flags as a splatted array
 ** inherit_errcode
 ** redirects
@@ -985,7 +983,9 @@
    #+end_src
 
 * Credits
-  Raimon Grau <raimonster@gmail.com> did the writing and most examples
-  with some help and inspiration from Lluís Eskerda
-  <eskerda@gmail.com>. nikisweeting provided some very nice examples
-  in this HN therad https://news.ycombinator.com/item?id=24402571.
+  - Raimon Grau <raimonster@gmail.com> did the writing.
+  - Most examples are result of Raimon's and Lluís
+    Esquerda's(<eskerda@gmail.com>) real world examples.
+  - nikisweeting provided some very nice examples in this HN therad
+    https://news.ycombinator.com/item?id=24402571 which I'll be
+    pulling in as time allows.
