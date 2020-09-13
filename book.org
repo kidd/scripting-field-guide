@@ -19,8 +19,8 @@
 * Introduction
   This booklet is intended to be a catalog of tricks and techniques
   you may want to use if you're doing some sort of complex
-  scripting. I'll try to keep the rethoric to the very minimal because
-  that way you can enjoy the content in less time.
+  scripting. I'll try to keep the rethoric to the minimum to maximize
+  signal/noise.
 
   The git repo is at https://github.com/kidd/scripting-field-guide/
   and both contents, order and wording are WIP. Any feedback is
@@ -35,7 +35,7 @@
   coworkers use for their own use (with some variations), etc. Those
   scripts are very difficult to kill and they have a very high
   mutation rate.
-* shell
+* Which Shell?
   No matter if you use Linux, Mac, or Windows, you should be living
   most of the time in a shell to enjoy the content shown here. Some
   value comes from the automated scripts, and some comes from the
@@ -50,7 +50,7 @@
   snippets are stolen from public repos and some important stuff might
   be missing if I don't feel I have anything to add to the generally
   available info around.
-* Basics
+* Patterns
 ** Use Shellcheck
    First, let's get that out of the way. This is low hanging
    fruit. And you will get the most of this booklet by following it.
@@ -681,7 +681,47 @@
 
    - https://www.oilshell.org/blog/2017/01/13.html
 
-* interactive
+** undestand <(foo) and >(foo)
+   Some commands ask for files as inputs. And sometimes you have that
+   file, but sometimes you're only creating that file to pass it to
+   the command.  In those cases, creating temporary files is not
+   necessary if you use =<(cmd)=. Here's a way to diff the output of 2
+   commands without putting them in a temporary file.
+
+   #+begin_src bash
+   diff <(date) <(date)
+   diff <(date) <(sleep 1; date)
+   #+end_src
+
+   The same hapens with outputs. Commands that ask you for a
+   destination file. You can trick them by using =>(command)= as a
+   file. A nice trick is to use =>(cat)= to know what's going on
+   there.
+
+   What the shell does in those cases is to bind a file descriptor of
+   the process created inside =</>= to the first process.
+
+   You can experiment with those using commands like =echo <(pwd)=.
+
+   # In Zsh you can use =m-x expand-word= to see the file descriptors
+   # being expanded.
+
+** Use xargs
+   Continuing with other ways of plumbing commands into other
+   commands, there's =xargs=. Some commands work seamlessly with
+   pipes, by taking inputs from stdin and printing to stdout.  But
+   some others like to work with files, and they ask for their
+   parameters in their args list. For example, =evince=. It wouldn't
+   be even expected to cat a pdf and pass it to evince through
+   stdin.
+
+   In general, to convert from this pattern: =cmd param= to =echo
+   param| cmd=, xargs can be helpful. Look at its man page to know how
+   to split or batch args in multiple =cmd= calls.
+
+   Xargs is helpful for parallelizing work. You should look at its man
+   page.
+* Interactive
 ** Save your small scripts
    Rome wasn't built in a day, and like having a journal log, most of
    the little scripts you create, once you have enough discipline will
@@ -850,7 +890,7 @@
    Miell]] and there's a snippet that is 99.9% like the one I
    created myself. That was a very cool moment.
 
-* debugging
+* Debugging
 ** adding =bash= to a script to debug
    You can add =bash= inside any script, and it will add as a
    breakpoint, allowing you to check the state of the env and manually
@@ -939,10 +979,8 @@
    #+begin_src bash
    $*
    #+end_src
-
 * TODO patterns
-** undestand <(foo) and >(foo)
-** use xargs
+** Use cat
 ** use GNU Parallel
 ** append options in an array during the logic of the program
    And splat them in the cli of the command you're throwing (docker run?)
@@ -973,15 +1011,6 @@
   - perl/python/ruby and migrate from bash to X using backticks
   - https://www.nushell.sh/
   - bocker
-* make zsh/bash scripts more compatible
-** create scripts that replace shell commands and do the same.
-   to be able to run a zsh script with noglobs in bash, here's
-   =~/bin/noglob=.
-   #+begin_src bash
-   #!/usr/bin/env bash
-   $*
-   #+end_src
-
 * Credits
   - Raimon Grau <raimonster@gmail.com> did the writing.
   - Most examples are result of Raimon's and Lluís
