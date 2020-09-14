@@ -990,6 +990,7 @@
    - https://catonmat.net/ftp/bash-redirections-cheat-sheet.pdf
    - https://catonmat.net/bash-one-liners-explained-part-three
 * links
+  - https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html
   - https://mywiki.wooledge.org/BashPitfalls
   - https://tldp.org/LDP/abs/html/
   - Gary Bernhardt. The Unix Chainsaw
