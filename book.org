@@ -19,8 +19,11 @@
 * Introduction
   This booklet is intended to be a catalog of tricks and techniques
   you may want to use if you're doing some sort of complex
-  scripting. I'll try to keep the rethoric to the minimum to maximize
-  signal/noise.
+  scripting. Some are just useful, some are more playful, and might
+  not have such direct impact in your day-to-day life. Some are pure
+  entertainment. You'll have to judge by yourself which things belong
+  to which category. I'll try to keep the rethoric to the minimum to
+  maximize signal/noise.
 
   The git repo is at https://github.com/kidd/scripting-field-guide/
   and both contents, order and wording are WIP. Any feedback is
