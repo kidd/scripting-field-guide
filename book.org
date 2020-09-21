@@ -252,9 +252,9 @@
    the normal behavior.
 
 ** Return Values for Conditionals
-   =if= 's conditions can be bound to the return values of
+   =if= 's test condition can use the return values of
    commands. That's a known thing, but lots of code you see around
-   rely on =[[]]== to test the return values of commands/functions
+   rely on =[[]]= to test the return values of commands/functions
    anyway.
 
    #+begin_src bash
@@ -469,12 +469,13 @@
    them, and the function will return the non-zero exit value of
    diff. If everything went fine, =compare_outputs= will succeed.
 
-   Now that we know that for this inputs, the command runs fine, we
+   Now that we know that for these inputs the command runs fine, we
    want to find out if it works for other types of releases, not only
    internal-preview.
 
    Here I'm using zsh's global aliases to give a much more fluid
-   interface to the commands:
+   interface to the commands, but you can use the regular while/for
+   loops:
 
    #+begin_src shell
    alias -g SPLIT='| tr " " "\n" '
@@ -498,11 +499,10 @@
    you, and keeps improving your toolbelt.
 
 ** structure the app like a normal app
-   Shellscripts are thought as quick one-off programs, but the truth
-   is that they tend to be useful and sticky, so you better write them
-   from the start as if it would be permanent.
-*** Fail Fast
-    - https://dougrichardson.us/2018/08/03/fail-fast-bash-scripting.html
+   Shellscripts are thought as quick one-off programs, but when they
+   are useful, they are sticky, so you better write them from the
+   start as if it would be permanent. The upfront cost is very low
+   anyway.
 *** Template
     Bash is extremely permissive in what it allows to be coded and
     ran. By default, failures do not make the program exit or throw an
@@ -525,24 +525,9 @@
 
     main "$@"
     #+end_src
-** Use tempfiles everywhere
-   Your script is not going to run alone. Don't assume paths are
-   fixed or known.
 
-   CI/CD Pipelines run many jobs in the same node and files can start
-   clashing.
+    Ref: https://dougrichardson.us/2018/08/03/fail-fast-bash-scripting.html
 
-   Make use of =$(mktemp /tmp/foo-bar.XXXXX)=.
-
-   # #+begin_src bash
-   # git_clone_tmp() {
-   #   local repo=${1:?repo is required}
-   #   local ref=${2:?ref is required}
-   #   tmpath=$(mktemp -d "/tmp/cloned-$repo-XXXXX")
-   #   on_exit "rm -rf $tmpath"
-   #   git clone -b ${ref} https://"$GITHUB_TOKEN"@github.com/my-org/${repo}.git $tmpath
-   # }
-   # #+end_src
 ** source files
    =source= is like =require= in most programming languages. It
    evaluates the sourced file in the context of the currently
@@ -576,8 +561,7 @@
       main
     fi
    #+end_src
-** Use tempdirs everywhere
-
+** Tmpfiles Everywhere
    Your script is not going to run alone. Don't assume paths are
    fixed or known.
 
@@ -589,7 +573,18 @@
 
    If you HAVE TO modify paths, do it idempotently.  But really, don't do it. aa
 
+   #+begin_src bash :eval no
+   git_clone_tmp() {
+     local repo=${1:?repo is required}
+     local ref=${2:?ref is required}
+     tmpath=$(mktemp -d "/tmp/cloned-$repo-XXXXX")
+     on_exit "rm -rf $tmpath"
+     git clone -b ${ref} https://"$GITHUB_TOKEN"@github.com/my-org/${repo}.git $tmpath
+   }
+   #+end_src
+
    CAVEAT: You have to manually delete the directory if you want it cleaned.
+
 ** Cleanup tasks with trap
    =trap= is used to 'subscribe' a callback when something happens.
    Many times it's used on exit. It's a good thing to cleanup tmpdirs after your script
@@ -605,26 +600,31 @@
    #+end_src
 
 ** array of callbacks on_exit
-   Level upping that pattern, we can have a helper to add callbacks to run on exit.
+   Level up that pattern, we can have a helper to add callbacks to run on exit.
 
    #+begin_src bash
 
-   ON_EXIT=()
-   EXIT_RES=
+     ON_EXIT=()
+     EXIT_RES=
 
-   function on_exit_fn {
-     EXIT_RES=$?
-     for cb in "${ON_EXIT[@]}"; do $cb || true; done
-     return $EXIT_RES
-   }
+     function on_exit_fn {
+       EXIT_RES=$?
+       for cb in "${ON_EXIT[@]}"; do $cb || true; done
+       return $EXIT_RES
+     }
 
-   trap on_exit_fn EXIT SIGINT
+     trap on_exit_fn EXIT SIGINT
 
-   function on_exit {
-     ON_EXIT+=("$@")
-   }
+     function on_exit {
+       ON_EXIT+=("$@")
+     }
 
+     local v_id=$(docker volume create)
+     on_exit "docker volume rm $v_id"
+     # Use your v_id knowing that it'll be available during your script but
+     # will be cleaned up before exiting.
    #+end_src
+
 ** Dots and colons allowed in function names!
    A way to split the namespace is to have libs define functions with
    their own namespace.
@@ -743,20 +743,21 @@
 ** Increased Interactivity
    Knowing your shell's shortcuts for interactive use is a must. The
    same way you learned to touchtype and you learned your editor, you
-   should learn all the shortcuts for your shell. Here's some simple
-   ones.
+   should learn all the shortcuts for your shell. Here's some of them.
 
-   | key    | action                        |
-   |--------+-------------------------------|
-   | ctrl-r | reverse-history-search        |
-   | c-a    | beginning-of-line             |
-   | c-e    | end-of-line                   |
-   | c-w    | delete-word-backwards         |
-   | c-k    | kill-line (from point to eol) |
-   | c-p    | previous-line                 |
-   | c-n    | next-line                     |
-   | a-.    | insert last agument           |
-   | a-/    | dabbrev-expand                |
+   | key    | action                              |
+   |--------+-------------------------------------|
+   | Ctrl-r | reverse-history-search              |
+   | C-a    | beginning-of-line                   |
+   | C-e    | end-of-line                         |
+   | C-w    | delete-word-backwards               |
+   | C-k    | kill-line (from point to eol)       |
+   | C-y    | paste last killed thing             |
+   | A-y    | previous killed thing (after a c-y) |
+   | C-p    | previous-line                       |
+   | C-n    | next-line                           |
+   | A-.    | insert last agument                 |
+   | A-/    | dabbrev-expand                      |
 
 ** Aliases
    Aliases are very simple substitutions of commands for a sequence of
