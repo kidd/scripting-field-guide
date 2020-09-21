@@ -1033,22 +1033,35 @@
    #+end_src
    Now, some sequences of words can start making sense:
 
-   - =lspdf -tr TL P XA evince=
+   - =lspdf -tr TL DM XA evince=
    - docker exec -u root -ti $(docker ps -q H1) bash
-   - =docker ps P P1 XA docker stop=
+   - =docker ps DM P1 XA docker stop=
 ** Create helpers and generate global aliases automagically
    Borrowing a bit from Perl, a bit from Forth, and a bit from
-   PicoLisp, I've come to create a few helpers that
+   PicoLisp, I've come to create a few helpers that abstract words
+   into a bit higher level concepts. Unifying the option selectors is
+   one, and then, other line oriented operations like =chomp, from,
+   till=.
+
    #+begin_src bash
+     pick() {
+       if [ -z "$DISPLAY" ]; then
+         percol || fzf || slmenu -i -l 20
+       else
+         dmenu -i -l 20
+       fi
+     }
+     alias -g P='| pick'
+
      globalias() {
-         alias -g `echo -n $1 | tr '[a-z]' '[A-Z]'`=" | $1 "
+       alias -g `echo -n $1 | tr '[a-z]' '[A-Z]'`=" | $1 "
      }
 
      globalias fzf
 
      # uniquify column
      function uc () {
-         awk -F" " "!_[\$$1]++"
+       awk -F" " "!_[\$$1]++"
      }
      globalias uc
 
