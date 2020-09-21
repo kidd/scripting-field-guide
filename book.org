@@ -1034,8 +1034,9 @@
    Now, some sequences of words can start making sense:
 
    - =lspdf -tr TL DM XA evince=
-   - docker exec -u root -ti $(docker ps -q H1) bash
+   - =docker exec -u root -ti $(docker ps -q H1) bash=
    - =docker ps DM P1 XA docker stop=
+
 ** Create helpers and generate global aliases automagically
    Borrowing a bit from Perl, a bit from Forth, and a bit from
    PicoLisp, I've come to create a few helpers that abstract words
