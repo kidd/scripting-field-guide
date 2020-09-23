@@ -339,7 +339,9 @@
 
 ** pushd/popd
    pushd and popd are used to move to some directory and go back to it
-   in a stack fashion, so nesting can happen and you never lose track.
+   in a stack fashion, so nesting can happen and you never lose
+   track. The problem is that it still is on you to have a =popd= per
+   =pushd=.
    #+begin_src bash
    pushd /tmp/my-dir
      echo $PWD
@@ -358,6 +360,10 @@
      ls
    )
    #+end_src
+
+   Remember to =inherit_errexit= or =set -e= inside the subshell if
+   you need. That's a very easy trap to fall into.
+
 ** wrap functions
    Bash can't pass blocks of code around, but the alternative is to
    pass functions.  More on that later.
@@ -413,16 +419,15 @@
    volume shared with our host, so we can extract our =.deb= file
    easily.
 
-   After that, you probably want to do some smoke tests on the
-   package, so the idea would be to install the =.deb= file in a fresh
-   ubuntu image.
+   After that, to do some smoke tests on the package, the idea is to
+   install the =.deb= file in a fresh ubuntu image.
 
    Let's pick the same base image we picked to build the package.
    #+begin_src bash
-   # evaluate the string "centos:$VERSION" (that comes from
-   # centos/Dockerfile) in the current scope
-   local VERSION=$(get_version $DISTRO)
-   run_tests "$PACKAGE_PATH" "$(eval echo $(awk '/^FROM /{print $2; exit}' $LOCAL_PATH/$(get_dockerfile_for $DISTRO)))"
+     # evaluate the string "centos:$VERSION" (that comes from
+     # centos/Dockerfile) in the current scope
+     local VERSION=$(get_version $DISTRO)
+     run_test "file.deb" "$(eval echo $(awk '/^FROM /{print $2; exit}' $LOCAL_PATH/$(get_dockerfile_for $DISTRO)))"
    #+end_src
 
    The usage of eval is there to interpolate the string that we get
@@ -1154,6 +1159,7 @@
   - http://catern.com/posts/pipes.html
   - https://ebzzry.io/en/zsh-tips-1/
   - https://github.com/ssledz/bash-fun
+  - https://news.ycombinator.com/item?id=24556022
 * from shell to lisp and everything in between
   - https://github.com/oilshell/oil
   - https://www.eigenbahn.com/2020/07/08/painless-emacs-remote-shells
@@ -1167,8 +1173,9 @@
   - https://www.nushell.sh/
   - bocker
 * Credits
-  - Raimon Grau <raimonster@gmail.com> did the writing.
-  - Most examples are result of Raimon's and Lluís
+  - Raimon Grau <raimonster@gmail.com> did the writing and most of the
+    examples.
+  - Some examples are result of Raimon's and Lluís
     Esquerda's(<eskerda@gmail.com>) real world examples.
   - nikisweeting provided some very nice examples in this HN therad
     https://news.ycombinator.com/item?id=24402571 which I'll be
