@@ -731,12 +731,29 @@
    to split or batch args in multiple =cmd= calls.
 
    Xargs is helpful for parallelizing work. You should look at its man
-   page.
+   page, but it can help in running parallel processes (check =-P= in
+   its man).
 ** inherit_errexit
    bash 4.4+ , you can =shopt -s inherit_errexit=, and subshells will
    inherit the errexit flag value. meaning that if you =set -Ee=,
    anything that runs inside a subshell will throw an error at the
    moment any command exits with =!=0=.
+** GNU Parallel
+   I can't recommend [[https://www.gnu.org/software/parallel/][parallel]] enough. The same as xargs, but in a
+   much more flexible way, parallel lets you run various jobs at a
+   time. If you have this tool into account, it doesn't just speed up
+   your runtimes, but it will force you write cleaner code. Parallel
+   execution will test your scripts so if they are not using
+   randomized tmp working directories, things will clash, etc...
+
+   Parallel in itself is such a hackerfriendly tool it deserves to be
+   deeply learned. You can use it just locally to run a process per
+   core, you can send jobs to several machines connected via a simple
+   ssh, you can bind tmux or sqlite to it, or you can write a trivial
+   job queuing system.
+
+   Man pages and official examples are a goldmine.
+
 * Interactive
 ** Save your small scripts
    Rome wasn't built in a day, and like having a journal log, most of
@@ -1144,7 +1161,6 @@
    #+end_src
 * TODO patterns
 ** Use cat
-** use GNU Parallel
 ** append options in an array during the logic of the program
    And splat them in the cli of the command you're throwing (docker run?)
 ** pass flags as a splatted array
