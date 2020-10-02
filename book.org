@@ -953,6 +953,21 @@
 ** explore what passes through a pipe with
    - https://stackoverflow.com/questions/17983777/shell-pipe-to-multiple-commands-in-a-file
    tee >(some_command) |
+** quoting
+   Bash: To get a quoted version of a given string, here's what you can do:
+   #+begin_src bash
+
+     # this is my "string" I want to 'comment "on"'
+     !:q
+   #+end_src
+
+   That gives us ='#this is my "string" I want to '\''comment
+   "on"'\'''=. Neat!
+
+   I just found this trick [[https://til.simonwillison.net/til/til/bash_escaping-a-string.md][here]].
+
+   Zsh: If you're on zsh, =a-'= quotes the current line.
+
 * zsh-only
 ** globbing
    In zsh, getting a list of files that match some characteristics is
