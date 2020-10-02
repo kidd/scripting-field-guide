@@ -964,7 +964,13 @@
    That gives us ='#this is my "string" I want to '\''comment
    "on"'\'''=. Neat!
 
-   I just found this trick [[https://til.simonwillison.net/til/til/bash_escaping-a-string.md][here]].
+   I just found this trick [[https://til.simonwillison.net/til/til/bash_escaping-a-string.md][here]]. From the associated HN thread:
+   #+begin_src bash
+     function bashquote () {
+       printf '%q' "$(cat)"
+       echo
+     }
+   #+end_src
 
    Zsh: If you're on zsh, =a-'= quotes the current line.
 
