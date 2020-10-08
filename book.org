@@ -283,9 +283,9 @@
    #+end_src
 
 ** Do work on loop conditions
-   Although not commonly seen used (and there might be a reason for
-   it, who knows), =while= conditions are just plain commands, so you
-   can put other stuff than =[]= tests there.
+   I've not seen it used a lot (and there might be a reason for it,
+   who knows), =while= conditions are just plain commands, so you can
+   put other stuff than =[]/[[]]/test= there.
 
    Heres's an idiomatic way to iterate through all the arguments of a
    function while consuming the =$*= array.
@@ -330,7 +330,7 @@
    }
    #+end_src
 
-   This conveys the desire of doing something *just* in one case, and
+   This conveys the intention of doing something *just* in one case, and
    that the negation of this is not interesting at all.
 
    There are lots of references to this, but I like this recent post
@@ -356,9 +356,9 @@
    directory after closing the new spawned shell.
 
    #+begin_src bash
-   (cd /tmp/my-dir
-     ls
-   )
+     (cd /tmp/my-dir
+       ls
+     )
    #+end_src
 
    Remember to =inherit_errexit= or =set -e= inside the subshell if
@@ -369,11 +369,11 @@
    pass functions.  More on that later.
 
    #+begin_src bash
-   mute() {
-     $@ >/dev/null
-   }
+     mute() {
+       $@ >/dev/null
+     }
 
-   mute ls
+     mute ls
    #+end_src
 ** use [[
    Unless you want your script to be POSIX compliant, use =[[= instead
@@ -386,11 +386,11 @@
 
    #+begin_src bash
 
-   # [[ does lazy evaluation:
-   [[ a = b && $(echo foo >&2) ]]
+     # [[ does lazy evaluation:
+     [[ a = b && $(echo foo >&2) ]]
 
-   # [ does not:
-   [ a = b -a "$(echo foo >&2)” ]
+     # [ does not:
+     [ a = b -a "$(echo foo >&2)” ]
    #+end_src
    Ref: https://lists.gnu.org/archive/html/help-bash/2014-06/msg00013.html
 
@@ -408,11 +408,11 @@
 
    It'd look something like this:
    #+begin_src Dockerfile
-   ARG VERSION
-   FROM ubuntu:$VERSION
+     ARG VERSION
+     FROM ubuntu:$VERSION
 
-   RUN apt-get ...
-   ...
+     RUN apt-get ...
+     ...
    #+end_src
 
    We build that image and do all the building inside it, mounting a
@@ -441,7 +441,7 @@
    in a sed.
 
    #+begin_src bash
-    test_release "$PACKAGE_PATH" $(awk '/^FROM /{print $2; exit}' $LOCAL_PATH/$(get_dockerfile_for $DISTRO) | sed -e "s/\$VERSION/$VERSION/")
+     test_release "$PACKAGE_PATH" $(awk '/^FROM /{print $2; exit}' $LOCAL_PATH/$(get_dockerfile_for $DISTRO) | sed -e "s/\$VERSION/$VERSION/")
    #+end_src
 
 ** pass commands around
@@ -450,16 +450,16 @@
    exact same calls in the same order.
 
    #+begin_src bash
-   compare_outputs() {
-     export DRY_RUN=1
-     git checkout b1
-     $@ 2>/tmp/1.out
-     git checkout b2
-     $@ 2>/tmp/2.out
-     echo "diffing"
-     diff /tmp/1.out /tmp/2.out
-   }
-   compare_outputs ./release.sh -p rhel:6 -R 'internal-preview'
+     compare_outputs() {
+       export DRY_RUN=1
+       git checkout b1
+       $@ 2>/tmp/1.out
+       git checkout b2
+       $@ 2>/tmp/2.out
+       echo "diffing"
+       diff /tmp/1.out /tmp/2.out
+     }
+     compare_outputs ./release.sh -p rhel:6 -R 'internal-preview'
    #+end_src
 
    First we create a function =compare_outputs=, that gets a command
@@ -483,14 +483,14 @@
    loops:
 
    #+begin_src shell
-   alias -g SPLIT='| tr " " "\n" '
-   alias -g FORI='| while read i ; do '
-   alias -g IROF='; done '
+     alias -g SPLIT='| tr " " "\n" '
+     alias -g FORI='| while read i ; do '
+     alias -g IROF='; done '
 
-   set -e
-   echo "ga internal-preview rc1 rc2" SPLIT FORI
-      noglob compare_outputs ./release.sh -p rhel:8 -R "$i"
-   IROF
+     set -e
+     echo "ga internal-preview rc1 rc2" SPLIT FORI
+        noglob compare_outputs ./release.sh -p rhel:8 -R "$i"
+     IROF
    #+end_src
 
    So, combining the two, we can have a really smooth way of iterating
@@ -519,18 +519,18 @@
     make the script stricter, so it fails on many situations you'd
     want to stop anyway because something went wrong.
     #+begin_src bash
-    #!/usr/bin/env bash
-    set -eEuo pipefail
-    shopt -s inherit_errexit
+      #!/usr/bin/env bash
+      set -eEuo pipefail
+      shopt -s inherit_errexit
 
-    main() {
-      parse_args()
-      validate_args()
-      do_things()
-      cleanup()
-    }
+      main() {
+        parse_args()
+        validate_args()
+        do_things()
+        cleanup()
+      }
 
-    main "$@"
+      main "$@"
     #+end_src
 
     Ref: https://dougrichardson.us/2018/08/03/fail-fast-bash-scripting.html
@@ -548,10 +548,10 @@
    there.
 
    #+begin_src bash
-   source file.sh
+     source file.sh
 
-   # the same
-   . file.sh
+     # the same
+     . file.sh
    #+end_src
 
 ** Use Scripts as a Libs
@@ -562,12 +562,12 @@
    Again, no side effects in load time makes this functionality
    possible. otherwise, you're on your own.
    #+begin_src bash
-    # Allow sourcing of this script
-    if [[ $(basename "$(realpath "$0")") == "package.sh" ]]; then
-      setup
-      parse_args "$@"
-      main
-    fi
+     # Allow sourcing of this script
+     if [[ $(basename "$(realpath "$0")") == "package.sh" ]]; then
+       setup
+       parse_args "$@"
+       main
+     fi
    #+end_src
 ** Tmpfiles Everywhere
    Your script is not going to run alone. Don't assume paths are
@@ -582,13 +582,13 @@
    If you HAVE TO modify paths, do it idempotently.  But really, don't do it. aa
 
    #+begin_src bash :eval no
-   git_clone_tmp() {
-     local repo=${1:?repo is required}
-     local ref=${2:?ref is required}
-     tmpath=$(mktemp -d "/tmp/cloned-$repo-XXXXX")
-     on_exit "rm -rf $tmpath"
-     git clone -b ${ref} https://"$GITHUB_TOKEN"@github.com/my-org/${repo}.git $tmpath
-   }
+     git_clone_tmp() {
+       local repo=${1:?repo is required}
+       local ref=${2:?ref is required}
+       tmpath=$(mktemp -d "/tmp/cloned-$repo-XXXXX")
+       on_exit "rm -rf $tmpath"
+       git clone -b ${ref} https://"$GITHUB_TOKEN"@github.com/my-org/${repo}.git $tmpath
+     }
    #+end_src
 
    CAVEAT: You have to manually delete the directory if you want it cleaned.
@@ -608,7 +608,9 @@
    #+end_src
 
 ** array of callbacks on_exit
-   Level up that pattern, we can have a helper to add callbacks to run on exit.
+   Level up that pattern, we can have a helper to add callbacks to run
+   on exit. Get used to these kind of patterns, they are super
+   powerful and save you lots of manual bookkeeping.
 
    #+begin_src bash
 
@@ -639,15 +641,15 @@
 
    I've gotten used to use dots or colons as namespace separator.
    #+begin_src bash
-   semver.greater() {
-    # ...
-   }
+     semver.greater() {
+      # ...
+     }
    #+end_src
    or
    #+begin_src bash
-   semver:greater() {
-    # ...
-   }
+     semver:greater() {
+      # ...
+     }
    #+end_src
 ** make steps of the process as composable as possible by using "$@"
    By using =$@= to pass commands as parameters around you can get to
@@ -660,14 +662,14 @@
    bit.
 
    #+begin_src bash
-   every() {
-      secs=$1
-      shift
-      while true; do
-        "$@"
-          sleep $secs;
-      done
-    }
+     every() {
+        secs=$1
+        shift
+        while true; do
+          "$@"
+            sleep $secs;
+        done
+      }
 
    #+end_src
 
@@ -676,18 +678,18 @@
    the alternative is to pass function names.
 
    #+begin_src bash
-   mute() {
-     $@ >/dev/null
-   }
-   mute ls
+     mute() {
+       $@ >/dev/null
+     }
+     mute ls
    #+end_src
 
    So now we can create the most stupid command composition ever:
 
    #+begin_src bash
-   every 1 mute echo hi
-   #or
-   mute every 1 echo hi
+     every 1 mute echo hi
+     #or
+     mute every 1 echo hi
    #+end_src
 
    - https://www.oilshell.org/blog/2017/01/13.html
@@ -700,8 +702,8 @@
    commands without putting them in a temporary file.
 
    #+begin_src bash
-   diff <(date) <(date)
-   diff <(date) <(sleep 1; date)
+     diff <(date) <(2020-10-08)
+     diff <(date) <(sleep 1; date)
    #+end_src
 
    The same hapens with outputs. Commands that ask you for a
@@ -789,7 +791,7 @@
    other commands.  Usual example is
 
    #+begin_src bash
-   alias ls='ls --auto-color'
+     alias ls='ls --auto-color'
    #+end_src
 
    Now let's move on to the interesting stuff.
@@ -809,14 +811,14 @@
    - aliasgen. Create an alias for each directory in
      ~/workspace/. This is superceeded by =CDPATH=, but the trick is
      still cool.
-   #+begin_src zsh
-   aliasgen() {
-     for i in ~/workspace/*(/) ; do
-         DIR=$(basename $i) ;
-          alias $DIR="cd ~/workspace/$i";
-     done
-   }
-   aliasgen
+   #+begin_src bash
+     aliasgen() {
+       for i in ~/workspace/*(/) ; do
+           DIR=$(basename $i) ;
+            alias $DIR="cd ~/workspace/$i";
+       done
+     }
+     aliasgen
    #+end_src
 
    - a make a shortcut to the current directory.
@@ -835,19 +837,19 @@
      functions as parameters (as a string (function name)), so we can
      combine them to advise existing functions.
      #+begin_src bash
-   unhist () {
-     alias $1=" $1"
-   }
-   unhist unhist
-   unhist grep
-   unhist rg
+       unhist () {
+         alias $1=" $1"
+       }
+       unhist unhist
+       unhist grep
+       unhist rg
 
-   noglobber() {
-       alias $1="noglob $1"
-   }
-   noglobber http
-   noglobber curl
-   noglobber git
+       noglobber() {
+           alias $1="noglob $1"
+       }
+       noglobber http
+       noglobber curl
+       noglobber git
 
      #+end_src
 
@@ -906,15 +908,15 @@
    many times you start and kill them.
 
    #+begin_src bash
-   DOCKER_ORIG=$(which docker)
-   docker () {
-       if [[ $1 == "run" ]]; then
-           shift
-           $DOCKER_ORIG run -v $HOME/.shared_bash_history:/root/.bash_history "$@"
-       else
-           $DOCKER_ORIG "$@"
-       fi
-   }
+     DOCKER_ORIG=$(which docker)
+     docker () {
+         if [[ $1 == "run" ]]; then
+             shift
+             $DOCKER_ORIG run -v $HOME/.shared_bash_history:/root/.bash_history "$@"
+         else
+             $DOCKER_ORIG "$@"
+         fi
+     }
    #+end_src
 
    I'm particularly fond of this trick, as it saved me tons of
@@ -932,22 +934,22 @@
 
 ** DRY_RUN
    #+begin_src bash
-   if [[-n $DRY_RUN ]]; then
-     curl () {
-       echo curl $@
-     }
-   fi
+     if [[-n $DRY_RUN ]]; then
+       curl () {
+         echo curl $@
+       }
+     fi
    #+end_src
    use =command curl= to force the command, not the alias or anything
 
 ** Cheap debugging flag
 
    #+begin_src bash
-   optargs "V" option; do
-   case $option in
-     V)
-       set -xa
-     ;;
+     optargs "V" option; do
+     case $option in
+       V)
+         set -xa
+       ;;
    #+end_src
 
 ** explore what passes through a pipe with
@@ -1138,8 +1140,8 @@
    it.
 
    #+begin_src shell
-   invoice1.docx
-   # will effectively call libreoffice invoice1.docx
+     invoice1.docx
+     # will effectively call libreoffice invoice1.docx
    #+end_src
 
    The trick here is that the parser doesn't check that the file is
@@ -1148,7 +1150,7 @@
    Let's look at an example of it.
 
    #+begin_src shell
-   alias -s git="git clone"
+     alias -s git="git clone"
    #+end_src
 
    In this case, we can easily copy a =git@github.com:.....git= from a
@@ -1170,7 +1172,7 @@
    Zsh provides a command to quote the following expansions. And it's
    called noglob.
    #+begin_src bash
-   noglob curl http://example.com\&a[]=1
+     noglob curl http://example.com\&a[]=1
    #+end_src
 
 ** make noglob 'transparent' to bash
@@ -1178,7 +1180,7 @@
    supported in bash. =noglob= is one of them. To do to layer
    inbetween, an easy way is to just create a =~/bin/noglob= file
    #+begin_src bash
-   $*
+     $*
    #+end_src
 * TODO patterns
 ** Use cat
