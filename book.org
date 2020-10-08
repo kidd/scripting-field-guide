@@ -121,12 +121,12 @@
 
 ** Variables
    By default variables are global, to a file. No matter if you assign
-   them for the first time inside a function, or at the top leve.
+   them for the first time inside a function, or at the top level.
    #+begin_src bash
    foo=3
    bar=$foo
    f() {
-     echo $foo
+     echo $bar
    }
    f
    #+end_src
