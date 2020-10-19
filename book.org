@@ -1204,6 +1204,8 @@
   - https://ebzzry.io/en/zsh-tips-1/
   - https://github.com/ssledz/bash-fun
   - https://news.ycombinator.com/item?id=24556022
+  - https://www.datafix.com.au/BASHing/index.html
+
 * from shell to lisp and everything in between
   - https://github.com/oilshell/oil
   - https://www.eigenbahn.com/2020/07/08/painless-emacs-remote-shells
