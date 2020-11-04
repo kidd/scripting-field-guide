@@ -600,11 +600,11 @@
    function for it.
 
    #+begin_src bash
-   on_exit() {
-     rm -rf $1
-   }
-
-   trap "on_exit $(mktemp -d /tmp/foo-bar.XXXXX)" EXIT SIGINT
+     on_exit() {
+       rm -rf $1
+     }
+     local tmpath=$(mktemp -d /tmp/foo-bar.XXXXX)
+     trap "on_exit $tmpath" EXIT SIGINT
    #+end_src
 
 ** array of callbacks on_exit
@@ -693,6 +693,67 @@
    #+end_src
 
    - https://www.oilshell.org/blog/2017/01/13.html
+** do_times/foreach_*
+   shellscripts are highly side-efffecty, and even though the scoping
+   of variables is not very empowering, you can get a limited amount
+   of decomposition of loops by passing function names.
+
+   This is a lame example, but I hope it shows the use case, it allows
+   you to group already existing functions while taking advantage of a
+   fixed looping iterator, and leaving traces of the current loop vars
+   in the global "variable" environment.
+
+   #+begin_src bash
+     create_user() {
+       uname="u$1" # leave uname in the global env so later functions see it
+       http :8080/users name="$uname"
+     }
+
+     create_pet() {
+       pname="p$1"
+       http :8080/users/$uname/pets name="$pname"
+     }
+
+     create_bundle() {
+       create_user $1
+       create_pet $1
+     }
+
+     do_times() {
+       local n=$1; shift
+       for i in $(seq $n); do
+         "$@" $i
+       done
+     }
+
+     do_times 15 create_bundle
+   #+end_src
+
+   A bit more complex is runnning a command to every repo in an org:
+
+   #+begin_src bash
+
+     run_tests() {
+       ./ci/test.sh
+     }
+
+     foreach_repo_with_index() {
+       local counter=0
+       local build_json=$(http https://api.github.com/users/$1/repos )
+       shift
+       for entry in $(echo $build_json | jq -r '.[].git_url'); do
+         (git_clone_tmp $entry master
+          cd $tmpath
+          "$@" $counter $entry
+         )
+         ((counter=counter+1))
+       done
+     }
+
+
+     foreach_plugin_with_index kidd run_tests
+
+   #+end_src
 
 ** undestand <(foo) and >(foo)
    Some commands ask for files as inputs. And sometimes you have that
@@ -1204,6 +1265,8 @@
   - https://ebzzry.io/en/zsh-tips-1/
   - https://github.com/ssledz/bash-fun
   - https://news.ycombinator.com/item?id=24556022
+  - https://www.datafix.com.au/BASHing/index.html
+
 * from shell to lisp and everything in between
   - https://github.com/oilshell/oil
   - https://www.eigenbahn.com/2020/07/08/painless-emacs-remote-shells
