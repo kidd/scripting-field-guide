@@ -587,7 +587,7 @@
        local ref=${2:?ref is required}
        tmpath=$(mktemp -d "/tmp/cloned-$repo-XXXXX")
        on_exit "rm -rf $tmpath"
-       git clone -b ${ref} https://"$GITHUB_TOKEN"@github.com/my-org/${repo}.git $tmpath
+       git clone -b ${ref} $repo $tmpath
      }
    #+end_src
 
@@ -732,16 +732,15 @@
    A bit more complex is runnning a command to every repo in an org:
 
    #+begin_src bash
-
      run_tests() {
        ./ci/test.sh
      }
 
      foreach_repo_with_index() {
        local counter=0
-       local build_json=$(http https://api.github.com/users/$1/repos )
+       local repos=$(http https://api.github.com/users/$1/repos)
        shift
-       for entry in $(echo $build_json | jq -r '.[].git_url'); do
+       for entry in $(echo $repos | jq -r '.[].git_url'); do
          (git_clone_tmp $entry master
           cd $tmpath
           "$@" $counter $entry
@@ -750,9 +749,7 @@
        done
      }
 
-
      foreach_plugin_with_index kidd run_tests
-
    #+end_src
 
 ** undestand <(foo) and >(foo)
