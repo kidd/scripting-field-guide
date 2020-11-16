@@ -524,10 +524,10 @@
       shopt -s inherit_errexit
 
       main() {
-        parse_args()
-        validate_args()
-        do_things()
-        cleanup()
+        parse_args
+        validate_args
+        do_things
+        cleanup
       }
 
       main "$@"
