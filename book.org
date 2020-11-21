@@ -793,6 +793,51 @@
    Xargs is helpful for parallelizing work. You should look at its man
    page, but it can help in running parallel processes (check =-P= in
    its man).
+** change loops for "mapping" functions
+*** find
+    Many times we want to run the same operation, or test to lots of
+    files. Instead of looping for each file, think if =find -exec=
+    would solve it. Also, find supports multiple directories.
+
+    #+begin_src bash
+      dirs=("/usr/local/bin" "/usr/bin")
+      for d in "${dirs[@]}"; do
+        for f in $(find "$d"); do
+          echo "check if owner of $f is johndoe and group is johndoe"
+          [ `stat -c %U:%G $f` == "johndoe:johndoe" ] || die "error"
+        done
+      done
+    #+end_src
+
+    Compare it to:
+
+    #+begin_src bash
+      [ $(find "$dirs[@]" -exec stat -c '%U:%G' {} \; | grep -vc "johndoe:johndoe") == "0" ] || die "error"
+    #+end_src
+
+*** grep -Fvf
+    Three magical flags that go well together.
+
+    =-f= list of patterns to match as a file.
+    =-F= interpret the "pattern" as a Fixed string, not a pattern/regex
+    =-v= negate the output. Print non matching lines.
+
+    The cool thing about combining =-f= and =-v= is that the negative
+    matches mean "lines that are not ANY of the ones in the pattern
+    list". So you can do list diffing. like =sort + diff= but more
+    flexible.
+
+    Here's a practical case of finding version numbers that we have a
+    tag for, that do not have a title in the readme
+
+    #+begin_src bash
+      f="readme.md"
+      ! grep -Fvf <(grep -P "^# \d\.\d\.\d\.\d$" "$f" | sed -e 's/^# //') \
+                  <(git tag | grep -P "^\d\.\d\.\d\.\d$")
+    #+end_src
+
+
+
 ** inherit_errexit
    bash 4.4+ , you can =shopt -s inherit_errexit=, and subshells will
    inherit the errexit flag value. meaning that if you =set -Ee=,
