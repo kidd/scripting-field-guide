@@ -563,7 +563,7 @@
    possible. otherwise, you're on your own.
    #+begin_src bash
      # Allow sourcing of this script
-     if [[ $(basename "$(realpath "$0")") == "package.sh" ]]; then
+     if [[ $(basename "$(realpath "$0")") == "${BASH_SOURCE}" ]]; then
        setup
        parse_args "$@"
        main
