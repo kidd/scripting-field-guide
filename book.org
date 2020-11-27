@@ -9,7 +9,7 @@
 #+LANGUAGE: en
 #+SELECT_TAGS: export
 
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/setup/theme-readtheorg.setup
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
 #+OPTIONS: reveal_center:nil timestamp:nil
 #+REVEAL_THEME: black
