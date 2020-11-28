@@ -767,15 +767,18 @@
    The same hapens with outputs. Commands that ask you for a
    destination file. You can trick them by using =>(command)= as a
    file. A nice trick is to use =>(cat)= to know what's going on
-   there.
+   there. Also useful to send stuff to the clipboard =>(xclip)= before
+   running something on the output.
 
    What the shell does in those cases is to bind a file descriptor of
-   the process created inside =</>= to the first process.
+   the process created inside =< or >= to the first process.
 
    You can experiment with those using commands like =echo <(pwd)=.
 
-   # In Zsh you can use =m-x expand-word= to see the file descriptors
-   # being expanded.
+   In Zsh you can use =m-x expand-word= to see the file descriptors
+   being expanded.
+
+   A way to peek into a huge pipe is to =tee >(cat)=
 
 ** Use xargs
    Continuing with other ways of plumbing commands into other
@@ -793,6 +796,7 @@
    Xargs is helpful for parallelizing work. You should look at its man
    page, but it can help in running parallel processes (check =-P= in
    its man).
+
 ** change loops for "mapping" functions
 *** find
     Many times we want to run the same operation, or test to lots of
@@ -1058,6 +1062,8 @@
 ** explore what passes through a pipe with
    - https://stackoverflow.com/questions/17983777/shell-pipe-to-multiple-commands-in-a-file
    tee >(some_command) |
+
+
 ** quoting
    Bash: To get a quoted version of a given string, here's what you can do:
    #+begin_src bash
@@ -1286,7 +1292,49 @@
      $*
    #+end_src
 * TODO patterns
-** Use cat
+** just use cat/netcat/pipes with <()
+
+- input
+
+  =python logger.py executable= will run the executable and monitor it
+  for error messages. Depending on the error messages it will be doing.
+
+  In order to test it, I want to run it with my own output. So what I
+  do is =python logger.py cat=. That way I can type my stuff there,
+  and even better, I can use a stream from the shell. =myexecutable |
+  python logger.py cat= still works.
+
+*** what's the unifying theory behind all that?
+    It's still not clear to me how they relate, but the feeling is
+    that there's a common thread ruling all those commands. as if they
+    generalize over the same things, or just a couple of very
+    interrelated things.
+
+    =echo= is to =cat= what =|= is to =xargs=. and =<()= and =>()= are
+    able to make static files be dynamic streams. putting =cat= and
+    =echo= inside =<()= seem like either a noop, or a leap in what can
+    be done there. Still have to figure it out.
+
+   <(grep a file.txt) , | xargs , cat, echo
+  | you-have\it-wants | executable  | file                 | stream         |
+  | executable        | X           | <(exe)               | exe \vert      |
+  | file              | <(cat file) | X                    | cat file \vert |
+  | stream            | cat         | <(grep foo file.txt) | X              |
+
+
+- output
+
+  Most of those can be tested with and =tee=. Sometimes you would like
+  the output to be an output to a file to be extramassaged.
+
+   | you-have\it-wants | executable | file       | stream |
+   | executable        | X          | >()        |        |
+   | file              |            | X          |        |
+   | stream            |            | >(cat) | X      |
+
+   lnav <(tail -F /my/logfile-that-gets-rotated-or-truncated.log)
+   cat <(date)
+
 ** append options in an array during the logic of the program
    And splat them in the cli of the command you're throwing (docker run?)
 ** pass flags as a splatted array
