@@ -819,6 +819,16 @@
       [ $(find "$dirs[@]" -exec stat -c '%U:%G' {} \; | grep -vc "johndoe:johndoe") == "0" ] || die "error"
     #+end_src
 
+    Other examples might be:
+    #+begin_src bash
+      # count all lines of all docx in this dir
+      find . -type f -name "*docx" -exec pandoc "{}" -t plain \; | wc
+
+      #All your files have the same owner and group permissions
+      [ $(find "$files[@]" -exec stat -c '%a' {} \; | grep -Evc "^(.)\1") == "0" ]
+
+
+    #+end_src
 *** grep -Fvf
     Three magical flags that go well together.
 
