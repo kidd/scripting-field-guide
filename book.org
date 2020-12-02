@@ -503,11 +503,11 @@
    tools to make interaction faster builds a language that grows on
    you, and keeps improving your toolbelt.
 
-** structure the app like a normal app
+** The Toplevel Is Hopeless[fn:1]
    Shellscripts are thought as quick one-off programs, but when they
    are useful, they are sticky, so you better write them from the
    start as if it would be permanent. The upfront cost is very low
-   anyway.
+   anyway. Structure the script like a regular app.
 *** Template
     Bash is extremely permissive in what it allows to be coded and
     ran. By default, failures do not make the program exit or throw an
@@ -1386,6 +1386,7 @@
    #+begin_src bash
      $*
    #+end_src
+
 * TODO patterns
 ** just use cat/netcat/pipes with <()
 
@@ -1470,3 +1471,6 @@
   - nikisweeting provided some very nice examples in this HN therad
     https://news.ycombinator.com/item?id=24402571 which I'll be
     pulling in as time allows.
+
+* Footnotes
+[fn:1] https://gist.github.com/samth/3083053df
