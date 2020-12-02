@@ -1069,10 +1069,20 @@
        ;;
    #+end_src
 
-** explore what passes through a pipe with
-   - https://stackoverflow.com/questions/17983777/shell-pipe-to-multiple-commands-in-a-file
-   tee >(some_command) |
+** explore a pipe with tee >(some_command) |
+   the =>()= is not very easy to use. Very few places where it
+   fits. Here's a nice pipe inspector though, using =tee >(cat 1>&2)=
+   trick.
+   #+begin_src bash
+     plog() {
+       # tee >(cat 1>&2)
+       local msg=${1:-plog}
+       tee >(sed -e "s/^/[$msg] /" | cat 1>&2 )
+     }
+     alias -g 'PL'=' |plog ' #zsh only
 
+   #+end_src
+   ref: https://stackoverflow.com/questions/17983777/shell-pipe-to-multiple-commands-in-a-file
 
 ** quoting
    Bash: To get a quoted version of a given string, here's what you can do:
@@ -1348,6 +1358,34 @@
 ** append options in an array during the logic of the program
    And splat them in the cli of the command you're throwing (docker run?)
 ** pass flags as a splatted array
+
+   #+begin_src bash
+     # Allows Ctrl-C'ing on interactive shells
+     INTERACTIVE=
+     if [[ -t 1 ]]; then INTERACTIVE="-it"; fi
+
+     local flags=(
+       # We mount it as read-only, so we make sure we are not writing anything
+       # in there, and that everything is explicitly defined
+       "-v $LOCAL_PATH/build-dir:/build-dir:ro,delegated"
+       "-v $OUTPUT_DIR:/output:rw,consistent"
+       "-v $tmp_dir:/tmp/work:rw,delegated"
+     )
+     if [[ -n $LOCAL_PATH ]]; then
+       flags+=("-v $(realpath $LOCAL_PATH)/overrides/my-other-file:/build-dir/build.json:ro")
+       flags+=("-e LOCAL_PATH=/tmp/local")
+     fi
+
+     local v_id=$(docker volume create)
+     flags+=("-v $v_id:/tmp/build")
+     on_exit "docker volume rm $v_id"
+
+     docker run --rm $INTERACTIVE ${flags[*]} $image touch /tmp/build/foo.txt
+
+     docker run --rm $INTERACTIVE ${flags[*]} fpm:latest fpm-build /tmp/build/foo.txt
+     on_exit "chown_cache $tmp_dir"
+
+   #+end_src
 ** redirects
    - https://catonmat.net/ftp/bash-redirections-cheat-sheet.pdf
    - https://catonmat.net/bash-one-liners-explained-part-three
