@@ -93,6 +93,31 @@
    (which you read like "and"), 0 is true. so yes. 0 is true, and
    other values are false.
 
+** Arrays
+   Ordered list of things.
+   #+begin_src bash
+     foo=("ls" "/tmp/")
+
+     echo ${foo[-2]}
+     echo ${foo[-1]}
+     echo ${foo[0]}
+     echo ${foo[1]}
+     echo ${foo[2]}
+
+     for i in "${foo[@]}"; do
+       echo $i
+     done
+
+     $foo
+     ${foo[*]}
+     ${foo[@]}
+     echo ${#foo[*]}
+     echo ${#foo[@]}
+     #+end_src
+
+   Are =*= and =@= equal? [[https://stackoverflow.com/questions/2761723/what-is-the-difference-between-and-in-shell-scripts][nope]].
+
+
 ** Functions
    Functions are functions. They receive arguments, and they return a
    value.
