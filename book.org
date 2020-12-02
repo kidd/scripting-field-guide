@@ -852,6 +852,55 @@
 
 
 
+** pass flags as a splatted array
+   There's quite a bit to chew on this example. First of all, the core
+   pattern is to build up your commandline options with an array, and
+   splat it in the final command line. For complex commands like
+   =docker= where you easily have 10+ flags it's a visual aid, and
+   also opens up the opportunities for reusing or abstracting sets of
+   options to logical blocks.
+
+   Once it's an array, we can add elements conditionally to that array
+   depending on the current run, and build the line that we'll be
+   running in the end.
+
+   #+begin_src bash
+     # Allows Ctrl-C'ing on interactive shells
+     INTERACTIVE=
+     if [[ -t 1 ]]; then INTERACTIVE="-it"; fi
+
+     local flags=(
+       # We mount it as read-only, so we make sure we are not writing anything
+       # in there, and that everything is explicitly defined
+       "-v $LOCAL_PATH/build-dir:/build-dir:ro,delegated"
+       "-v $OUTPUT_DIR:/output:rw,consistent"
+       "-v $tmp_dir:/tmp/work:rw,delegated"
+     )
+     if [[ -n $LOCAL_PATH ]]; then
+       flags+=("-v $(realpath $LOCAL_PATH)/overrides/my-other-file:/build-dir/build.json:ro")
+       flags+=("-e LOCAL_PATH=/tmp/local")
+     fi
+
+     local v_id=$(docker volume create)
+     flags+=("-v $v_id:/tmp/build")
+     on_exit "docker volume rm $v_id"
+
+     docker run --rm $INTERACTIVE ${flags[*]} $image touch /tmp/build/foo.txt
+
+     docker run --rm $INTERACTIVE ${flags[*]} fpm:latest fpm-build /tmp/build/foo.txt
+     on_exit "chown_cache $tmp_dir"
+   #+end_src
+
+   In this example we see another cool trick. Mounting a volume in 2
+   differrent containers, so not for the purpose of sharing a local
+   file/dir with the host but to share it between themselves. In that
+   case, the 2 containers don't even coexist temporarily, but use the
+   volume as a conveyor belt, passing it from container to container,
+   and each one applies "its thing".
+
+   After all the mess, someone has to cleanup everything, but we know
+   how to do it with =on_exit= trick.
+
 ** inherit_errexit
    bash 4.4+ , you can =shopt -s inherit_errexit=, and subshells will
    inherit the errexit flag value. meaning that if you =set -Ee=,
@@ -1374,37 +1423,6 @@
    lnav <(tail -F /my/logfile-that-gets-rotated-or-truncated.log)
    cat <(date)
 
-** append options in an array during the logic of the program
-   And splat them in the cli of the command you're throwing (docker run?)
-** pass flags as a splatted array
-
-   #+begin_src bash
-     # Allows Ctrl-C'ing on interactive shells
-     INTERACTIVE=
-     if [[ -t 1 ]]; then INTERACTIVE="-it"; fi
-
-     local flags=(
-       # We mount it as read-only, so we make sure we are not writing anything
-       # in there, and that everything is explicitly defined
-       "-v $LOCAL_PATH/build-dir:/build-dir:ro,delegated"
-       "-v $OUTPUT_DIR:/output:rw,consistent"
-       "-v $tmp_dir:/tmp/work:rw,delegated"
-     )
-     if [[ -n $LOCAL_PATH ]]; then
-       flags+=("-v $(realpath $LOCAL_PATH)/overrides/my-other-file:/build-dir/build.json:ro")
-       flags+=("-e LOCAL_PATH=/tmp/local")
-     fi
-
-     local v_id=$(docker volume create)
-     flags+=("-v $v_id:/tmp/build")
-     on_exit "docker volume rm $v_id"
-
-     docker run --rm $INTERACTIVE ${flags[*]} $image touch /tmp/build/foo.txt
-
-     docker run --rm $INTERACTIVE ${flags[*]} fpm:latest fpm-build /tmp/build/foo.txt
-     on_exit "chown_cache $tmp_dir"
-
-   #+end_src
 ** redirects
    - https://catonmat.net/ftp/bash-redirections-cheat-sheet.pdf
    - https://catonmat.net/bash-one-liners-explained-part-three
