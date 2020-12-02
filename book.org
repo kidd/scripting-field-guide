@@ -1094,9 +1094,9 @@
 
 * Debugging
 ** adding =bash= to a script to debug
-   You can add =bash= inside any script, and it will add as a
-   breakpoint, allowing you to check the state of the env and manually
-   call functions around.
+   You can add =bash= inside any script, and it'll add a sort of
+   a breakpoint, allowing you to check the state of the env and
+   manually call functions around.
 
    If you orgainse your code in small functions, it's easy to add
    breakpoints by just spawning bash processes inside your script.
@@ -1104,17 +1104,24 @@
    This works also inside docker containers (if you provide =-ti= flag
    on run).
 
-   Let's compare some usual uses of docker and how we can debug our scripts there
+   Let's see some usual uses of docker and how we can debug our
+   scripts there:
 
    #+begin_src bash
-     # leaves you at a console to fiddle if everything is in place
-     docker run -it mycomplex-built-image bash
-     # Runs /tmp/file.sh from the host inside
-     docker run -it -v $PWD:/tmp/file.sh ubuntu /tmp/file.sh
+     # leaves you at a shell to fiddle if all is in place after build
+     docker run -it mycomplex-image bash
+
+     # Runs /tmp/file.sh from the host inside. That's cool to make the
+     # container less hermetic. Even if the image is not originally ment
+     # to, you can even override it and 'monkeypatch' the file with the one
+     # from the host anyway.
+     docker run -it -v $PWD:/tmp/file.sh mycomplex-image /tmp/file.sh
+
+     # So now you can really add wtv you want there.
      echo 'bash' >>$PWD/file.sh
-     # edit the script adding a call to bash
-     docker run -it -v $PWD:/tmp/file.sh ubuntu /tmp/file.sh
+
      # run+open shell at runtime to inspect the state of the script
+     docker run -it -v $PWD:/tmp/file.sh mycomplex-image /tmp/file.sh
    #+end_src
 
 ** DRY_RUN
