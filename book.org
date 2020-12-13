@@ -1181,7 +1181,17 @@
      }
      alias -g 'PL'=' |plog ' #zsh only
 
+     echo "a\nb" PL foo | tr 'a-z' 'A-Z' PL bar
+     # output:
+     # [foo] a     # stderr
+     # [foo] b     # stderr
+     # A           # stdout
+     # B           # stdout
+     # [bar] A     # stderr
+     # [bar] b     # stderr
    #+end_src
+
+
    ref: https://stackoverflow.com/questions/17983777/shell-pipe-to-multiple-commands-in-a-file
 
 ** quoting
