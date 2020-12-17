@@ -117,7 +117,6 @@
 
    Are =*= and =@= equal? [[https://stackoverflow.com/questions/2761723/what-is-the-difference-between-and-in-shell-scripts][nope]].
 
-
 ** Functions
    Functions are functions. They receive arguments, and they return a
    value.
@@ -143,6 +142,7 @@
 
    #+RESULTS:
    : hi
+
 
 ** Variables
    By default variables are global, to a file. No matter if you assign
@@ -189,6 +189,18 @@
    | 4 |
    | 3 |
    | 4 |
+** Variable Expansions
+   Take a read on
+   https://tldp.org/LDP/abs/html/string-manipulation.html#SUBSTRREPL00.
+   And a nice non-obvious trick from here is to join an array with a
+   fixed string:
+
+   #+begin_src bash
+     local arr=(var1 var2)
+     echo ${arr[@]/#/"--env "}
+   #+end_src
+   This will produce =--env var1 --env var2=.
+
 ** Interpolation
    We previously saw that functions can be passed around as strings,
    and be called later on.
@@ -874,7 +886,6 @@
       ! grep -Fvf <(grep -P "^# \d\.\d\.\d\.\d$" "$f" | sed -e 's/^# //') \
                   <(git tag | grep -P "^\d\.\d\.\d\.\d$")
     #+end_src
-
 
 
 ** pass flags as a splatted array
