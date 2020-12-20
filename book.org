@@ -190,16 +190,46 @@
    | 3 |
    | 4 |
 ** Variable Expansions
-   Take a read on
-   https://tldp.org/LDP/abs/html/string-manipulation.html#SUBSTRREPL00.
-   And a nice non-obvious trick from here is to join an array with a
-   fixed string:
+   This is bash/zsh only. They offer some variable manipulations using
+   shell only, not having to create another process =sed,awk,perl=.
+
 
    #+begin_src bash
-     local arr=(var1 var2)
-     echo ${arr[@]/#/"--env "}
+     v=banana
+     # substitute one
+     echo ${v/na/NA}   # baNAna
+     # substitute many
+     echo ${v//na/NA}  # baNANA
+
+     # substitute from the start (think ^ in PCRE)
+     echo ${v/#ba/NA}  # NAnana
+
+     # substitute from the end
+     echo ${v/%na/NA}  # banaNA
    #+end_src
-   This will produce =--env var1 --env var2=.
+
+   Take a read on
+   https://tldp.org/LDP/abs/html/string-manipulation.html#SUBSTRREPL00
+   for more details.
+
+   And a nice non-obvious trick from here is to prefix or suffix a
+   variable string:
+
+   #+begin_src bash
+     v=banana
+     echo ${v/%/na}   # bananana
+     echo ${v/#/na}   # nabanana
+   #+end_src
+
+   And a less obvious trick is to prefix every element of an array
+   with a fixed string:
+   #+begin_src bash
+     local arr=(var1=1 var2=2)
+     echo ${arr[*]/#/"--env "}
+   #+end_src
+
+   This will produce =--env var1 --env var2=.  Super useful to be
+   combined when building flags for docker.
 
 ** Interpolation
    We previously saw that functions can be passed around as strings,
