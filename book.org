@@ -1549,4 +1549,4 @@
     pulling in as time allows.
 
 * Footnotes
-[fn:1] https://gist.github.com/samth/3083053df
+[fn:1] https://gist.github.com/samth/3083053
