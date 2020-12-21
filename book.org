@@ -190,9 +190,8 @@
    | 3 |
    | 4 |
 ** Variable Expansions
-   This is bash/zsh only. They offer some variable manipulations using
-   shell only, not having to create another process =sed,awk,perl=.
-
+   They offer some variable manipulations using shell only, not having
+   to create another process =sed,awk,perl=.
 
    #+begin_src bash
      v=banana
@@ -208,8 +207,9 @@
      echo ${v/%na/NA}  # banaNA
    #+end_src
 
-   Take a read on
-   https://tldp.org/LDP/abs/html/string-manipulation.html#SUBSTRREPL00
+   Take a read on https://tldp.org/LDP/abs/html/manipulatingvars.html
+   and
+   https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
    for more details.
 
    And a nice non-obvious trick from here is to prefix or suffix a
@@ -230,7 +230,6 @@
 
    This will produce =--env var1=1 --env var2=2=.  Super useful to be
    combined when building flags for docker.
-
 ** Interpolation
    We previously saw that functions can be passed around as strings,
    and be called later on.
@@ -509,6 +508,14 @@
 
    #+begin_src bash
      test_release "$PACKAGE_PATH" $(awk '/^FROM /{print $2; exit}' $LOCAL_PATH/$(get_dockerfile_for $DISTRO) | sed -e "s/\$VERSION/$VERSION/")
+   #+end_src
+
+   Yet another way is using [[https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html][shell parameter expansions.]]
+   #+begin_src bash
+     var1=lol
+     echo 'this is $var1' >/tmp/f.txt
+     f=$(cat /tmp/f.txt)
+     echo "${f@P}"  # this is lol
    #+end_src
 
 ** pass commands around
@@ -1514,8 +1521,9 @@
    https://www.reddit.com/r/oilshell/comments/f6of85/four_more_posts_in_shell_the_good_parts/
 * links
   - https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html
-  - https://mywiki.wooledge.org/BashPitfalls
+  - https://www.gnu.org/software/bash/manual/html_node/
   - https://tldp.org/LDP/abs/html/
+  - https://mywiki.wooledge.org/BashPitfalls
   - Gary Bernhardt. The Unix Chainsaw
   - https://news.ycombinator.com/item?id=23765123
   - https://medium.com/@joydeepubuntu/functional-programming-in-bash-145b6db336b7
@@ -1526,6 +1534,8 @@
   - https://news.ycombinator.com/item?id=24556022
   - https://www.datafix.com.au/BASHing/index.html
   - https://susam.github.io/tucl/the-unix-command-language.html
+  - https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html
+  - https://github.com/dylanaraps/pure-sh-bible
 
 * from shell to lisp and everything in between
   - https://github.com/oilshell/oil
