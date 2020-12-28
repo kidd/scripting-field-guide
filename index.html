@@ -262,103 +262,103 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org14ce70c">1. Introduction</a></li>
-<li><a href="#org2a6529d">2. Which Shell?</a></li>
-<li><a href="#org3d6ca2c">3. Level</a></li>
-<li><a href="#orgccd9635">4. Patterns</a>
+<li><a href="#org3ae1829">1. Introduction</a></li>
+<li><a href="#orgc3efa6a">2. Which Shell?</a></li>
+<li><a href="#orgeebb5b7">3. Level</a></li>
+<li><a href="#org60c8962">4. Patterns</a>
 <ul>
-<li><a href="#orgfb32355">4.1. Use Shellcheck</a></li>
-<li><a href="#org1dcbb8b">4.2. Overview</a></li>
-<li><a href="#orga402ed4">4.3. Booleans and Conditionals</a></li>
-<li><a href="#org9615228">4.4. Arrays</a></li>
-<li><a href="#orgcbc915a">4.5. Functions</a></li>
-<li><a href="#orgbc5da61">4.6. Variables</a></li>
-<li><a href="#orgbd67d54">4.7. Variable Expansions</a></li>
-<li><a href="#orgc8ab340">4.8. Interpolation</a></li>
-<li><a href="#org2bf315d">4.9. dispatch functions using args</a></li>
-<li><a href="#org96c70fe">4.10. command_not_found_handle</a></li>
-<li><a href="#org2243e48">4.11. Return Values for Conditionals</a></li>
-<li><a href="#org2ffbff2">4.12. Do work on loop conditions</a></li>
-<li><a href="#orgc687ff8">4.13. One Branch Conditionals</a></li>
-<li><a href="#org4d158ea">4.14. pushd/popd</a></li>
-<li><a href="#org0fe7749">4.15. wrap functions</a></li>
-<li><a href="#orge11945f">4.16. use [[</a></li>
-<li><a href="#orgfa73158">4.17. eval?</a></li>
-<li><a href="#org9daaf06">4.18. pass commands around</a></li>
-<li><a href="#orgc86f2f8">4.19. The Toplevel Is Hopeless</a>
+<li><a href="#org305ae67">4.1. Use Shellcheck</a></li>
+<li><a href="#org9512f85">4.2. Overview</a></li>
+<li><a href="#org56d8767">4.3. Booleans and Conditionals</a></li>
+<li><a href="#org527fdae">4.4. Arrays</a></li>
+<li><a href="#org72460ff">4.5. Functions</a></li>
+<li><a href="#org40f0be2">4.6. Variables</a></li>
+<li><a href="#org98f60f2">4.7. Variable Expansions</a></li>
+<li><a href="#org9e24d9d">4.8. Interpolation</a></li>
+<li><a href="#org259e9e8">4.9. dispatch functions using args</a></li>
+<li><a href="#org040f4bb">4.10. command_not_found_handle</a></li>
+<li><a href="#org134216a">4.11. Return Values for Conditionals</a></li>
+<li><a href="#org8b3f5a6">4.12. Do work on loop conditions</a></li>
+<li><a href="#org9078b3d">4.13. One Branch Conditionals</a></li>
+<li><a href="#org7ca08f1">4.14. pushd/popd</a></li>
+<li><a href="#orga03ed60">4.15. wrap functions</a></li>
+<li><a href="#org7846733">4.16. use [[</a></li>
+<li><a href="#org3b81fd2">4.17. eval?</a></li>
+<li><a href="#org2e15f2e">4.18. pass commands around</a></li>
+<li><a href="#org1cbd9f6">4.19. The Toplevel Is Hopeless</a>
 <ul>
-<li><a href="#orgb3c5311">4.19.1. Template</a></li>
+<li><a href="#org6669271">4.19.1. Template</a></li>
 </ul>
 </li>
-<li><a href="#orgf04a51c">4.20. source files</a></li>
-<li><a href="#org598b1b2">4.21. Use Scripts as a Libs</a></li>
-<li><a href="#org5428bb3">4.22. Tmpfiles Everywhere</a></li>
-<li><a href="#orgaef139b">4.23. Cleanup tasks with trap</a></li>
-<li><a href="#orgc3b44ff">4.24. array of callbacks on_exit</a></li>
-<li><a href="#orgc2025ba">4.25. Dots and colons allowed in function names!</a></li>
-<li><a href="#org33fbf03">4.26. make steps of the process as composable as possible by using "$@"</a></li>
-<li><a href="#org60f0ded">4.27. do_times/foreach_*</a></li>
-<li><a href="#orgf16785c">4.28. undestand &lt;(foo) and &gt;(foo)</a></li>
-<li><a href="#org9cb335f">4.29. Use xargs</a></li>
-<li><a href="#org1531690">4.30. change loops for "mapping" functions</a>
+<li><a href="#orgf6034af">4.20. source files</a></li>
+<li><a href="#org975ad6d">4.21. Use Scripts as a Libs</a></li>
+<li><a href="#org4108867">4.22. Tmpfiles Everywhere</a></li>
+<li><a href="#org058920b">4.23. Cleanup tasks with trap</a></li>
+<li><a href="#org2aeb11f">4.24. array of callbacks on_exit</a></li>
+<li><a href="#orgf450743">4.25. Dots and colons allowed in function names!</a></li>
+<li><a href="#org55bd84f">4.26. make steps of the process as composable as possible by using "$@"</a></li>
+<li><a href="#org0b31e4a">4.27. do_times/foreach_*</a></li>
+<li><a href="#org9489377">4.28. undestand &lt;(foo) and &gt;(foo)</a></li>
+<li><a href="#org0847d85">4.29. Use xargs</a></li>
+<li><a href="#orge5b4a47">4.30. change loops for "mapping" functions</a>
 <ul>
-<li><a href="#orgfd28977">4.30.1. find</a></li>
-<li><a href="#org0694bd7">4.30.2. grep -Fvf</a></li>
+<li><a href="#org8d6e62a">4.30.1. find</a></li>
+<li><a href="#org780a013">4.30.2. grep -Fvf</a></li>
 </ul>
 </li>
-<li><a href="#org808107a">4.31. pass flags as a splatted array</a></li>
-<li><a href="#org3de2484">4.32. inherit_errexit</a></li>
-<li><a href="#org8be3ad1">4.33. GNU Parallel</a></li>
+<li><a href="#orgf250e7d">4.31. pass flags as a splatted array</a></li>
+<li><a href="#org56695c8">4.32. inherit_errexit</a></li>
+<li><a href="#org2996541">4.33. GNU Parallel</a></li>
 </ul>
 </li>
-<li><a href="#orga8cdec9">5. Interactive</a>
+<li><a href="#orgad781fe">5. Interactive</a>
 <ul>
-<li><a href="#orga79df4c">5.1. Save your small scripts</a></li>
-<li><a href="#orgd32dfa8">5.2. Increased Interactivity</a></li>
-<li><a href="#org5955545">5.3. Aliases</a></li>
-<li><a href="#org0c96630">5.4. functions can generate aliases</a></li>
-<li><a href="#orgc83d5ab">5.5. Override (advise?) common functions</a></li>
+<li><a href="#org08162b0">5.1. Save your small scripts</a></li>
+<li><a href="#org217d292">5.2. Increased Interactivity</a></li>
+<li><a href="#org25a051b">5.3. Aliases</a></li>
+<li><a href="#org264a541">5.4. functions can generate aliases</a></li>
+<li><a href="#orgbfe6506">5.5. Override (advise?) common functions</a></li>
 </ul>
 </li>
-<li><a href="#org9ffe4d2">6. Debugging</a>
+<li><a href="#orgaab2281">6. Debugging</a>
 <ul>
-<li><a href="#orga734c11">6.1. adding <code>bash</code> to a script to debug</a></li>
-<li><a href="#org5e5e361">6.2. DRY_RUN</a></li>
-<li><a href="#org3a0884e">6.3. Cheap debugging flag</a></li>
-<li><a href="#org68b7289">6.4. explore a pipe with tee &gt;(some_command) |</a></li>
-<li><a href="#org020b175">6.5. quoting</a></li>
+<li><a href="#orgfd52d2d">6.1. adding <code>bash</code> to a script to debug</a></li>
+<li><a href="#orgdd9c3d1">6.2. DRY_RUN</a></li>
+<li><a href="#org5bedaab">6.3. Cheap debugging flag</a></li>
+<li><a href="#orgfa13a29">6.4. explore a pipe with tee &gt;(some_command) |</a></li>
+<li><a href="#org0ffaf90">6.5. quoting</a></li>
 </ul>
 </li>
-<li><a href="#org3cf475c">7. zsh-only</a>
+<li><a href="#org805292f">7. zsh-only</a>
 <ul>
-<li><a href="#org383b3ef">7.1. globbing</a></li>
-<li><a href="#org9b25b27">7.2. Some global aliases:</a></li>
-<li><a href="#org568cc95">7.3. Create helpers and generate global aliases automagically</a></li>
-<li><a href="#orgd0d255e">7.4. suffix aliases don't have to match a filename</a></li>
-<li><a href="#orge97cc78">7.5. noglob</a></li>
-<li><a href="#org05cd717">7.6. make noglob 'transparent' to bash</a></li>
+<li><a href="#org241312d">7.1. globbing</a></li>
+<li><a href="#orgedfe607">7.2. Some global aliases:</a></li>
+<li><a href="#orgcb8cfe1">7.3. Create helpers and generate global aliases automagically</a></li>
+<li><a href="#orgf241842">7.4. suffix aliases don't have to match a filename</a></li>
+<li><a href="#orgc964cf6">7.5. noglob</a></li>
+<li><a href="#org4a7ea84">7.6. make noglob 'transparent' to bash</a></li>
 </ul>
 </li>
-<li><a href="#org5015d3a">8. <span class="todo TODO">TODO</span> patterns</a>
+<li><a href="#orgbf1713c">8. <span class="todo TODO">TODO</span> patterns</a>
 <ul>
-<li><a href="#org93f5639">8.1. just use cat/netcat/pipes with &lt;()</a>
+<li><a href="#org096e13a">8.1. just use cat/netcat/pipes with &lt;()</a>
 <ul>
-<li><a href="#orgd45821e">8.1.1. what's the unifying theory behind all that?</a></li>
+<li><a href="#org21ada04">8.1.1. what's the unifying theory behind all that?</a></li>
 </ul>
 </li>
-<li><a href="#org02bf2e6">8.2. redirects</a></li>
-<li><a href="#orgcdf14b1">8.3. The $0 pattern</a></li>
+<li><a href="#org1831a52">8.2. redirects</a></li>
+<li><a href="#org4188e42">8.3. The $0 pattern</a></li>
 </ul>
 </li>
-<li><a href="#orgc46a6b2">9. links</a></li>
-<li><a href="#org76af65f">10. from shell to lisp and everything in between</a></li>
-<li><a href="#org9e716ff">11. Credits</a></li>
+<li><a href="#orgd60ffbc">9. links</a></li>
+<li><a href="#org6eddb37">10. from shell to lisp and everything in between</a></li>
+<li><a href="#org2d15d7a">11. Credits</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org14ce70c" class="outline-2">
-<h2 id="org14ce70c"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-org3ae1829" class="outline-2">
+<h2 id="org3ae1829"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This booklet is intended to be a catalog of tricks and techniques
@@ -389,8 +389,8 @@ mutation rate.
 </p>
 </div>
 </div>
-<div id="outline-container-org2a6529d" class="outline-2">
-<h2 id="org2a6529d"><span class="section-number-2">2</span> Which Shell?</h2>
+<div id="outline-container-orgc3efa6a" class="outline-2">
+<h2 id="orgc3efa6a"><span class="section-number-2">2</span> Which Shell?</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 No matter if you use Linux, Mac, or Windows, you should be living
@@ -406,8 +406,8 @@ are compatible for the most part.
 </p>
 </div>
 </div>
-<div id="outline-container-org3d6ca2c" class="outline-2">
-<h2 id="org3d6ca2c"><span class="section-number-2">3</span> Level</h2>
+<div id="outline-container-orgeebb5b7" class="outline-2">
+<h2 id="orgeebb5b7"><span class="section-number-2">3</span> Level</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 These examples are based on non-trivial real world code I've written
@@ -418,12 +418,12 @@ available info around.
 </p>
 </div>
 </div>
-<div id="outline-container-orgccd9635" class="outline-2">
-<h2 id="orgccd9635"><span class="section-number-2">4</span> Patterns</h2>
+<div id="outline-container-org60c8962" class="outline-2">
+<h2 id="org60c8962"><span class="section-number-2">4</span> Patterns</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-orgfb32355" class="outline-3">
-<h3 id="orgfb32355"><span class="section-number-3">4.1</span> Use Shellcheck</h3>
+<div id="outline-container-org305ae67" class="outline-3">
+<h3 id="org305ae67"><span class="section-number-3">4.1</span> Use Shellcheck</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 First, let's get that out of the way. This is low hanging
@@ -467,8 +467,8 @@ Shellcheck is available on most distros, so it's just an <code>apt</code>,
 </div>
 </div>
 
-<div id="outline-container-org1dcbb8b" class="outline-3">
-<h3 id="org1dcbb8b"><span class="section-number-3">4.2</span> Overview</h3>
+<div id="outline-container-org9512f85" class="outline-3">
+<h3 id="org9512f85"><span class="section-number-3">4.2</span> Overview</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 In this section, we're covering the parts of the basics that are
@@ -478,8 +478,8 @@ languages.
 </div>
 </div>
 
-<div id="outline-container-orga402ed4" class="outline-3">
-<h3 id="orga402ed4"><span class="section-number-3">4.3</span> Booleans and Conditionals</h3>
+<div id="outline-container-org56d8767" class="outline-3">
+<h3 id="org56d8767"><span class="section-number-3">4.3</span> Booleans and Conditionals</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 In any shell, <code>foo &amp;&amp; bar</code> will execute <code>bar</code> only if <code>foo</code>
@@ -490,8 +490,8 @@ other values are false.
 </div>
 </div>
 
-<div id="outline-container-org9615228" class="outline-3">
-<h3 id="org9615228"><span class="section-number-3">4.4</span> Arrays</h3>
+<div id="outline-container-org527fdae" class="outline-3">
+<h3 id="org527fdae"><span class="section-number-3">4.4</span> Arrays</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 Ordered list of things.
@@ -523,8 +523,8 @@ Are <code>*</code> and <code>@</code> equal? <a href="https://stackoverflow.com/
 </div>
 </div>
 
-<div id="outline-container-orgcbc915a" class="outline-3">
-<h3 id="orgcbc915a"><span class="section-number-3">4.5</span> Functions</h3>
+<div id="outline-container-org72460ff" class="outline-3">
+<h3 id="org72460ff"><span class="section-number-3">4.5</span> Functions</h3>
 <div class="outline-text-3" id="text-4-5">
 <p>
 Functions are functions. They receive arguments, and they return a
@@ -560,8 +560,8 @@ f touch <span style="font-weight: bold; font-style: italic;"># </span><span styl
 </div>
 
 
-<div id="outline-container-orgbc5da61" class="outline-3">
-<h3 id="orgbc5da61"><span class="section-number-3">4.6</span> Variables</h3>
+<div id="outline-container-org40f0be2" class="outline-3">
+<h3 id="org40f0be2"><span class="section-number-3">4.6</span> Variables</h3>
 <div class="outline-text-3" id="text-4-6">
 <p>
 By default variables are global, to a file. No matter if you assign
@@ -605,8 +605,8 @@ myfun
 </div>
 </div>
 </div>
-<div id="outline-container-orgbd67d54" class="outline-3">
-<h3 id="orgbd67d54"><span class="section-number-3">4.7</span> Variable Expansions</h3>
+<div id="outline-container-org98f60f2" class="outline-3">
+<h3 id="org98f60f2"><span class="section-number-3">4.7</span> Variable Expansions</h3>
 <div class="outline-text-3" id="text-4-7">
 <p>
 They offer some variable manipulations using shell only, not having
@@ -663,8 +663,8 @@ combined when building flags for docker.
 </p>
 </div>
 </div>
-<div id="outline-container-orgc8ab340" class="outline-3">
-<h3 id="orgc8ab340"><span class="section-number-3">4.8</span> Interpolation</h3>
+<div id="outline-container-org9e24d9d" class="outline-3">
+<h3 id="org9e24d9d"><span class="section-number-3">4.8</span> Interpolation</h3>
 <div class="outline-text-3" id="text-4-8">
 <p>
 We previously saw that functions can be passed around as strings,
@@ -687,8 +687,8 @@ $<span style="font-weight: bold; font-style: italic;">l</span>$<span style="font
 </div>
 </div>
 
-<div id="outline-container-org2bf315d" class="outline-3">
-<h3 id="org2bf315d"><span class="section-number-3">4.9</span> dispatch functions using args</h3>
+<div id="outline-container-org259e9e8" class="outline-3">
+<h3 id="org259e9e8"><span class="section-number-3">4.9</span> dispatch functions using args</h3>
 <div class="outline-text-3" id="text-4-9">
 <p>
 A nice usage of the previous technique is using user's input as a
@@ -745,8 +745,8 @@ map to any <code>cmd_$1</code> we'll get something like
 </div>
 </div>
 
-<div id="outline-container-org96c70fe" class="outline-3">
-<h3 id="org96c70fe"><span class="section-number-3">4.10</span> command_not_found_handle</h3>
+<div id="outline-container-org040f4bb" class="outline-3">
+<h3 id="org040f4bb"><span class="section-number-3">4.10</span> command_not_found_handle</h3>
 <div class="outline-text-3" id="text-4-10">
 <p>
 Here's a detail on a kinda obscure bash (only bash) feature.
@@ -781,8 +781,8 @@ the normal behavior.
 </div>
 </div>
 
-<div id="outline-container-org2243e48" class="outline-3">
-<h3 id="org2243e48"><span class="section-number-3">4.11</span> Return Values for Conditionals</h3>
+<div id="outline-container-org134216a" class="outline-3">
+<h3 id="org134216a"><span class="section-number-3">4.11</span> Return Values for Conditionals</h3>
 <div class="outline-text-3" id="text-4-11">
 <p>
 <code>if</code> 's test condition can use the return values of
@@ -825,8 +825,8 @@ finding your way around the output strings.
 </div>
 </div>
 
-<div id="outline-container-org2ffbff2" class="outline-3">
-<h3 id="org2ffbff2"><span class="section-number-3">4.12</span> Do work on loop conditions</h3>
+<div id="outline-container-org8b3f5a6" class="outline-3">
+<h3 id="org8b3f5a6"><span class="section-number-3">4.12</span> Do work on loop conditions</h3>
 <div class="outline-text-3" id="text-4-12">
 <p>
 I've not seen it used a lot (and there might be a reason for it,
@@ -863,8 +863,8 @@ Note: <code>:</code> is a nop builtin in bash.
 </p>
 </div>
 </div>
-<div id="outline-container-orgc687ff8" class="outline-3">
-<h3 id="orgc687ff8"><span class="section-number-3">4.13</span> One Branch Conditionals</h3>
+<div id="outline-container-org9078b3d" class="outline-3">
+<h3 id="org9078b3d"><span class="section-number-3">4.13</span> One Branch Conditionals</h3>
 <div class="outline-text-3" id="text-4-13">
 <p>
 The usual conditionals one sees everywhere look like <code>if</code>.
@@ -908,8 +908,8 @@ where it explains it for arrays in higher level languages like ruby:
 </div>
 </div>
 
-<div id="outline-container-org4d158ea" class="outline-3">
-<h3 id="org4d158ea"><span class="section-number-3">4.14</span> pushd/popd</h3>
+<div id="outline-container-org7ca08f1" class="outline-3">
+<h3 id="org7ca08f1"><span class="section-number-3">4.14</span> pushd/popd</h3>
 <div class="outline-text-3" id="text-4-14">
 <p>
 pushd and popd are used to move to some directory and go back to it
@@ -949,8 +949,8 @@ you need. That's a very easy trap to fall into.
 </div>
 </div>
 
-<div id="outline-container-org0fe7749" class="outline-3">
-<h3 id="org0fe7749"><span class="section-number-3">4.15</span> wrap functions</h3>
+<div id="outline-container-orga03ed60" class="outline-3">
+<h3 id="orga03ed60"><span class="section-number-3">4.15</span> wrap functions</h3>
 <div class="outline-text-3" id="text-4-15">
 <p>
 Bash can't pass blocks of code around, but the alternative is to
@@ -967,8 +967,8 @@ mute ls
 </div>
 </div>
 </div>
-<div id="outline-container-orge11945f" class="outline-3">
-<h3 id="orge11945f"><span class="section-number-3">4.16</span> use [[</h3>
+<div id="outline-container-org7846733" class="outline-3">
+<h3 id="org7846733"><span class="section-number-3">4.16</span> use [[</h3>
 <div class="outline-text-3" id="text-4-16">
 <p>
 Unless you want your script to be POSIX compliant, use <code>[[</code> instead
@@ -997,8 +997,8 @@ Ref: <a href="https://lists.gnu.org/archive/html/help-bash/2014-06/msg00013.html
 </div>
 </div>
 
-<div id="outline-container-orgfa73158" class="outline-3">
-<h3 id="orgfa73158"><span class="section-number-3">4.17</span> eval?</h3>
+<div id="outline-container-org3b81fd2" class="outline-3">
+<h3 id="org3b81fd2"><span class="section-number-3">4.17</span> eval?</h3>
 <div class="outline-text-3" id="text-4-17">
 <p>
 When you have mostly small functions that are mostly pure, you
@@ -1074,20 +1074,23 @@ in a sed.
 Yet another way is using <a href="https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html">shell parameter expansions.</a>
 </p>
 <div class="org-src-container">
-<pre class="src src-bash"><span style="font-weight: bold; font-style: italic;">var1</span>=lol
+<pre class="src src-bash">
+<span style="font-weight: bold; font-style: italic;">var1</span>=value
 <span style="font-weight: bold;">echo</span> <span style="font-style: italic;">'this is $var1'</span> &gt;/tmp/f.txt
 <span style="font-weight: bold; font-style: italic;">f</span>=$(cat /tmp/f.txt)
-<span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"${f@P}"</span>  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">this is lol</span>
+<span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"${f}"</span>  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">this is $var1</span>
+<span style="font-weight: bold;">echo</span> <span style="font-style: italic;">"${f@P}"</span>  <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">this is value</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org9daaf06" class="outline-3">
-<h3 id="org9daaf06"><span class="section-number-3">4.18</span> pass commands around</h3>
+
+<div id="outline-container-org2e15f2e" class="outline-3">
+<h3 id="org2e15f2e"><span class="section-number-3">4.18</span> pass commands around</h3>
 <div class="outline-text-3" id="text-4-18">
 <p>
-This one uses <a href="#org5e5e361">DRY_RUN</a>. While refactoring a script that does some
+This one uses <a href="#orgdd9c3d1">DRY_RUN</a>. While refactoring a script that does some
 curls, we want to make sure that our refactored version does the
 exact same calls in the same order.
 </p>
@@ -1164,8 +1167,8 @@ you, and keeps improving your toolbelt.
 </div>
 </div>
 
-<div id="outline-container-orgc86f2f8" class="outline-3">
-<h3 id="orgc86f2f8"><span class="section-number-3">4.19</span> The Toplevel Is Hopeless<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h3>
+<div id="outline-container-org1cbd9f6" class="outline-3">
+<h3 id="org1cbd9f6"><span class="section-number-3">4.19</span> The Toplevel Is Hopeless<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h3>
 <div class="outline-text-3" id="text-4-19">
 <p>
 Shellscripts are thought as quick one-off programs, but when they
@@ -1174,8 +1177,8 @@ start as if it would be permanent. The upfront cost is very low
 anyway. Structure the script like a regular app.
 </p>
 </div>
-<div id="outline-container-orgb3c5311" class="outline-4">
-<h4 id="orgb3c5311"><span class="section-number-4">4.19.1</span> Template</h4>
+<div id="outline-container-org6669271" class="outline-4">
+<h4 id="org6669271"><span class="section-number-4">4.19.1</span> Template</h4>
 <div class="outline-text-4" id="text-4-19-1">
 <p>
 Bash is extremely permissive in what it allows to be coded and
@@ -1213,8 +1216,8 @@ Ref: <a href="https://dougrichardson.us/2018/08/03/fail-fast-bash-scripting.html
 </div>
 </div>
 
-<div id="outline-container-orgf04a51c" class="outline-3">
-<h3 id="orgf04a51c"><span class="section-number-3">4.20</span> source files</h3>
+<div id="outline-container-orgf6034af" class="outline-3">
+<h3 id="orgf6034af"><span class="section-number-3">4.20</span> source files</h3>
 <div class="outline-text-3" id="text-4-20">
 <p>
 <code>source</code> is like <code>require</code> or <code>import</code> in some programming
@@ -1243,8 +1246,8 @@ there.
 </div>
 </div>
 
-<div id="outline-container-org598b1b2" class="outline-3">
-<h3 id="org598b1b2"><span class="section-number-3">4.21</span> Use Scripts as a Libs</h3>
+<div id="outline-container-org975ad6d" class="outline-3">
+<h3 id="org975ad6d"><span class="section-number-3">4.21</span> Use Scripts as a Libs</h3>
 <div class="outline-text-3" id="text-4-21">
 <p>
 A python-inspired way of using scripts as loadable libraries is to
@@ -1267,8 +1270,8 @@ possible. otherwise, you're on your own.
 </div>
 </div>
 </div>
-<div id="outline-container-org5428bb3" class="outline-3">
-<h3 id="org5428bb3"><span class="section-number-3">4.22</span> Tmpfiles Everywhere</h3>
+<div id="outline-container-org4108867" class="outline-3">
+<h3 id="org4108867"><span class="section-number-3">4.22</span> Tmpfiles Everywhere</h3>
 <div class="outline-text-3" id="text-4-22">
 <p>
 Your script is not going to run alone. Don't assume paths are
@@ -1306,8 +1309,8 @@ CAVEAT: You have to manually delete the directory if you want it cleaned.
 </div>
 </div>
 
-<div id="outline-container-orgaef139b" class="outline-3">
-<h3 id="orgaef139b"><span class="section-number-3">4.23</span> Cleanup tasks with trap</h3>
+<div id="outline-container-org058920b" class="outline-3">
+<h3 id="org058920b"><span class="section-number-3">4.23</span> Cleanup tasks with trap</h3>
 <div class="outline-text-3" id="text-4-23">
 <p>
 <code>trap</code> is used to 'subscribe' a callback when something happens.
@@ -1327,8 +1330,8 @@ local <span style="font-weight: bold; font-style: italic;">tmpath</span>=$(mktem
 </div>
 </div>
 
-<div id="outline-container-orgc3b44ff" class="outline-3">
-<h3 id="orgc3b44ff"><span class="section-number-3">4.24</span> array of callbacks on_exit</h3>
+<div id="outline-container-org2aeb11f" class="outline-3">
+<h3 id="org2aeb11f"><span class="section-number-3">4.24</span> array of callbacks on_exit</h3>
 <div class="outline-text-3" id="text-4-24">
 <p>
 Level up that pattern, we can have a helper to add callbacks to run
@@ -1362,8 +1365,8 @@ on_exit <span style="font-style: italic;">"docker volume rm $v_id"</span>
 </div>
 </div>
 
-<div id="outline-container-orgc2025ba" class="outline-3">
-<h3 id="orgc2025ba"><span class="section-number-3">4.25</span> Dots and colons allowed in function names!</h3>
+<div id="outline-container-orgf450743" class="outline-3">
+<h3 id="orgf450743"><span class="section-number-3">4.25</span> Dots and colons allowed in function names!</h3>
 <div class="outline-text-3" id="text-4-25">
 <p>
 A way to split the namespace is to have libs define functions with
@@ -1390,8 +1393,8 @@ or
 </div>
 </div>
 </div>
-<div id="outline-container-org33fbf03" class="outline-3">
-<h3 id="org33fbf03"><span class="section-number-3">4.26</span> make steps of the process as composable as possible by using "$@"</h3>
+<div id="outline-container-org55bd84f" class="outline-3">
+<h3 id="org55bd84f"><span class="section-number-3">4.26</span> make steps of the process as composable as possible by using "$@"</h3>
 <div class="outline-text-3" id="text-4-26">
 <p>
 By using <code>$@</code> to pass commands as parameters around you can get to
@@ -1449,8 +1452,8 @@ mute every 1 echo hi
 </ul>
 </div>
 </div>
-<div id="outline-container-org60f0ded" class="outline-3">
-<h3 id="org60f0ded"><span class="section-number-3">4.27</span> do_times/foreach_*</h3>
+<div id="outline-container-org0b31e4a" class="outline-3">
+<h3 id="org0b31e4a"><span class="section-number-3">4.27</span> do_times/foreach_*</h3>
 <div class="outline-text-3" id="text-4-27">
 <p>
 shellscripts are highly side-efffecty, and even though the scoping
@@ -1520,8 +1523,8 @@ foreach_plugin_with_index kidd run_tests
 </div>
 </div>
 
-<div id="outline-container-orgf16785c" class="outline-3">
-<h3 id="orgf16785c"><span class="section-number-3">4.28</span> undestand &lt;(foo) and &gt;(foo)</h3>
+<div id="outline-container-org9489377" class="outline-3">
+<h3 id="org9489377"><span class="section-number-3">4.28</span> undestand &lt;(foo) and &gt;(foo)</h3>
 <div class="outline-text-3" id="text-4-28">
 <p>
 Some commands ask for files as inputs. And sometimes you have that
@@ -1565,8 +1568,8 @@ A way to peek into a huge pipe is to <code>tee &gt;(cat)</code>
 </div>
 </div>
 
-<div id="outline-container-org9cb335f" class="outline-3">
-<h3 id="org9cb335f"><span class="section-number-3">4.29</span> Use xargs</h3>
+<div id="outline-container-org0847d85" class="outline-3">
+<h3 id="org0847d85"><span class="section-number-3">4.29</span> Use xargs</h3>
 <div class="outline-text-3" id="text-4-29">
 <p>
 Continuing with other ways of plumbing commands into other
@@ -1592,12 +1595,12 @@ its man).
 </div>
 </div>
 
-<div id="outline-container-org1531690" class="outline-3">
-<h3 id="org1531690"><span class="section-number-3">4.30</span> change loops for "mapping" functions</h3>
+<div id="outline-container-orge5b4a47" class="outline-3">
+<h3 id="orge5b4a47"><span class="section-number-3">4.30</span> change loops for "mapping" functions</h3>
 <div class="outline-text-3" id="text-4-30">
 </div>
-<div id="outline-container-orgfd28977" class="outline-4">
-<h4 id="orgfd28977"><span class="section-number-4">4.30.1</span> find</h4>
+<div id="outline-container-org8d6e62a" class="outline-4">
+<h4 id="org8d6e62a"><span class="section-number-4">4.30.1</span> find</h4>
 <div class="outline-text-4" id="text-4-30-1">
 <p>
 Many times we want to run the same operation, or test to lots of
@@ -1640,8 +1643,8 @@ find . -type f -name <span style="font-style: italic;">"*docx"</span> -exec pand
 </div>
 </div>
 </div>
-<div id="outline-container-org0694bd7" class="outline-4">
-<h4 id="org0694bd7"><span class="section-number-4">4.30.2</span> grep -Fvf</h4>
+<div id="outline-container-org780a013" class="outline-4">
+<h4 id="org780a013"><span class="section-number-4">4.30.2</span> grep -Fvf</h4>
 <div class="outline-text-4" id="text-4-30-2">
 <p>
 Three magical flags that go well together.
@@ -1676,8 +1679,8 @@ tag for, that do not have a title in the readme
 </div>
 
 
-<div id="outline-container-org808107a" class="outline-3">
-<h3 id="org808107a"><span class="section-number-3">4.31</span> pass flags as a splatted array</h3>
+<div id="outline-container-orgf250e7d" class="outline-3">
+<h3 id="orgf250e7d"><span class="section-number-3">4.31</span> pass flags as a splatted array</h3>
 <div class="outline-text-3" id="text-4-31">
 <p>
 There's quite a bit to chew on this example. First of all, the core
@@ -1738,8 +1741,8 @@ how to do it with <code>on_exit</code> trick.
 </div>
 </div>
 
-<div id="outline-container-org3de2484" class="outline-3">
-<h3 id="org3de2484"><span class="section-number-3">4.32</span> inherit_errexit</h3>
+<div id="outline-container-org56695c8" class="outline-3">
+<h3 id="org56695c8"><span class="section-number-3">4.32</span> inherit_errexit</h3>
 <div class="outline-text-3" id="text-4-32">
 <p>
 bash 4.4+ , you can <code>shopt -s inherit_errexit</code>, and subshells will
@@ -1749,8 +1752,8 @@ moment any command exits with <code>!=0</code>.
 </p>
 </div>
 </div>
-<div id="outline-container-org8be3ad1" class="outline-3">
-<h3 id="org8be3ad1"><span class="section-number-3">4.33</span> GNU Parallel</h3>
+<div id="outline-container-org2996541" class="outline-3">
+<h3 id="org2996541"><span class="section-number-3">4.33</span> GNU Parallel</h3>
 <div class="outline-text-3" id="text-4-33">
 <p>
 I can't recommend <a href="https://www.gnu.org/software/parallel/">parallel</a> enough. The same as xargs, but in a
@@ -1776,12 +1779,12 @@ Man pages and official examples are a goldmine.
 </div>
 </div>
 
-<div id="outline-container-orga8cdec9" class="outline-2">
-<h2 id="orga8cdec9"><span class="section-number-2">5</span> Interactive</h2>
+<div id="outline-container-orgad781fe" class="outline-2">
+<h2 id="orgad781fe"><span class="section-number-2">5</span> Interactive</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-orga79df4c" class="outline-3">
-<h3 id="orga79df4c"><span class="section-number-3">5.1</span> Save your small scripts</h3>
+<div id="outline-container-org08162b0" class="outline-3">
+<h3 id="org08162b0"><span class="section-number-3">5.1</span> Save your small scripts</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 Rome wasn't built in a day, and like having a journal log, most of
@@ -1798,8 +1801,8 @@ shortens the feedback cycle as much as possible.
 </div>
 </div>
 
-<div id="outline-container-orgd32dfa8" class="outline-3">
-<h3 id="orgd32dfa8"><span class="section-number-3">5.2</span> Increased Interactivity</h3>
+<div id="outline-container-org217d292" class="outline-3">
+<h3 id="org217d292"><span class="section-number-3">5.2</span> Increased Interactivity</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 Knowing your shell's shortcuts for interactive use is a must. The
@@ -1881,8 +1884,8 @@ should learn all the shortcuts for your shell. Here's some of them.
 </div>
 </div>
 
-<div id="outline-container-org5955545" class="outline-3">
-<h3 id="org5955545"><span class="section-number-3">5.3</span> Aliases</h3>
+<div id="outline-container-org25a051b" class="outline-3">
+<h3 id="org25a051b"><span class="section-number-3">5.3</span> Aliases</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 Aliases are very simple substitutions of commands for a sequence of
@@ -1900,8 +1903,8 @@ Now let's move on to the interesting stuff.
 </div>
 </div>
 
-<div id="outline-container-org0c96630" class="outline-3">
-<h3 id="org0c96630"><span class="section-number-3">5.4</span> functions can generate aliases</h3>
+<div id="outline-container-org264a541" class="outline-3">
+<h3 id="org264a541"><span class="section-number-3">5.4</span> functions can generate aliases</h3>
 <div class="outline-text-3" id="text-5-4">
 <p>
 Aliases live in a global namespace for the shell, so no matter
@@ -1981,8 +1984,8 @@ alias.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc83d5ab" class="outline-3">
-<h3 id="orgc83d5ab"><span class="section-number-3">5.5</span> Override (advise?) common functions</h3>
+<div id="outline-container-orgbfe6506" class="outline-3">
+<h3 id="orgbfe6506"><span class="section-number-3">5.5</span> Override (advise?) common functions</h3>
 <div class="outline-text-3" id="text-5-5">
 <p>
 Overriding commands is generally a bad practice as it violates the
@@ -2027,12 +2030,12 @@ created myself. That was a very cool moment.
 </div>
 </div>
 
-<div id="outline-container-org9ffe4d2" class="outline-2">
-<h2 id="org9ffe4d2"><span class="section-number-2">6</span> Debugging</h2>
+<div id="outline-container-orgaab2281" class="outline-2">
+<h2 id="orgaab2281"><span class="section-number-2">6</span> Debugging</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-orga734c11" class="outline-3">
-<h3 id="orga734c11"><span class="section-number-3">6.1</span> adding <code>bash</code> to a script to debug</h3>
+<div id="outline-container-orgfd52d2d" class="outline-3">
+<h3 id="orgfd52d2d"><span class="section-number-3">6.1</span> adding <code>bash</code> to a script to debug</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 You can add <code>bash</code> inside any script, and it'll add a sort of
@@ -2075,8 +2078,8 @@ docker run -it -v $<span style="font-weight: bold; font-style: italic;">PWD</spa
 </div>
 </div>
 
-<div id="outline-container-org5e5e361" class="outline-3">
-<h3 id="org5e5e361"><span class="section-number-3">6.2</span> DRY_RUN</h3>
+<div id="outline-container-orgdd9c3d1" class="outline-3">
+<h3 id="orgdd9c3d1"><span class="section-number-3">6.2</span> DRY_RUN</h3>
 <div class="outline-text-3" id="text-6-2">
 <div class="org-src-container">
 <pre class="src src-bash"><span style="font-weight: bold;">if</span> [[-n $<span style="font-weight: bold; font-style: italic;">DRY_RUN</span> ]]; <span style="font-weight: bold;">then</span>
@@ -2092,8 +2095,8 @@ use <code>command curl</code> to force the command, not the alias or anything
 </div>
 </div>
 
-<div id="outline-container-org3a0884e" class="outline-3">
-<h3 id="org3a0884e"><span class="section-number-3">6.3</span> Cheap debugging flag</h3>
+<div id="outline-container-org5bedaab" class="outline-3">
+<h3 id="org5bedaab"><span class="section-number-3">6.3</span> Cheap debugging flag</h3>
 <div class="outline-text-3" id="text-6-3">
 <div class="org-src-container">
 <pre class="src src-bash">optargs <span style="font-style: italic;">"V"</span> option; <span style="font-weight: bold;">do</span>
@@ -2106,8 +2109,8 @@ use <code>command curl</code> to force the command, not the alias or anything
 </div>
 </div>
 
-<div id="outline-container-org68b7289" class="outline-3">
-<h3 id="org68b7289"><span class="section-number-3">6.4</span> explore a pipe with tee &gt;(some_command) |</h3>
+<div id="outline-container-orgfa13a29" class="outline-3">
+<h3 id="orgfa13a29"><span class="section-number-3">6.4</span> explore a pipe with tee &gt;(some_command) |</h3>
 <div class="outline-text-3" id="text-6-4">
 <p>
 the <code>&gt;()</code> is not very easy to use. Very few places where it
@@ -2140,8 +2143,8 @@ ref: <a href="https://stackoverflow.com/questions/17983777/shell-pipe-to-multipl
 </div>
 </div>
 
-<div id="outline-container-org020b175" class="outline-3">
-<h3 id="org020b175"><span class="section-number-3">6.5</span> quoting</h3>
+<div id="outline-container-org0ffaf90" class="outline-3">
+<h3 id="org0ffaf90"><span class="section-number-3">6.5</span> quoting</h3>
 <div class="outline-text-3" id="text-6-5">
 <p>
 Bash: To get a quoted version of a given string, here's what you can do:
@@ -2176,12 +2179,12 @@ Zsh: If you're on zsh, <code>a-'</code> quotes the current line.
 </div>
 </div>
 
-<div id="outline-container-org3cf475c" class="outline-2">
-<h2 id="org3cf475c"><span class="section-number-2">7</span> zsh-only</h2>
+<div id="outline-container-org805292f" class="outline-2">
+<h2 id="org805292f"><span class="section-number-2">7</span> zsh-only</h2>
 <div class="outline-text-2" id="text-7">
 </div>
-<div id="outline-container-org383b3ef" class="outline-3">
-<h3 id="org383b3ef"><span class="section-number-3">7.1</span> globbing</h3>
+<div id="outline-container-org241312d" class="outline-3">
+<h3 id="org241312d"><span class="section-number-3">7.1</span> globbing</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 In zsh, getting a list of files that match some characteristics is
@@ -2213,8 +2216,8 @@ complete list. The ones I use more are:
 </div>
 </div>
 
-<div id="outline-container-org9b25b27" class="outline-3">
-<h3 id="org9b25b27"><span class="section-number-3">7.2</span> Some global aliases:</h3>
+<div id="outline-container-orgedfe607" class="outline-3">
+<h3 id="orgedfe607"><span class="section-number-3">7.2</span> Some global aliases:</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 These are some aliases I have in my ~/.zshrc that somehow help me
@@ -2313,8 +2316,8 @@ Now, some sequences of words can start making sense:
 </div>
 </div>
 
-<div id="outline-container-org568cc95" class="outline-3">
-<h3 id="org568cc95"><span class="section-number-3">7.3</span> Create helpers and generate global aliases automagically</h3>
+<div id="outline-container-orgcb8cfe1" class="outline-3">
+<h3 id="orgcb8cfe1"><span class="section-number-3">7.3</span> Create helpers and generate global aliases automagically</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 Borrowing a bit from Perl, a bit from Forth, and a bit from
@@ -2365,8 +2368,8 @@ though.
 </p>
 </div>
 </div>
-<div id="outline-container-orgd0d255e" class="outline-3">
-<h3 id="orgd0d255e"><span class="section-number-3">7.4</span> suffix aliases don't have to match a filename</h3>
+<div id="outline-container-orgf241842" class="outline-3">
+<h3 id="orgf241842"><span class="section-number-3">7.4</span> suffix aliases don't have to match a filename</h3>
 <div class="outline-text-3" id="text-7-4">
 <p>
 zsh has another type of aliases called "suffix alias". Those alias
@@ -2416,8 +2419,8 @@ Cool, ain't it?
 </div>
 </div>
 
-<div id="outline-container-orge97cc78" class="outline-3">
-<h3 id="orge97cc78"><span class="section-number-3">7.5</span> noglob</h3>
+<div id="outline-container-orgc964cf6" class="outline-3">
+<h3 id="orgc964cf6"><span class="section-number-3">7.5</span> noglob</h3>
 <div class="outline-text-3" id="text-7-5">
 <p>
 zsh has more aggressive parameter expansion, to the level that
@@ -2442,8 +2445,8 @@ called noglob.
 </div>
 </div>
 
-<div id="outline-container-org05cd717" class="outline-3">
-<h3 id="org05cd717"><span class="section-number-3">7.6</span> make noglob 'transparent' to bash</h3>
+<div id="outline-container-org4a7ea84" class="outline-3">
+<h3 id="org4a7ea84"><span class="section-number-3">7.6</span> make noglob 'transparent' to bash</h3>
 <div class="outline-text-3" id="text-7-6">
 <p>
 zsh and bash are mostly compatible, but there's a few things not
@@ -2458,12 +2461,12 @@ inbetween, an easy way is to just create a <code>~/bin/noglob</code> file
 </div>
 </div>
 
-<div id="outline-container-org5015d3a" class="outline-2">
-<h2 id="org5015d3a"><span class="section-number-2">8</span> <span class="todo TODO">TODO</span> patterns</h2>
+<div id="outline-container-orgbf1713c" class="outline-2">
+<h2 id="orgbf1713c"><span class="section-number-2">8</span> <span class="todo TODO">TODO</span> patterns</h2>
 <div class="outline-text-2" id="text-8">
 </div>
-<div id="outline-container-org93f5639" class="outline-3">
-<h3 id="org93f5639"><span class="section-number-3">8.1</span> just use cat/netcat/pipes with &lt;()</h3>
+<div id="outline-container-org096e13a" class="outline-3">
+<h3 id="org096e13a"><span class="section-number-3">8.1</span> just use cat/netcat/pipes with &lt;()</h3>
 <div class="outline-text-3" id="text-8-1">
 <ul class="org-ul">
 <li><p>
@@ -2484,8 +2487,8 @@ and even better, I can use a stream from the shell. <code>myexecutable |
 </ul>
 </div>
 
-<div id="outline-container-orgd45821e" class="outline-4">
-<h4 id="orgd45821e"><span class="section-number-4">8.1.1</span> what's the unifying theory behind all that?</h4>
+<div id="outline-container-org21ada04" class="outline-4">
+<h4 id="org21ada04"><span class="section-number-4">8.1.1</span> what's the unifying theory behind all that?</h4>
 <div class="outline-text-4" id="text-8-1-1">
 <p>
 It's still not clear to me how they relate, but the feeling is
@@ -2610,8 +2613,8 @@ cat &lt;(date)
 </div>
 </div>
 
-<div id="outline-container-org02bf2e6" class="outline-3">
-<h3 id="org02bf2e6"><span class="section-number-3">8.2</span> redirects</h3>
+<div id="outline-container-org1831a52" class="outline-3">
+<h3 id="org1831a52"><span class="section-number-3">8.2</span> redirects</h3>
 <div class="outline-text-3" id="text-8-2">
 <ul class="org-ul">
 <li><a href="https://catonmat.net/ftp/bash-redirections-cheat-sheet.pdf">https://catonmat.net/ftp/bash-redirections-cheat-sheet.pdf</a></li>
@@ -2619,8 +2622,8 @@ cat &lt;(date)
 </ul>
 </div>
 </div>
-<div id="outline-container-orgcdf14b1" class="outline-3">
-<h3 id="orgcdf14b1"><span class="section-number-3">8.3</span> The $0 pattern</h3>
+<div id="outline-container-org4188e42" class="outline-3">
+<h3 id="org4188e42"><span class="section-number-3">8.3</span> The $0 pattern</h3>
 <div class="outline-text-3" id="text-8-3">
 <p>
 <a href="https://www.reddit.com/r/oilshell/comments/f6of85/four_more_posts_in_shell_the_good_parts/">https://www.reddit.com/r/oilshell/comments/f6of85/four_more_posts_in_shell_the_good_parts/</a>
@@ -2628,8 +2631,8 @@ cat &lt;(date)
 </div>
 </div>
 </div>
-<div id="outline-container-orgc46a6b2" class="outline-2">
-<h2 id="orgc46a6b2"><span class="section-number-2">9</span> links</h2>
+<div id="outline-container-orgd60ffbc" class="outline-2">
+<h2 id="orgd60ffbc"><span class="section-number-2">9</span> links</h2>
 <div class="outline-text-2" id="text-9">
 <ul class="org-ul">
 <li><a href="https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html">https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html</a></li>
@@ -2652,8 +2655,8 @@ cat &lt;(date)
 </div>
 </div>
 
-<div id="outline-container-org76af65f" class="outline-2">
-<h2 id="org76af65f"><span class="section-number-2">10</span> from shell to lisp and everything in between</h2>
+<div id="outline-container-org6eddb37" class="outline-2">
+<h2 id="org6eddb37"><span class="section-number-2">10</span> from shell to lisp and everything in between</h2>
 <div class="outline-text-2" id="text-10">
 <ul class="org-ul">
 <li><a href="https://github.com/oilshell/oil">https://github.com/oilshell/oil</a></li>
@@ -2670,8 +2673,8 @@ cat &lt;(date)
 </ul>
 </div>
 </div>
-<div id="outline-container-org9e716ff" class="outline-2">
-<h2 id="org9e716ff"><span class="section-number-2">11</span> Credits</h2>
+<div id="outline-container-org2d15d7a" class="outline-2">
+<h2 id="org2d15d7a"><span class="section-number-2">11</span> Credits</h2>
 <div class="outline-text-2" id="text-11">
 <ul class="org-ul">
 <li>Raimon Grau &lt;raimonster@gmail.com&gt; did the writing and most of the

@@ -512,11 +512,14 @@
 
    Yet another way is using [[https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html][shell parameter expansions.]]
    #+begin_src bash
-     var1=lol
+
+     var1=value
      echo 'this is $var1' >/tmp/f.txt
      f=$(cat /tmp/f.txt)
-     echo "${f@P}"  # this is lol
+     echo "${f}"  # this is $var1
+     echo "${f@P}"  # this is value
    #+end_src
+
 
 ** pass commands around
    This one uses [[*DRY_RUN][DRY_RUN]]. While refactoring a script that does some
