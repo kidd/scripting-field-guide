@@ -1551,16 +1551,15 @@
   - https://github.com/artyom-poptsov/metabash
   - https://www.nushell.sh/
   - [[https://github.com/borkdude/babashka][Babashka]]
-  - [[https://github.com/p8952/bocker][bocker]]. Docker implemented in around 100 lines of bash
+  - [[https://github.com/p8952/bocker][bocker]]. Docker implemented in around 100 lines of bash.
   - Bash to Perl/Python/Ruby using =``= and growing from there.
 * Credits
-  - Raimon Grau <raimonster@gmail.com> did the writing and most of the
-    examples.
-  - Some examples are result of Raimon's and Lluís
-    Esquerda's(<eskerda@gmail.com>) real world examples.
-  - nikisweeting provided some very nice examples in this HN therad
-    https://news.ycombinator.com/item?id=24402571 which I'll be
-    pulling in as time allows.
+- Raimon Grau <[[mailto:raimonster@gmail.com][raimonster@gmail.com]]>.
+- Some examples are result of Raimon's and Lluís Esquerda's
+  conversations or real world examples.
+- nikisweeting provided some very nice examples in this HN therad
+  https://news.ycombinator.com/item?id=24402571 which I'll be
+  pulling in as time allows.
 
 * Footnotes
 [fn:1] https://gist.github.com/samth/3083053
