@@ -1527,7 +1527,8 @@
   - https://www.gnu.org/software/bash/manual/html_node/
   - https://tldp.org/LDP/abs/html/
   - https://mywiki.wooledge.org/BashPitfalls
-  - Gary Bernhardt. The Unix Chainsaw
+  - [[https://www.youtube.com/watch?v=sCZJblyT_XM][Gary Bernhardt. The Unix Chainsaw]]
+  - [[https://github.com/spencertipping/][spencertipping@github]]. This guy has some really sick snippets
   - https://news.ycombinator.com/item?id=23765123
   - https://medium.com/@joydeepubuntu/functional-programming-in-bash-145b6db336b7
   - https://www.youtube.com/watch?v=yD2ekOEP9sU
@@ -1541,17 +1542,17 @@
   - https://github.com/dylanaraps/pure-sh-bible
 
 * from shell to lisp and everything in between
-  - https://github.com/oilshell/oil
-  - https://www.eigenbahn.com/2020/07/08/painless-emacs-remote-shells
+  - [[https://github.com/oilshell/oil][Oil Shell]].
+  - [[https://www.eigenbahn.com/2020/07/08/painless-emacs-remote-shells][Painless emacs remote shells]]. Because emacs has you covered
   - https://news.ycombinator.com/item?id=24249646 rust
-  - spencertipping @github
-  - rash (racket shell)
-  - zsh
+  - [[https://rash-lang.org/][Rash]] (Racket shell)
+  - [[https://arxiv.org/pdf/2007.09436.pdf][PaSh]]: Light-touch Data-Parallel Shell Processing.
   - https://github.com/liljencrantz/crush
   - https://github.com/artyom-poptsov/metabash
-  - perl/python/ruby and migrate from bash to X using backticks
   - https://www.nushell.sh/
-  - bocker
+  - [[https://github.com/borkdude/babashka][Babashka]]
+  - [[https://github.com/p8952/bocker][bocker]]. Docker implemented in around 100 lines of bash
+  - Bash to Perl/Python/Ruby using =``= and growing from there.
 * Credits
   - Raimon Grau <raimonster@gmail.com> did the writing and most of the
     examples.
