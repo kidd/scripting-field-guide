@@ -143,7 +143,6 @@
    #+RESULTS:
    : hi
 
-
 ** Variables
    By default variables are global, to a file. No matter if you assign
    them for the first time inside a function, or at the top level.
@@ -1540,13 +1539,14 @@
   - https://susam.github.io/tucl/the-unix-command-language.html
   - https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html
   - https://github.com/dylanaraps/pure-sh-bible
+  - https://shatterealm.netlify.app/programming/2021_01_02_shiv_lets_build_a_vcs
 
 * from shell to lisp and everything in between
   - [[https://github.com/oilshell/oil][Oil Shell]].
-  - [[https://www.eigenbahn.com/2020/07/08/painless-emacs-remote-shells][Painless emacs remote shells]]. Because emacs has you covered
-  - https://news.ycombinator.com/item?id=24249646 rust
   - [[https://rash-lang.org/][Rash]] (Racket shell)
   - [[https://arxiv.org/pdf/2007.09436.pdf][PaSh]]: Light-touch Data-Parallel Shell Processing.
+  - [[https://www.eigenbahn.com/2020/07/08/painless-emacs-remote-shells][Painless emacs remote shells]]. Because emacs has you covered
+  - https://news.ycombinator.com/item?id=24249646 rust
   - https://github.com/liljencrantz/crush
   - https://github.com/artyom-poptsov/metabash
   - https://www.nushell.sh/
