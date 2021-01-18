@@ -1274,8 +1274,8 @@
    #+end_src
    This works in bash, but zsh will not split by words. To make zsh
    expand by words, there are 2 ways: =setopt SH_WORD_SPLIT= and
-   =${=foo}=.  zsh has =nosetop= command, which allows to scope where
-   you want the expansions to happen.
+   =${=foo}=.  zsh has =unsetop= command, which allows to scope where
+   you want the expansions to happen. =unsetop SH_WORD_SPLIT=.
 
    The problem with both solutions is that none of them are compatible
    with bash, so you'll be cornering yourself to "this only works in
