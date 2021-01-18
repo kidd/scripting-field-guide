@@ -1266,6 +1266,27 @@
    Zsh: If you're on zsh, =a-'= quotes the current line.
 
 * zsh-only
+** Word spliting
+   Word splitting works differently by default in zsh than in bash.
+   #+begin_src bash
+     foo="ls -las"
+     $foo
+   #+end_src
+   This works in bash, but zsh will not split by words. To make zsh
+   expand by words, there are 2 ways: =setopt SH_WORD_SPLIT= and
+   =${=foo}=.  zsh has =unsetop= command, which allows to scope where
+   you want the expansions to happen. =unsetop SH_WORD_SPLIT=.
+
+   The problem with both solutions is that none of them are compatible
+   with bash, so you'll be cornering yourself to "this only works in
+   zsh".  A way to overcome this is to use arrays, which are expanded
+   in the same way in both shells.
+
+   Or, use the same hack as you'll see later with noglob.
+
+   Refs:
+   - https://stackoverflow.com/questions/6715388/variable-expansion-is-different-in-zsh-from-that-in-bash
+   - http://zsh.sourceforge.net/FAQ/zshfaq03.html#l18
 ** globbing
    In zsh, getting a list of files that match some characteristics is
    doable using globbing. Bash has globbing also, but in a less sophisticated way.
