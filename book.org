@@ -519,7 +519,6 @@
      echo "${f@P}"  # this is value
    #+end_src
 
-
 ** pass commands around
    This one uses [[*DRY_RUN][DRY_RUN]]. While refactoring a script that does some
    curls, we want to make sure that our refactored version does the
@@ -828,7 +827,7 @@
      foreach_plugin_with_index kidd run_tests
    #+end_src
 
-** undestand <(foo) and >(foo)
+** <(foo) and >(foo)
    Some commands ask for files as inputs. And sometimes you have that
    file, but sometimes you're only creating that file to pass it to
    the command.  In those cases, creating temporary files is not
@@ -925,7 +924,6 @@
       ! grep -Fvf <(grep -P "^# \d\.\d\.\d\.\d$" "$f" | sed -e 's/^# //') \
                   <(git tag | grep -P "^\d\.\d\.\d\.\d$")
     #+end_src
-
 
 ** pass flags as a splatted array
    There's quite a bit to chew on this example. First of all, the core
@@ -1542,6 +1540,8 @@
    - https://catonmat.net/bash-one-liners-explained-part-three
 ** The $0 pattern
    https://www.reddit.com/r/oilshell/comments/f6of85/four_more_posts_in_shell_the_good_parts/
+** use git staging area to diff outputs of commands
+   https://chrismorgan.info/blog/make-and-git-diff-test-harness/
 * links
   - https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html
   - https://www.gnu.org/software/bash/manual/html_node/
