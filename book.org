@@ -1491,6 +1491,32 @@
      $*
    #+end_src
 
+** glob nested expansion
+   In https://news.ycombinator.com/item?id=26175894 there's a nice
+   advanced example:
+
+   #+begin_src text
+     Variable expansion syntax, glob qualifiers, and history modifiers can
+     be combined/nested quite nicely. For example, this outputs all the
+     commands available from $PATH: `echo
+     ${~${path/%/\/*(*N:t)}}`. `${~foo}` is to enable glob expansion on the
+     result of foo. `${foo/%/bar}` substitutes the end of the result of foo
+     to "bar" (i.e. it appends it); when foo is an array, it does it for
+     each element. In `/*(*N:t)`, we're adding the slash and star to the
+     paths from `$path`, then the parentheses are glob qualifiers. `*`
+     inside means only match the executables, `N` is to activate NULL_GLOB
+     for the match so that we don't get errors for globs that didn't match
+     anything, `:t` is a history mod used for globs that returns just the
+     "tail" of the result, i.e. the basename. IIRC, bash can't even nest
+     multiple parameter expansions; you need to save each step separately.
+   #+end_src
+** Some extra shortcuts for nice things
+   - =alt-'= quotes the current line. It's like =quotemeta=. great to
+     help you fight double and triple quoting when writing scripts.
+   - =alt-#= comment and accept. Nice way to store the current line
+     for later.
+   - =ctrl-o= kill-current-line, wait for a command, and paste.
+
 * TODO patterns
 ** just use cat/netcat/pipes with <()
 
@@ -1542,6 +1568,10 @@
    https://www.reddit.com/r/oilshell/comments/f6of85/four_more_posts_in_shell_the_good_parts/
 ** use git staging area to diff outputs of commands
    https://chrismorgan.info/blog/make-and-git-diff-test-harness/
+** coprocs
+   https://unix.stackexchange.com/questions/86270/how-do-you-use-the-command-coproc-in-various-shells
+** HEREDOCS
+   https://stackoverflow.com/questions/4937792/using-variables-inside-a-bash-heredoc
 * links
   - https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html
   - https://www.gnu.org/software/bash/manual/html_node/
