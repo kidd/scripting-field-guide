@@ -1517,6 +1517,19 @@
      for later.
    - =ctrl-o= kill-current-line, wait for a command, and paste.
 
+** =()
+   Zsh has =<()= and =>()= like Bash, but it also has ==()=. This
+   varant is similar to =<()= but instead of creating a temporary
+   pipe, it creates a temporary file. That is useful if we want to run
+   commands that require a file instead of a pipe (most times, because
+   it uses lseek to go through it).
+
+   Node is an example of this.
+   #+begin_src shell
+    node <(echo 'setTimeout(() => console.log("foo"), 400)')   # fails
+    node =(echo 'setTimeout(() => console.log("foo"), 400)')   # works!
+  #+end_src
+
 * TODO patterns
 ** just use cat/netcat/pipes with <()
 
