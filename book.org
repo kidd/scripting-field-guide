@@ -117,6 +117,29 @@
 
    Are =*= and =@= equal? [[https://stackoverflow.com/questions/2761723/what-is-the-difference-between-and-in-shell-scripts][nope]].
 
+** Slurping arrays
+   A nice way to read a bunch of elements from one go is to use
+   =readarray=.
+   #+begin_src bash
+   parse_args() {
+     [[ $# -eq 0 ]] && die "Usage: $0 <version>"
+     version="$1"
+     local version_split=$(echo $version | tr '.' '\n')
+     readarray -t version_array <<< "$version_split"
+
+     if [[ -z ${version_array[3]} ]]; then
+       die "not enough version numbers"
+     fi
+   }
+   #+end_src
+
+   Even nicer would be to use IFS so we'd be able to split in one go.
+
+   #+begin_src bash
+     IFS=. read -a ver <<<"1.23.1.0"
+     echo ${ver[0]}
+     echo "next/${ver[0]}.${ver[1]}.x.x"
+   #+end_src
 ** Functions
    Functions are functions. They receive arguments, and they return a
    value.
