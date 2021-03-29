@@ -1028,7 +1028,6 @@
    Save your scripts into files early on, instead of crunching
    everything in the repl. learn how to use a decent editor that
    shortens the feedback cycle as much as possible.
-
 ** Increased Interactivity
    Knowing your shell's shortcuts for interactive use is a must. The
    same way you learned to touchtype and you learned your editor, you
@@ -1187,6 +1186,47 @@
    Also, I recently read the greate book "Docker in Practice" by [[https://github.com/ianmiell][Ian
    Miell]] and there's a snippet that is 99.9% like the one I
    created myself. That was a very cool moment.
+
+** Faster iteration on pipes
+   When testing complex pipelines:
+
+   - Make them pure (no side effects).
+   - One command per line.
+   - End lines with the pipe character.
+   - During development, end the pipeline with =cat=.
+
+   I usually use =watch -n1 'code.sh'= in a split window so I see the
+   results of what I'm doing. The advantage of
+
+   #+begin_src bash
+     curl https://www.example.com/videos/ |
+      pup 'figure.mg > a attr{href}' |
+      head -1 |
+      xargs -I{} curl -L "https://www.example/{}" |
+      pup 'script' |
+      grep file: |
+      sed -e "s/.*\(http[^ \"']*\).*/\1/" |
+      cat
+   #+end_src
+
+   Over
+   #+begin_src bash
+     curl https://www.example.com/videos/ \
+     |pup 'figure.mg > a attr{href}' \
+     |head -1 \
+     |xargs -I{} curl -L "https://www.example.com/{}" \
+     |pup 'script' \
+     |grep file: \
+     |sed -e "s/.*\(http[^ \"']*\).*/\1/"
+   #+end_src
+
+   Is that you can comment out lines on the former one, but you can't
+   do that on the latter. The =cat= trick makes it so that you have an
+   'exit' point, and you don't have to comment that one. Also, some
+   editors will indent the first one correctly, while you'll have to
+   manually indent the second one.
+
+   Small wins that compose just fine :)
 
 * Debugging
 ** adding =bash= to a script to debug
