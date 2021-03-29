@@ -1199,25 +1199,27 @@
    results of what I'm doing. The advantage of
 
    #+begin_src bash
-     curl https://www.example.com/videos/ |
-      pup 'figure.mg > a attr{href}' |
-      head -1 |
-      xargs -I{} curl -L "https://www.example/{}" |
-      pup 'script' |
-      grep file: |
-      sed -e "s/.*\(http[^ \"']*\).*/\1/" |
-      cat
+     curl https://www.example.com/videos/              |
+       pup 'figure.mg > a attr{href}'                  |
+       head -1                                         |
+       xargs -I{} curl -L "https://www.example.com/{}" |
+       pup 'script'                                    |
+       grep file:                                      |
+       sed -e "s/.*\(http[^ \"']*\).*/\1/"             |
+     # xargs vlc                                       |
+       cat
    #+end_src
 
    Over
    #+begin_src bash
-     curl https://www.example.com/videos/ \
-     |pup 'figure.mg > a attr{href}' \
-     |head -1 \
-     |xargs -I{} curl -L "https://www.example.com/{}" \
-     |pup 'script' \
-     |grep file: \
-     |sed -e "s/.*\(http[^ \"']*\).*/\1/"
+     curl https://www.example.com/videos/                \
+       | pup 'figure.mg > a attr{href}'                  \
+       | head -1                                         \
+       | xargs -I{} curl -L "https://www.example.com/{}" \
+       | pup 'script'                                    \
+       | grep file:                                      \
+       | sed -e "s/.*\(http[^ \"']*\).*/\1/"             \
+     # xargs vlc   # doesn't work
    #+end_src
 
    Is that you can comment out lines on the former one, but you can't
@@ -1645,6 +1647,7 @@
 ** use git staging area to diff outputs of commands
    https://chrismorgan.info/blog/make-and-git-diff-test-harness/
 ** coprocs
+   https://stackoverflow.com/questions/7942632/how-to-extrace-pg-backend-pid-from-postgresql-in-shell-script-and-pass-it-to-ano/8305578#8305578
    https://unix.stackexchange.com/questions/86270/how-do-you-use-the-command-coproc-in-various-shells
 ** HEREDOCS
    https://stackoverflow.com/questions/4937792/using-variables-inside-a-bash-heredoc
