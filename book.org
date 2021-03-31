@@ -1290,7 +1290,7 @@
      plog() {
        # tee >(cat 1>&2)
        local msg=${1:-plog}
-       tee >(sed -e "s/^/[$msg] /" | cat 1>&2 )
+       tee >(sed -e "s/^/[$msg] /" 1>&2)
      }
      alias -g 'PL'=' |plog ' #zsh only
 
