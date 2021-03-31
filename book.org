@@ -858,7 +858,7 @@
    commands without putting them in a temporary file.
 
    #+begin_src bash
-     diff <(date) <(echo 2020-10-08)
+     diff <(date) <(date)
      diff <(date) <(sleep 1; date)
    #+end_src
 
