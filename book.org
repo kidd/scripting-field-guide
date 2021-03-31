@@ -847,7 +847,7 @@
        done
      }
 
-     foreach_plugin_with_index kidd run_tests
+     foreach_repo_with_index kidd run_tests
    #+end_src
 
 ** <(foo) and >(foo)
@@ -858,11 +858,11 @@
    commands without putting them in a temporary file.
 
    #+begin_src bash
-     diff <(date) <(2020-10-08)
+     diff <(date) <(echo 2020-10-08)
      diff <(date) <(sleep 1; date)
    #+end_src
 
-   The same hapens with outputs. Commands that ask you for a
+   The same happens with outputs. Commands that ask you for a
    destination file. You can trick them by using =>(command)= as a
    file. A nice trick is to use =>(cat)= to know what's going on
    there. Also useful to send stuff to the clipboard =>(xclip)= before
@@ -892,12 +892,12 @@
    to split or batch args in multiple =cmd= calls.
 
    Xargs is helpful for parallelizing work. You should look at its man
-   page, but it can help in running parallel processes (check =-P= in
-   its man).
+   page, but just know it can help in running parallel processes
+   (check =-P= in its man).
 
-** change loops for "mapping" functions
+** change loops for "mapping/reducing" functions
 *** find
-    Many times we want to run the same operation, or test to lots of
+    Many times we want to run the same operation or test to lots of
     files. Instead of looping for each file, think if =find -exec=
     would solve it. Also, find supports multiple directories.
 
@@ -920,12 +920,10 @@
     Other examples might be:
     #+begin_src bash
       # count all lines of all docx in this dir
-      find . -type f -name "*docx" -exec pandoc "{}" -t plain \; | wc
+      find . -type f -name "*docx" -exec pandoc "{}" -t plain \; | wc -l
 
       #All your files have the same owner and group permissions
       [ $(find "$files[@]" -exec stat -c '%a' {} \; | grep -Evc "^(.)\1") == "0" ]
-
-
     #+end_src
 *** grep -Fvf
     Three magical flags that go well together.
@@ -1253,13 +1251,13 @@
      # container less hermetic. Even if the image is not originally ment
      # to, you can even override it and 'monkeypatch' the file with the one
      # from the host anyway.
-     docker run -it -v $PWD:/tmp/file.sh mycomplex-image /tmp/file.sh
+     docker run -it -v $PWD:/tmp/ mycomplex-image /tmp/file.sh
 
      # So now you can really add wtv you want there.
      echo 'bash' >>$PWD/file.sh
 
      # run+open shell at runtime to inspect the state of the script
-     docker run -it -v $PWD:/tmp/file.sh mycomplex-image /tmp/file.sh
+     docker run -it -v $PWD:/tmp/ mycomplex-image /tmp/file.sh
    #+end_src
 
 ** DRY_RUN
@@ -1508,7 +1506,7 @@
    alias -s docx="libreoffice"
    #+end_src
 
-   With this set, if you write a name of a file ending with =docx= as
+   With this said, if you write a name of a file ending with =docx= as
    the first token in a command line, it will use libreoffice to open
    it.
 
