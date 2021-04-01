@@ -632,7 +632,6 @@
     #+end_src
 
     Ref: https://dougrichardson.us/2018/08/03/fail-fast-bash-scripting.html
-
 ** source files
    =source= is like =require= or =import= in some programming
    languages. It evaluates the sourced file in the context of the
@@ -733,6 +732,25 @@
      # will be cleaned up before exiting.
    #+end_src
 
+** stacktrace on error
+   Here's a nice helper for debugging errors in bash. In case of non-0
+   exit, it prints a stacktrace.
+    #+begin_src bash
+      set -Eeuo pipefail
+      trap stacktrace EXIT
+      stacktrace() {
+          rc="$?"
+          if [ $rc != 0 ]; then
+              printf '\nThe command "%s" triggerd a stacktrace:\n' "$BASH_COMMAND"
+              for i in $(seq 1 $((${#FUNCNAME[@]} - 2))); do
+                j=$((i+1));
+                printf '\t%s: %s() called in %s:%s\n' "${BASH_SOURCE[$i]}" "${FUNCNAME[$i]}" "${BASH_SOURCE[$j]}" "${BASH_LINENO[$i]}";
+              done
+          fi
+      }
+
+    #+end_src
+    ref: https://news.ycombinator.com/item?id=26644110
 ** Dots and colons allowed in function names!
    A way to split the namespace is to have libs define functions with
    their own namespace.
