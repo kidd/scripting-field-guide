@@ -418,13 +418,19 @@
    }
    #+end_src
 
-   This conveys the intention of doing something *just* in one case, and
-   that the negation of this is not interesting at all.
+   This conveys the intention of doing something *just* in one case,
+   and that the negation of this is not interesting at all. There's a
+   big warning you have to be aware of. The same as with lua's
+   =... and .. or ..=, bash =||= and =&&= are not interchangeable for
+   =if...else...end=. [[https://mywiki.wooledge.org/BashPitfalls#cmd1_.26.26_cmd2_.7C.7C_cmd3][BashWiki]] has an explanation why, but, the same
+   as in Lua's case, if the "then" part returns false, the else will
+   run.
 
    There are lots of references to this, but I like this recent post
    where it explains it for arrays in higher level languages like ruby:
    https://jesseduffield.com/array-functions-and-the-rule-of-least-power/
 
+   An extended article of this kind of conditionals can be found [[https://timvisee.com/blog/elegant-bash-conditionals/][here]].
 ** pushd/popd
    pushd and popd are used to move to some directory and go back to it
    in a stack fashion, so nesting can happen and you never lose
@@ -1062,6 +1068,9 @@
    | C-n    | next-line                           |
    | A-.    | insert last agument                 |
    | A-/    | dabbrev-expand                      |
+
+   A written form of =A-.= is =$_=. It retains the last argment and
+   puts it in $_.  =test -f "FILE" && source "$_"=.
 
 ** Aliases
    Aliases are very simple substitutions of commands for a sequence of
