@@ -117,6 +117,11 @@
 
    Are =*= and =@= equal? [[https://stackoverflow.com/questions/2761723/what-is-the-difference-between-and-in-shell-scripts][nope]].
 
+   #+begin_src bash
+   "${foo[@]}"
+   "${foo[*]}"
+   #+end_src
+
 ** Slurping arrays
    A nice way to read a bunch of elements from one go is to use
    =readarray=.
