@@ -25,10 +25,10 @@
   to which category. I'll try to keep the rethoric to the minimum to
   maximize signal/noise.
 
-  The git repo is at https://github.com/kidd/scripting-field-guide/
-  and both contents, order and wording are WIP. Any feedback is
+  The git repo is at
+  https://github.com/kidd/scripting-field-guide/. Any feedback is
   greatly appreciated. It's not any kind of official doc, and in fact
-  I'm learning as I go. Ijust write MY current "state of the
+  I'm learning as I go. I just write MY current "state of the
   art". I'll be updating the contents with the very very useful info
   in https://news.ycombinator.com/item?id=24401085 's comments.
 
@@ -145,6 +145,23 @@
      echo ${ver[0]}
      echo "next/${ver[0]}.${ver[1]}.x.x"
    #+end_src
+
+   Or, use it in a destructuring fashion:
+   #+begin_src bash
+    get_nix_version_parts(){
+      local major minor patch
+      # shellcheck disable=SC2034,SC2162
+      IFS="." read major minor patch < <(get_nix_version)
+      local -p
+    }
+
+    $ get_nix_version_parts
+    major=2
+    minor=3
+    patch=4
+   #+end_src
+   https://news.ycombinator.com/item?id=24408318
+
 ** Functions
    Functions are functions. They receive arguments, and they return a
    value.
