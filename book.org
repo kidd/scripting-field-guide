@@ -1505,6 +1505,44 @@
    - =docker exec -u root -ti $(docker ps -q H1) bash=
    - =docker ps DM P1 XA docker stop=
 
+** Autocomplete
+   Writting smart autocompletion scripts is not easy.
+
+   zsh supports =compdef _gnu_generic= type of completion, which gets
+   you very far with 0 effort.
+
+   When autocompleting after a =-= in the commandline, if your command
+   is configured like =compdef _gnu_generic mycommand=, zsh will call
+   the script with =--help= and parse the output, trying to find
+   flags, and will use them as suggestions. It's really great.
+
+   The compromise is to write a decent "--help" for your script. Which
+   is cool because your user will love it too, and you just have to
+   write it once.
+
+   The completion is not context aware though, so you can't
+   autocomplete flags after the first non-flag argument. It seems this
+   could be improved in zsh-land, by asking for the --help like
+   =mycommand args-so-far --help=. But it doesn't work like that.
+
+
+   #+begin_src zsh
+     #!/usr/bin/env bash
+     # The script can be bash-only, while the completion work in zsh-only
+     set -Eeuo pipefail
+
+     help() {
+       echo "  -h,--help    Show help"
+       echo "  -c,--command Another thing"
+     }
+
+     if [ "$1" == "--help" ];
+       help
+     fi
+   #+end_src
+
+   Now you can play with =mycommand -<TAB>=. Amazing, wow.
+
 ** Create helpers and generate global aliases automagically
    Borrowing a bit from Perl, a bit from Forth, and a bit from
    PicoLisp, I've come to create a few helpers that abstract words
