@@ -27,10 +27,10 @@
 
   The git repo is at
   https://github.com/kidd/scripting-field-guide/. Any feedback is
-  greatly appreciated. It's not any kind of official doc, and in fact
-  I'm learning as I go. I just write MY current "state of the
-  art". I'll be updating the contents with the very very useful info
-  in https://news.ycombinator.com/item?id=24401085 's comments.
+  greatly appreciated. Keep in mind this is not any kind of official
+  doc. I just write MY current "state of the art" and I'll be updating
+  the contents with useful stuff I find or discover, that are not
+  widely explained in usual manuals/wikis.
 
   You probably have some amount of sh/bash/zsh in your stack that
   probably started as 1 off scripts, and probably later on started
@@ -50,9 +50,9 @@
 * Level
   These examples are based on non-trivial real world code I've written
   that I haven't seen applied in many places over the net. Some of the
-  snippets are stolen from public repos and some important stuff might
-  be missing if I don't feel I have anything to add to the generally
-  available info around.
+  snippets are stolen from public repos I find interesting and some
+  important stuff might be missing if I don't feel I have anything to
+  add to the generally available info around.
 * Patterns
 ** Use Shellcheck
    First, let's get that out of the way. This is low hanging
@@ -1717,6 +1717,7 @@
   - https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html
   - https://github.com/dylanaraps/pure-sh-bible
   - https://shatterealm.netlify.app/programming/2021_01_02_shiv_lets_build_a_vcs
+  - https://news.ycombinator.com/item?id=24401085
 
 * from shell to lisp and everything in between
   - [[https://github.com/oilshell/oil][Oil Shell]].
