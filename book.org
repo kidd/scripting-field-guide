@@ -1133,13 +1133,15 @@
    #+begin_src bash
      function a() { alias $1=cd\ $PWD; }
 
-     mkdir -p /tmp/foo
-     cd /tmp/my-very-long-thing
-     a vlt
+     mkdir -p /tmp/fing-longer
+     cd /tmp/fing-longer
+     a fl
      cd /
-     vlt
-     echo $PWD   # /tmp/my-very-long-thing
+     fl
+     echo $PWD   # /tmp/fing-longer .
    #+end_src
+   A man can dream...
+
 
    - unhist. functions can create aliases, and functions can receive
      functions as parameters (as a string (function name)), so we can
@@ -1756,6 +1758,7 @@
   - https://github.com/dylanaraps/pure-sh-bible
   - https://shatterealm.netlify.app/programming/2021_01_02_shiv_lets_build_a_vcs
   - https://news.ycombinator.com/item?id=24401085
+  - https://git.sr.ht/~sircmpwn/shit
 
 * from shell to lisp and everything in between
   - [[https://github.com/oilshell/oil][Oil Shell]].
@@ -1773,9 +1776,8 @@
 - Raimon Grau <[[mailto:raimonster@gmail.com][raimonster@gmail.com]]>.
 - Some examples are result of Raimon's and Lluís Esquerda's
   conversations or real world examples.
-- nikisweeting provided some very nice examples in this HN therad
-  https://news.ycombinator.com/item?id=24402571 which I'll be
-  pulling in as time allows.
+- people in https://news.ycombinator.com/item?id=24402571 which I'll
+  be pulling in as time allows.
 
 * Footnotes
 [fn:1] https://gist.github.com/samth/3083053
