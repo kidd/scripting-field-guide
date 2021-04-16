@@ -843,7 +843,7 @@
 
    #+begin_src bash
      mute() {
-       $@ >/dev/null
+       $@ >/dev/null 2>/dev/null
      }
      mute ls
    #+end_src
