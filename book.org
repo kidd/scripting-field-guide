@@ -49,10 +49,10 @@
   are compatible for the most part.
 * Level
   These examples are based on non-trivial real world code I've written
-  that I haven't seen applied in many places over the net. Some of the
-  snippets are stolen from public repos I find interesting and some
-  important stuff might be missing if I don't feel I have anything to
-  add to the generally available info around.
+  that I haven't seen applied in many places over the net. A few of
+  the snippets are stolen from public repos I find interesting and
+  also, important scripting stuff might be missing if I don't feel I
+  have anything to add to the generally available info around.
 * Patterns
 ** Use Shellcheck
    First, let's get that out of the way. This is low hanging
@@ -679,7 +679,6 @@
      }
    #+end_src
 
-
 ** source files
    =source= is like =require= or =import= in some programming
    languages. It evaluates the sourced file in the context of the
@@ -1082,6 +1081,32 @@
 
    Man pages and official examples are a goldmine.
 
+** HEREDOCS
+   - Basic usage of heredocs:
+   #+begin_src bash
+     echo <<EOF
+$interpolated
+\$non_interpolated
+EOF
+   #+end_src
+
+   - A dash after =<<= replaces trailing spaces in here docs
+   #+begin_src bash
+     echo <<-EOF
+     $var
+     there
+     EOF
+   #+end_src
+
+   - quoting the identifier disables interpolation of variables
+   #+begin_src bash
+     echo <<'EOF'
+     $non_interpolated
+     there
+     EOF
+   #+end_src
+
+   The [[http://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Here-Documents][bash manual]] is super concise and to the point there.
 * Interactive
 ** Save your small scripts
    Rome wasn't built in a day, and like having a journal log, most of
@@ -1657,7 +1682,7 @@
 
 ** make noglob 'transparent' to bash
    zsh and bash are mostly compatible, but there's a few things not
-   supported in bash. =noglob= is one of them. To do to layer
+   supported in bash. =noglob= is one of them. To build a cushion
    inbetween, an easy way is to just create a =~/bin/noglob= file
    #+begin_src bash
      $*
@@ -1754,10 +1779,8 @@
 ** use git staging area to diff outputs of commands
    https://chrismorgan.info/blog/make-and-git-diff-test-harness/
 ** coprocs
-   https://stackoverflow.com/questions/7942632/how-to-extrace-pg-backend-pid-from-postgresql-in-shell-script-and-pass-it-to-ano/8305578#8305578
-   https://unix.stackexchange.com/questions/86270/how-do-you-use-the-command-coproc-in-various-shells
-** HEREDOCS
-   https://stackoverflow.com/questions/4937792/using-variables-inside-a-bash-heredoc
+   - https://stackoverflow.com/questions/7942632/how-to-extrace-pg-backend-pid-from-postgresql-in-shell-script-and-pass-it-to-ano/8305578#8305578
+   - https://unix.stackexchange.com/questions/86270/how-do-you-use-the-command-coproc-in-various-shells
 * links
   - https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html
   - https://www.gnu.org/software/bash/manual/html_node/
@@ -1779,8 +1802,9 @@
   - https://shatterealm.netlify.app/programming/2021_01_02_shiv_lets_build_a_vcs
   - https://news.ycombinator.com/item?id=24401085
   - https://git.sr.ht/~sircmpwn/shit
+  - [[https://github.com/p8952/bocker][bocker]]. Docker implemented in around 100 lines of bash.
 
-* from shell to lisp and everything in between
+* From shell to lisp and everything in between
   - [[https://github.com/oilshell/oil][Oil Shell]].
   - [[https://rash-lang.org/][Rash]] (Racket shell)
   - [[https://arxiv.org/pdf/2007.09436.pdf][PaSh]]: Light-touch Data-Parallel Shell Processing.
@@ -1790,7 +1814,6 @@
   - https://github.com/artyom-poptsov/metabash
   - https://www.nushell.sh/
   - [[https://github.com/borkdude/babashka][Babashka]]
-  - [[https://github.com/p8952/bocker][bocker]]. Docker implemented in around 100 lines of bash.
   - Bash to Perl/Python/Ruby using =``= and growing from there.
 * Credits
 - Raimon Grau <[[mailto:raimonster@gmail.com][raimonster@gmail.com]]>.
