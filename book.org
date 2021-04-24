@@ -1358,9 +1358,9 @@ EOF
 
 ** DRY_RUN
    #+begin_src bash
-     if [[-n $DRY_RUN ]]; then
+     if [[-n "$DRY_RUN" ]]; then
        curl () {
-         echo curl $@
+         echo curl "$@"
        }
      fi
    #+end_src
