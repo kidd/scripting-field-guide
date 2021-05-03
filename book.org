@@ -855,6 +855,16 @@
      mute every 1 echo hi
    #+end_src
 
+   For the particular redirection problem, another option is to use
+   aliases. Redirects can be written anywhere on your CLI (not just at
+   the end), so the following will work using a plain alias:
+   #+begin_src bash
+     alias null='>/dev/null 2>/dev/null'
+     null ls
+   #+end_src
+
+
+
    - https://www.oilshell.org/blog/2017/01/13.html
 ** do_times/foreach_*
    shellscripts are highly side-efffecty, and even though the scoping
@@ -1396,11 +1406,20 @@ EOF
      # B           # stdout
      # [bar] A     # stderr
      # [bar] b     # stderr
-   #+end_src
+     #+end_src
 
 
    ref: https://stackoverflow.com/questions/17983777/shell-pipe-to-multiple-commands-in-a-file
 
+
+** tee+sudo
+   If you wat to store a file in a root-owned dir, in the middle of
+   your pipeline, instead of running the whole thing as root, you can
+   use =sudo tee file=:
+   #+begin_src bash
+     ls | grep m >/usr/local/garbage  # fail
+     ls | grep m | sudo tee /usr/local/garbage # success!
+   #+end_src
 ** quoting
    Bash: To get a quoted version of a given string, here's what you can do:
    #+begin_src bash
