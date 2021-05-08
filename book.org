@@ -1790,9 +1790,11 @@ EOF
    lnav <(tail -F /my/logfile-that-gets-rotated-or-truncated.log)
    cat <(date)
 
-** redirects
+** redirects & streams
    - https://catonmat.net/ftp/bash-redirections-cheat-sheet.pdf
    - https://catonmat.net/bash-one-liners-explained-part-three
+   - https://github.com/miguelmota/bash-streams-handbook
+   - https://www2.dmst.aueb.gr/dds/sw/dgsh/
 ** The $0 pattern
    https://www.reddit.com/r/oilshell/comments/f6of85/four_more_posts_in_shell_the_good_parts/
 ** use git staging area to diff outputs of commands
