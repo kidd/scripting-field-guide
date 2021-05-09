@@ -723,7 +723,7 @@
    Make use of =$(mktemp -d /tmp/foo-bar.XXXXX)=.  If you have to patch a
    file, do it in a clean fresh copy. Don't modify files in old paths
 
-   If you HAVE TO modify paths, do it idempotently.  But really, don't do it. aa
+   If you HAVE TO modify paths, do it idempotently.  But really, don't do it.
 
    #+begin_src bash :eval no
      git_clone_tmp() {
