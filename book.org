@@ -821,8 +821,8 @@
 
    here's a very simple version of =watch=. See how you can =every 2
    ls -la=. I think that style is called Bernstein Chaining. But I'm
-   not sure. It also looks like currying to me if you squint a little
-   bit.
+   not sure if it's exactly the same. It also looks like currying or
+   partial evaluation to me if you squint a little bit.
 
    #+begin_src bash
      every() {
@@ -830,10 +830,9 @@
         shift
         while true; do
           "$@"
-            sleep $secs;
+          sleep $secs;
         done
       }
-
    #+end_src
 
 
