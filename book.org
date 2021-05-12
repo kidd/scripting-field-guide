@@ -1334,6 +1334,12 @@ EOF
 
    Small wins that compose just fine :)
 
+** Use ${var?error msg} on templates
+   If you write something to be copypasted by your user and filled in,
+   instead of =<var>=, try =${var?You need to set var}=. it allows for the user to set
+   the variable in the environment without having to replace inline,
+   and if the user forgets any, the shell will barf.
+
 * Debugging
 ** adding =bash= to a script to debug
    You can add =bash= inside any script, and it'll add a sort of
@@ -1744,6 +1750,12 @@ EOF
    #+begin_src shell
     node <(echo 'setTimeout(() => console.log("foo"), 400)')   # fails
     node =(echo 'setTimeout(() => console.log("foo"), 400)')   # works!
+  #+end_src
+
+  Or,
+
+  #+begin_src bash
+    docker run --rm -ti -v =(echo "OHAI"):/tmp/foo ubuntu cat /tmp/foo
   #+end_src
 
 * TODO patterns
