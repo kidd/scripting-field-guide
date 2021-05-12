@@ -859,8 +859,8 @@
    aliases. Redirects can be written anywhere on your CLI (not just at
    the end), so the following will work using a plain alias:
    #+begin_src bash
-     alias null='>/dev/null 2>/dev/null'
-     null ls
+     alias mute='>/dev/null 2>/dev/null'
+     mute ls
    #+end_src
 
 
