@@ -49,10 +49,10 @@
   are compatible for the most part.
 * Level
   These examples are based on non-trivial real world code I've written
-  that I haven't seen applied in many places over the net. A few of
-  the snippets are stolen from public repos I find interesting and
-  also, important scripting stuff might be missing if I don't feel I
-  have anything to add to the generally available info around.
+  using patterns I haven't seen applied in many places over the net. A
+  few of the snippets are stolen from public repos I find interesting.
+  Also, important scripting stuff might be missing if I don't feel
+  I have anything to add to the generally available info around.
 * Patterns
 ** Use Shellcheck
    First, let's get that out of the way. This is low hanging
@@ -391,6 +391,38 @@
      die "can't proceed"
    fi
    #+end_src
+
+** set variable in an "if" test
+   Usual pattern to capture the output of a command and branch
+   depending on its return value is:
+   #+begin_src bash
+     res="$(... whatever ...)"
+     if [ "$?" -eq 0 ]; then ...
+                             ...
+     fi
+   #+end_src
+
+   Well, you can test the return value AND capture the output at the
+   same time!
+
+   #+begin_src bash
+     if res="$(...)"; then
+       ...
+     fi
+   #+end_src
+
+   Unfortunately, it doesnt' work with =local=, so you can't be
+   defining a local var in the same line. So, the variable is either
+   global, or you spent a line to declare it local before. Still, I
+   think I prefer to have a line to declare the variable as local
+   rather than having explicit =$?='s around.
+   #+begin_src bash
+     local var1
+     if var1=$(f); then
+       echo "$var1"
+     fi
+   #+end_src
+   Ref: https://news.ycombinator.com/item?id=27163494
 
 ** Do work on loop conditions
    I've not seen it used a lot (and there might be a reason for it,
@@ -1576,6 +1608,21 @@ EOF
    - =docker exec -u root -ti $(docker ps -q H1) bash=
    - =docker ps DM P1 XA docker stop=
 
+** Expansion of global aliases
+   Let's dig deeper.
+   #+begin_src zsh
+   alias -g DOCK='docker ps 2..N P P1'
+   DOCK  # works fine. Echoes the id of the chosen container
+   docker stop DOCK   # does not work , because it expands to docker stop docker ps 2..N P P1
+   docker stop $(DOCK) # works fine again
+   alias -g DOCK='$(docker ps 2..N P P1)'
+   docker stop DOCK   # yay!
+   #+end_src
+
+   So, you can bind words to expansion-time results of the aliases. It
+   feels like a very powerful thing, to have this "compile time"
+   expansions. Reminds me of CL's symbol-macrolet, or IMMEDIATE Forth
+   words.
 ** Autocomplete
    Writting smart autocompletion scripts is not easy.
 
@@ -1835,6 +1882,7 @@ EOF
   - https://news.ycombinator.com/item?id=24401085
   - https://git.sr.ht/~sircmpwn/shit
   - [[https://github.com/p8952/bocker][bocker]]. Docker implemented in around 100 lines of bash.
+  - https://github.com/simplenetes-io/simplenetes wow
 
 * From shell to lisp and everything in between
   - [[https://github.com/oilshell/oil][Oil Shell]].
