@@ -1877,6 +1877,7 @@ EOF
   - https://www.datafix.com.au/BASHing/index.html
   - https://susam.github.io/tucl/the-unix-command-language.html
   - https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html
+  - https://www.grymoire.com/Unix/Sh.html
   - https://github.com/dylanaraps/pure-sh-bible
   - https://shatterealm.netlify.app/programming/2021_01_02_shiv_lets_build_a_vcs
   - https://news.ycombinator.com/item?id=24401085
