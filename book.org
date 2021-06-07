@@ -1884,6 +1884,7 @@ EOF
   - https://git.sr.ht/~sircmpwn/shit
   - [[https://github.com/p8952/bocker][bocker]]. Docker implemented in around 100 lines of bash.
   - https://github.com/simplenetes-io/simplenetes wow
+  - https://bakkenbaeck.github.io/a-random-walk-through-git/
 
 * From shell to lisp and everything in between
   - [[https://github.com/oilshell/oil][Oil Shell]].
