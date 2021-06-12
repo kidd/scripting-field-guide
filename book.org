@@ -122,6 +122,31 @@
    "${foo[*]}"
    #+end_src
 
+   The best example in that StackOverflow is this one:
+
+   #+begin_src bash
+     #!/bin/bash
+
+     main()
+     {
+       echo 'MAIN sees ' $# ' args'
+     }
+
+     main $*
+     main $@
+
+     main "$*"
+     main "$@"
+
+     ### end ###
+
+     and I run it like this:
+
+     my_script 'a b c' d e
+
+   #+end_src
+
+
 ** Slurping arrays
    A nice way to read a bunch of elements from one go is to use
    =readarray=.
@@ -1866,7 +1891,7 @@ EOF
   - https://tldp.org/LDP/abs/html/
   - https://mywiki.wooledge.org/BashPitfalls
   - [[https://www.youtube.com/watch?v=sCZJblyT_XM][Gary Bernhardt. The Unix Chainsaw]]
-  - [[https://github.com/spencertipping/][spencertipping@github]]. This guy has some really sick snippets
+  - https://github.com/spencertipping/. This guy has some bash sick snippets
   - https://news.ycombinator.com/item?id=23765123
   - https://medium.com/@joydeepubuntu/functional-programming-in-bash-145b6db336b7
   - https://www.youtube.com/watch?v=yD2ekOEP9sU
@@ -1885,6 +1910,7 @@ EOF
   - [[https://github.com/p8952/bocker][bocker]]. Docker implemented in around 100 lines of bash.
   - https://github.com/simplenetes-io/simplenetes wow
   - https://bakkenbaeck.github.io/a-random-walk-through-git/
+  - https://github.com/WeilerWebServices/Bash
 
 * From shell to lisp and everything in between
   - [[https://github.com/oilshell/oil][Oil Shell]].
