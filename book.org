@@ -146,7 +146,14 @@
 
    #+end_src
 
+** Pass Arrays around
+   #+begin_src bash
+     a=('Track 01.mp3' 'Track 02.mp3')
+     myfun "${a[@]}" # pass array to a function
+     b=( "${a[@]}" ) # copy array
+   #+end_src
 
+   Read the great Oil Shell [[http://www.oilshell.org/blog/2016/11/06.html][blogpost]].
 ** Slurping arrays
    A nice way to read a bunch of elements from one go is to use
    =readarray=.
