@@ -1414,7 +1414,7 @@ EOF
 
    #+begin_src bash
   foo() {
-      foo() { true;gg }
+      foo() { true; }
       echo "This bit will only be executed on the first foo call"
   }
    #+end_src
