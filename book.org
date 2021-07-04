@@ -550,10 +550,10 @@
 
    #+begin_src bash
      mute() {
-       $@ >/dev/null
+       "$@" >/dev/null
      }
 
-     mute ls
+     mute pushd /tmp/foobar
    #+end_src
 ** use [[
    Unless you want your script to be POSIX compliant, use =[[= instead
@@ -1403,6 +1403,18 @@ EOF
    the variable in the environment without having to replace inline,
    and if the user forgets any, the shell will barf.
 
+** Idempotent functions
+
+   "My favourite shell scripting function definition technique:
+   idempotent functions by redefining the function as a noop inside
+   its body:" -- [[https://news.ycombinator.com/item?id=27729397][chrismorgan]]
+
+   #+begin_src bash
+  foo() {
+      foo() { }
+      echo "This bit will only be executed on the first foo call"
+  }
+   #+end_src
 * Debugging
 ** adding =bash= to a script to debug
    You can add =bash= inside any script, and it'll add a sort of
