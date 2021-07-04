@@ -578,14 +578,14 @@
    compose them like you'd do in any other language.
 
    In the following snippet, we are in a release script. Some step
-   builds a package inside an image, another step tests a package
-   already built.
+   builds a package inside a docker container, another step tests a
+   package already built.
 
    A nice way to build ubuntus, for example, is to add an ARG to the
    Dockerfile so we can build several ubuntu versions using the same
    file.
 
-   It'd look something like this:
+   It'd look like this:
    #+begin_src Dockerfile
      ARG VERSION
      FROM ubuntu:$VERSION
@@ -605,8 +605,9 @@
    #+begin_src bash
      # evaluate the string "centos:$VERSION" (that comes from
      # centos/Dockerfile) in the current scope
-     local VERSION=$(get_version $DISTRO)
-     run_test "file.deb" "$(eval echo $(awk '/^FROM /{print $2; exit}' $LOCAL_PATH/$(get_dockerfile_for $DISTRO)))"
+     # DISTRO is ubuntu:18.04
+     local VERSION=$(get_version $DISTRO) # VERSION==18.04
+     run_test "file.deb" "$(eval echo $(awk '/^FROM /{print $2; exit}' $LOCAL_PATH/$(get_dockerfile_for $DISTRO)))" # ubuntu:18.04
    #+end_src
 
    The usage of eval is there to interpolate the string that we get
