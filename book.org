@@ -22,7 +22,7 @@
   scripting. Some are just useful, some are more playful, and might
   not have such direct impact in your day-to-day life. Some are pure
   entertainment. You'll have to judge by yourself which things belong
-  to which category. I'll try to keep the rethoric to the minimum to
+  to which category. I'll try to keep the rhetoric to the minimum to
   maximize signal/noise.
 
   The git repo is at
@@ -33,7 +33,7 @@
   widely explained in usual manuals/wikis.
 
   You probably have some amount of sh/bash/zsh in your stack that
-  probably started as 1 off scripts, and probably later on started
+  probably started as one-off scripts, and probably later on started
   growing and being copypasted everywhere in your pipelines, or your
   coworkers use for their own use (with some variations), etc. Those
   scripts are very difficult to kill and they have a very high
@@ -45,7 +45,7 @@
   daily usage and refinement of your helper functions, aliases,
   etc. in interactive mode.
 
-  In general the examples here are ment to run in Bash or Zsh, which
+  In general the examples here are meant to run in Bash or Zsh, which
   are compatible for the most part.
 * Level
   These examples are based on non-trivial real world code I've written
@@ -55,7 +55,7 @@
   I have anything to add to the generally available info around.
 * Patterns
 ** Use Shellcheck
-   First, let's get that out of the way. This is low hanging
+   First, let's get that out of the way. This is low-hanging
    fruit. And you will get the most of this booklet by following it.
 
    A lot of the most common errors we usually make are well known
@@ -63,9 +63,10 @@
    known for being error prone when dealing with testing variable
    values, string operations, or flaky subshells and pipes.
 
-   Installing [[https://www.shellcheck.net/][shellcheck]] will flag you many of those ticking bombs.
+   Installing [[https://www.shellcheck.net/][shellcheck]] will flag many of those ticking bombs for
+   you.
 
-   No matter which editor you are using, but you should be able to
+   No matter which editor you are using, you should be able to
    install a plugin to do automatic checks while you're editing.
 
    In emacs' case, the package is called [[https://github.com/federicotdn/flymake-shellcheck][flymake-shellcheck]], and a
@@ -122,8 +123,6 @@
    "${foo[*]}"
    #+end_src
 
-   The best example in that StackOverflow is this one:
-
    #+begin_src bash
      #!/bin/bash
 
@@ -155,7 +154,7 @@
 
    Read the great Oil Shell [[http://www.oilshell.org/blog/2016/11/06.html][blogpost]].
 ** Slurping arrays
-   A nice way to read a bunch of elements from one go is to use
+   A nice way to read a bunch of elements in one go is to use
    =readarray=.
    #+begin_src bash
    parse_args() {
@@ -198,7 +197,7 @@
    Functions are functions. They receive arguments, and they return a
    value.
 
-   The special thing about functions in shell is that they also can use
+   The special thing about shell functions is that they also can use
    the file descriptors of the process. That means that they "inherit"
    STDIN, STDOUT, STDERR (and maybe more).
 
@@ -328,7 +327,7 @@
    | readme.org |
 
 ** dispatch functions using args
-   A nice usage of the previous technique is using user's input as a
+   A nice usage of the previous technique is using user input as a
    dispatching method.
 
    You've probably seen this pattern already:
@@ -390,13 +389,13 @@
    cmd_bar
    #+end_src
 
-   you can unset the function =command_not_found_handle= to go back to
+   You can unset the function =command_not_found_handle= to go back to
    the normal behavior.
 
 ** Return Values for Conditionals
    =if= 's test condition can use the return values of
    commands. That's a known thing, but lots of code you see around
-   rely on =[[]]= to test the return values of commands/functions
+   relies on =[[]]= to test the return values of commands/functions
    anyway.
 
    #+begin_src bash
@@ -413,7 +412,7 @@
    #+end_src
 
    As easy and trivial as it seems, this way of thinking pushes you
-   forward to thinking on creating smaller functions that check the
+   forward to thinking about creating smaller functions that check the
    conditions and =return= 0 or non 0. It's syntactically smaller, and
    usually makes you play by the rules of the commands, more than just
    finding your way around the output strings.
@@ -1414,7 +1413,7 @@ EOF
 
    #+begin_src bash
   foo() {
-      foo() { true; }
+      foo() { true;gg }
       echo "This bit will only be executed on the first foo call"
   }
    #+end_src
