@@ -10,6 +10,7 @@
 #+SELECT_TAGS: export
 
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+#+html_head_extra: <link rel="stylesheet" type="text/css" href="styles.css"/>
 
 #+OPTIONS: reveal_center:nil timestamp:nil
 #+REVEAL_THEME: black
@@ -1180,6 +1181,37 @@ EOF
    #+end_src
 
    The [[http://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Here-Documents][bash manual]] is super concise and to the point there.
+** \__DATA__
+   I loved the Perl [[https://perldoc.perl.org/perldata#Special-Literals][\__END__ and \__DATA__]], features and realized it's
+   possible to do it in shellscripts.
+
+   You can append to the current file. Here's an example of a super
+   simple bookmark "manager":
+   #+begin_src bash
+     #!/usr/bin/env sh
+
+     cmd_add() {
+         shift
+         echo "$@" >> "$0"
+     }
+
+     cmd_go() {
+         sed '0,/^__DATA__$/d' "$0" |
+         dmenu -i -l 20  |
+         rev | cut -f1 -d' ' | rev |
+         xargs xdg-open
+     }
+
+     main() {
+         cmd_${1:-go} $@
+     }
+
+     main $@
+     exit
+
+     __DATA__
+     r/emacs             https://www.reddit.com/r/emacs
+   #+end_src
 * Interactive
 ** Save your small scripts
    Rome wasn't built in a day, and like having a journal log, most of
