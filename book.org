@@ -702,7 +702,7 @@
 
    Bash is extremely permissive in what it allows to be coded and
    ran. By default, failures do not make the program exit or throw an
-   exeption (no exceptions here). And for some reason, the common
+   exception (no exceptions). And for some reason, the common
    usage of shellscripts is to put everything in the top level. Don't
    do that. Do the least possible things in the toplevel.
 
@@ -727,9 +727,9 @@
     Ref: https://dougrichardson.us/2018/08/03/fail-fast-bash-scripting.html
 
 ** Check your deps
-   Giving useful information to the user will only help them using the
-   script, and you debugging it.  This is a common use case, so let's
-   do it nicely.
+   Giving useful information to the users will help them using the
+   script, and you debugging it. Script dependencies is a common use
+   case that we'll do it in a nice way.
 
    #+begin_src bash
      deps() {
