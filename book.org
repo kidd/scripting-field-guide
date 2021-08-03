@@ -9,7 +9,7 @@
 #+LANGUAGE: en
 #+SELECT_TAGS: export
 
-#+OPTIONS: html-style:nile
+#+OPTIONS: html-style:nil
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 #+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="styles.css"/>
 
