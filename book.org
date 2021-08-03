@@ -9,8 +9,9 @@
 #+LANGUAGE: en
 #+SELECT_TAGS: export
 
+#+OPTIONS: html-style:nile
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
-#+html_head_extra: <link rel="stylesheet" type="text/css" href="styles.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="./styles.css"/>
 
 #+OPTIONS: reveal_center:nil timestamp:nil
 #+REVEAL_THEME: black
@@ -193,6 +194,21 @@
     patch=4
    #+end_src
    https://news.ycombinator.com/item?id=24408318
+** Assign to $1,$2,$3...
+   =set --= can be used as an incantation to assign to the positional
+   parameters. Let me show you.
+
+   #+begin_src bash
+     set -- a b c
+     echo $1 $2 $3
+     echo $@
+   #+end_src
+
+   See? here's how to "unshift" a parameter to the current arg list:
+
+   #+begin_src bash
+     set -- "injected" "$@"
+   #+end_src
 
 ** Functions
    Functions are functions. They receive arguments, and they return a
@@ -802,6 +818,7 @@
 
    CAVEAT: You have to manually delete the directory if you want it cleaned.
 
+   Here's an article with very good advice on [[https://www.netmeister.org/blog/mktemp.html][tempfiles]].
 ** Cleanup tasks with trap
    =trap= is used to 'subscribe' a callback when something happens.
    Many times it's used on exit. It's a good thing to cleanup tmpdirs after your script
@@ -1965,6 +1982,7 @@ EOF
   - https://github.com/simplenetes-io/simplenetes wow
   - https://bakkenbaeck.github.io/a-random-walk-through-git/
   - https://github.com/WeilerWebServices/Bash
+  - https://www.netmeister.org/blog/consistent-tools.html.
 
 * From shell to lisp and everything in between
   - [[https://github.com/oilshell/oil][Oil Shell]].
