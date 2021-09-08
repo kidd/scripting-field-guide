@@ -1949,6 +1949,7 @@ EOF
    - https://catonmat.net/bash-one-liners-explained-part-three
    - https://github.com/miguelmota/bash-streams-handbook
    - https://www2.dmst.aueb.gr/dds/sw/dgsh/
+   - https://wiki.bash-hackers.org/howto/redirection_tutorial
 ** The $0 pattern
    https://www.reddit.com/r/oilshell/comments/f6of85/four_more_posts_in_shell_the_good_parts/
 ** use git staging area to diff outputs of commands
@@ -1956,6 +1957,7 @@ EOF
 ** coprocs
    - https://stackoverflow.com/questions/7942632/how-to-extrace-pg-backend-pid-from-postgresql-in-shell-script-and-pass-it-to-ano/8305578#8305578
    - https://unix.stackexchange.com/questions/86270/how-do-you-use-the-command-coproc-in-various-shells
+   - https://mbuki-mvuki.org/posts/2021-05-30-memoize-commands-or-bash-functions-with-coprocs/
 * links
   - https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html
   - https://www.gnu.org/software/bash/manual/html_node/
