@@ -1051,6 +1051,8 @@
    page, but just know it can help in running parallel processes
    (check =-P= in its man).
 
+   Other tips on this great [[https://www.oilshell.org/blog/2021/08/xargs.html][Guide to xargs]].
+
 ** change loops for "mapping/reducing" functions
 *** find
     Many times we want to run the same operation or test to lots of
