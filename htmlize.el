@@ -1,11 +1,11 @@
 ;;; htmlize.el --- Convert buffer text and decorations to HTML. -*- lexical-binding: t -*-
 
-;; Copyright (C) 1997-2003,2005,2006,2009,2011,2012,2014,2017,2018 Hrvoje Niksic
+;; Copyright (C) 1997-2003,2005,2006,2009,2011,2012,2014,2017,2018,2020 Hrvoje Niksic
 
 ;; Author: Hrvoje Niksic <hniksic@gmail.com>
 ;; Homepage: https://github.com/hniksic/emacs-htmlize
 ;; Keywords: hypermedia, extensions
-;; Version: 1.56
+;; Version: 1.57
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -88,7 +88,7 @@
   (defvar font-lock-support-mode)
   (defvar global-font-lock-mode))
 
-(defconst htmlize-version "1.56")
+(defconst htmlize-version "1.57")
 
 (defgroup htmlize nil
   "Convert buffer text and faces to HTML."
@@ -1045,7 +1045,7 @@ If no rgb.txt file is found, return nil."
     (let ((size-list
            (cl-loop
             for f in face-list
-            for h = (face-attribute f :height)
+            for h = (and (facep f) (face-attribute f :height))
             collect (if (eq h 'unspecified) nil h))))
       (cl-reduce 'htmlize-merge-size (cons nil size-list)))))
 
@@ -1273,24 +1273,6 @@ overlays that specify `face'."
                                faces :test 'equal))))
     faces))
 
-(if (>= emacs-major-version 25)
-    (defun htmlize-sorted-overlays-at (pos)
-      (overlays-at pos t))
-
-  (defun htmlize-sorted-overlays-at (pos)
-    ;; Like OVERLAYS-AT with the SORTED argument, for older Emacsen.
-    (let ((overlays (overlays-at pos)))
-      (setq overlays (cl-sort overlays #'<
-                              :key (lambda (o)
-                                     (- (overlay-end o) (overlay-start o)))))
-      (setq overlays
-            (cl-stable-sort overlays #'<
-                            :key (lambda (o)
-                                   (let ((prio (overlay-get o 'priority)))
-                                     (if (numberp prio) prio 0)))))
-      (nreverse overlays))))
-
-
 ;; htmlize-faces-at-point returns the faces in use at point.  The
 ;; faces are sorted by increasing priority, i.e. the last face takes
 ;; precedence.
@@ -1310,7 +1292,7 @@ overlays that specify `face'."
            ;; Collect overlays at point that specify `face'.
            (cl-delete-if-not (lambda (o)
                                (overlay-get o 'face))
-                             (nreverse (htmlize-sorted-overlays-at (point)))))
+                             (nreverse (overlays-at (point) t))))
           list face-prop)
       (dolist (overlay overlays)
         (setq face-prop (overlay-get overlay 'face)
