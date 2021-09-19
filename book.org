@@ -194,6 +194,17 @@
     patch=4
    #+end_src
    https://news.ycombinator.com/item?id=24408318
+** Read lines from file
+   The =read= command we used just above is part of the usual idiom to
+   read a file line by line.
+
+   #+begin_src bash
+     while read line; do
+       echo $line
+     done < /tmp/file.txt
+   #+end_src
+
+   More related info in the [[https://mywiki.wooledge.org/BashFAQ/001][BashFAQ001]].
 ** Assign to $1,$2,$3...
    =set --= can be used as an incantation to assign to the positional
    parameters. Let me show you.
