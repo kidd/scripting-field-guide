@@ -1242,6 +1242,13 @@ EOF
      __DATA__
      r/emacs             https://www.reddit.com/r/emacs
    #+end_src
+** Secrets
+   As, [[https://smallstep.com/blog/command-line-secrets/][Smallstep article]] explains, you should be careful when passing
+   around secret data like tokens between processes.
+
+   Env vars are not really safe, and there are a few tricks you can
+   use to cover your assets.
+
 * Interactive
 ** Save your small scripts
    Rome wasn't built in a day, and like having a journal log, most of
