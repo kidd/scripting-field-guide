@@ -1211,6 +1211,36 @@ EOF
    #+end_src
 
    The [[http://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Here-Documents][bash manual]] is super concise and to the point there.
+
+   The most complex case is having a heredoc which contains some bash
+   code that is ment to run remotely, and wanting to interpolate some
+   variables in the local env, and some in the remote one. [[https://stackoverflow.com/questions/4937792/using-variables-inside-a-bash-heredoc][Escaping is
+   enough for regular]] vars, but if you want to use special (=$1, $!,
+   $?=...) vars, check this out:
+
+   #+begin_src bash
+     deploy () {
+       local deploy_dir="$1"
+       ssh_root 'bash -s' <<EOSSH
+       echo "deploying => ${deploy_dir}"
+       ls -tdr ~/quote-clojure/artifacts/deploy-be-* | head -n -5 | xargs rm -rf
+       ln -nfs "\$HOME/quote-clojure/artifacts/${deploy_dir}/quote-clojure-0.1.0-SNAPSHOT-standalone.jar" "\$HOME/quote-clojure/artifacts/current.jar"
+       cat ~/quote-clojure/artifacts/current.pid | xargs kill
+       java -jar ~/quote-clojure/artifacts/current.jar &>/dev/null &
+       lastpid=\$(echo \$!)
+       echo \$lastpid > ~/quote-clojure/artifacts/current.pid
+     EOSSH
+     }
+   #+end_src
+
+** HERESTRINGS
+   It's the next level from HEREDOCS. Inline a string as a file.
+
+   #+begin_src bash
+     cat <<<"HELLO"
+     cat <<<$(echo "HELLO")
+   #+end_src
+
 ** \__DATA__
    I loved the Perl [[https://perldoc.perl.org/perldata#Special-Literals][\__END__ and \__DATA__]], features and realized it's
    possible to do it in shellscripts.
