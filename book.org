@@ -1221,7 +1221,7 @@ EOF
    #+begin_src bash
      deploy () {
        local deploy_dir="$1"
-       ssh_root 'bash -s' <<EOSSH
+       ssh server1 'bash -s' <<EOSSH
        echo "deploying => ${deploy_dir}"
        ls -tdr ~/quote-clojure/artifacts/deploy-be-* | head -n -5 | xargs rm -rf
        ln -nfs "\$HOME/quote-clojure/artifacts/${deploy_dir}/quote-clojure-0.1.0-SNAPSHOT-standalone.jar" "\$HOME/quote-clojure/artifacts/current.jar"
@@ -1234,11 +1234,15 @@ EOF
    #+end_src
 
 ** HERESTRINGS
-   It's the next level from HEREDOCS. Inline a string as a file.
+   It's the stripped down version of HEREDOCS. Inline a single string
+   (or output of a single command) as an input string.
 
+   It's [[https://stackoverflow.com/questions/18116343/whats-the-difference-between-here-string-and-echo-pipe][kinda similar]] to what you could do with a pipe.
    #+begin_src bash
      cat <<<"HELLO"
      cat <<<$(echo "HELLO")
+     echo "ECHOPIPE" | /bin/cat <(seq 5) <<<"HERESTRING"
+     echo "ECHOPIPE" | /bin/cat <(seq 5) - <<<"HERESTRING"
    #+end_src
 
 ** \__DATA__
