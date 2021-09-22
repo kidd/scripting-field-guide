@@ -204,7 +204,9 @@
      done < /tmp/file.txt
    #+end_src
 
-   More related info in the [[https://mywiki.wooledge.org/BashFAQ/001][BashFAQ001]].
+   More related info in the [[https://mywiki.wooledge.org/BashFAQ/001][BashFAQ001]]. But it's very rare the case
+   where I need to iterate a file line by line.
+
 ** Assign to $1,$2,$3...
    =set --= can be used as an incantation to assign to the positional
    parameters. Let me show you.
