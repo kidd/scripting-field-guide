@@ -600,7 +600,7 @@
 
      # [ does not:
      [ a = b -a "$(echo foo >&2)” ]
-   #+end_src
+     #+end_src
    Ref: https://lists.gnu.org/archive/html/help-bash/2014-06/msg00013.html
 
 ** eval?
@@ -753,7 +753,7 @@
      main "$@"
    #+end_src
 
-    Ref: https://dougrichardson.us/2018/08/03/fail-fast-bash-scripting.html
+   Ref: https://dougrichardson.us/2018/08/03/fail-fast-bash-scripting.html
 
 ** Check your deps
    Giving useful information to the users will help them using the
@@ -877,7 +877,7 @@
 ** stacktrace on error
    Here's a nice helper for debugging errors in bash. In case of non-0
    exit, it prints a stacktrace.
-    #+begin_src bash
+   #+begin_src bash
       set -Eeuo pipefail
       trap stacktrace EXIT
       stacktrace() {
@@ -891,8 +891,8 @@
           fi
       }
 
-    #+end_src
-    ref: https://news.ycombinator.com/item?id=26644110
+   #+end_src
+   ref: https://news.ycombinator.com/item?id=26644110
 ** Dots and colons allowed in function names!
    A way to split the namespace is to have libs define functions with
    their own namespace.
@@ -1225,12 +1225,12 @@ EOF
        local deploy_dir="$1"
        ssh server1 'bash -s' <<EOSSH
        echo "deploying => ${deploy_dir}"
-       ls -tdr ~/quote-clojure/artifacts/deploy-be-* | head -n -5 | xargs rm -rf
-       ln -nfs "\$HOME/quote-clojure/artifacts/${deploy_dir}/quote-clojure-0.1.0-SNAPSHOT-standalone.jar" "\$HOME/quote-clojure/artifacts/current.jar"
-       cat ~/quote-clojure/artifacts/current.pid | xargs kill
-       java -jar ~/quote-clojure/artifacts/current.jar &>/dev/null &
+       ls -tdr ~/my-project/artifacts/deploy-be-* | head -n -5 | xargs rm -rf
+       ln -nfs "\$HOME/my-project/artifacts/${deploy_dir}/my-project-0.1.0-SNAPSHOT-standalone.jar" "\$HOME/my-project/artifacts/current.jar"
+       cat ~/my-project/artifacts/current.pid | xargs kill
+       java -jar ~/my-project/artifacts/current.jar &>/dev/null &
        lastpid=\$(echo \$!)
-       echo \$lastpid > ~/quote-clojure/artifacts/current.pid
+       echo \$lastpid > ~/my-project/artifacts/current.pid
      EOSSH
      }
    #+end_src
@@ -1278,6 +1278,23 @@ EOF
      __DATA__
      r/emacs             https://www.reddit.com/r/emacs
    #+end_src
+** Simple Templating
+   For trivial templating, there's no need for any external tool
+   except for just variable interpolation. This is quite obvious, but
+   I use it quite often to generate repetitive bash code itself
+
+   #+begin_src bash
+   #!/usr/bin/env bash
+   is=("obj1" "obj2")
+   js=("resource1" "resource2")
+
+   for i in "${is[@]}"; do
+     for j in "${js[@]}"; do
+       echo "insert into t (obj, resource) values ('$i', '$j');"
+     done
+   done
+   #+end_src
+
 ** Secrets
    As, [[https://smallstep.com/blog/command-line-secrets/][Smallstep article]] explains, you should be careful when passing
    around secret data like tokens between processes.
@@ -1599,7 +1616,6 @@ EOF
 
 
    ref: https://stackoverflow.com/questions/17983777/shell-pipe-to-multiple-commands-in-a-file
-
 
 ** tee+sudo
    If you wat to store a file in a root-owned dir, in the middle of
