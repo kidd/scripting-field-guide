@@ -1687,9 +1687,27 @@ EOF
    - =/= Directories
    - =om[numberhere]=. Nth latest modified
 
-** Some global aliases:
-   These are some aliases I have in my ~/.zshrc that somehow help me
-   use a shell in a more fluid way.
+** Global aliases:
+   Zsh has 3 kinds of aliases: normal, global, and suffix. Normal ones
+   behave the same as in bash: They expand only in the first token of
+   a line.
+
+   #+begin_src bash
+   alias foo=ls
+   foo foo # -> ls: cannot access 'foo': No such file or directory
+   #+end_src
+
+   Global aliases expand anywhere in your cli, and they can expand to
+   anything.
+
+   #+begin_src bash
+   alias  -g foo=ls
+   foo foo # -> ls: cannot access 'ls': No such file or directory
+   #+end_src
+
+   These are some aliases I have in my ~/.zshrc that help me use a
+   shell in a more fluid way.
+
    #+begin_src bash
      alias -g P1='| awk "{print \$1}"'
      alias -g P2='| awk "{print \$2}"'
