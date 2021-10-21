@@ -1582,6 +1582,20 @@ EOF
    #+end_src
    use =command curl= to force the command, not the alias or anything
 
+   If you have many functions to mock, and you want to overabstract (bad thing):
+
+   #+begin_src bash
+   dry () {                           
+     $1() { echo $0 "$@" }
+   }
+
+   for i in {"curl", "rm", "http"}; do
+     dry $i
+   done
+   #+end_src
+
+
+
 ** Cheap debugging flag
 
    #+begin_src bash
