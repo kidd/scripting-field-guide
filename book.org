@@ -1317,6 +1317,23 @@ EOF
    Env vars are not really safe, and there are a few tricks you can
    use to cover your assets.
 
+** Escape single quotes in single quoted strings
+   Escaping single quoted strings doesn't work the way you'd think.
+
+   #+begin_src bash
+     # does not work
+     a='hi \'bob\''
+   #+end_src
+
+   Use =$''= strings like:
+   #+begin_src bash
+     # works!
+     a='hi \'bob\''
+     echo $a
+   #+end_src
+
+   Extra explanations: [[https://stackoverflow.com/questions/1250079/how-to-escape-single-quotes-within-single-quoted-strings][StackOverflow]]
+
 * Interactive
 ** Save your small scripts
    Rome wasn't built in a day, and like having a journal log, most of
@@ -1600,7 +1617,7 @@ EOF
    If you have many functions to mock, and you want to overabstract (bad thing):
 
    #+begin_src bash
-   dry () {                           
+   dry () {
      $1() { echo $0 "$@" }
    }
 
@@ -1674,7 +1691,6 @@ EOF
    #+end_src
 
    Zsh: If you're on zsh, =a-'= quotes the current line.
-
 * zsh-only
 ** Word spliting
    Word splitting works differently by default in zsh than in bash.
