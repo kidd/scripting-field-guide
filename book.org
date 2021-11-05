@@ -1328,7 +1328,7 @@ EOF
    Use =$''= strings like:
    #+begin_src bash
      # works!
-     a='hi \'bob\''
+     a=$'hi \'bob\''
      echo $a
    #+end_src
 
