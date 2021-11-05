@@ -1066,6 +1066,21 @@
 
    Other tips on this great [[https://www.oilshell.org/blog/2021/08/xargs.html][Guide to xargs]].
 
+** Scripts as filters
+   Strive to create scripts that can be used as filters. Perl had
+   =while(<>) { ... }= that would open a file line by line, or get
+   input from stdin depending on the actual arguments to the file.
+
+   In shellscripting, we can simulate (part of) it using
+   #+begin_src bash
+     while IFS= read -r line
+     do
+       echo "$line"
+     done < "${1:-/dev/stdin}"
+   #+end_src
+
+   Look [[https://stackoverflow.com/questions/6980090/how-to-read-from-a-file-or-standard-input-in-bash][here]] for more detailed explanations and variants.
+
 ** change loops for "mapping/reducing" functions
 *** find
     Many times we want to run the same operation or test to lots of
