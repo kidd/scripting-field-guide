@@ -1984,7 +1984,7 @@ EOF
 
 ** make noglob 'transparent' to bash
    zsh and bash are mostly compatible, but there's a few things not
-   supported in bash. =noglob= is one of them. To build a cushion
+   supported in bash. =noglob= is one of them. To build a shim
    inbetween, an easy way is to just create a =~/bin/noglob= file
    #+begin_src bash
      $*
