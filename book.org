@@ -1268,7 +1268,7 @@ EOF
        local deploy_dir="$1"
        ssh server1 'bash -s' <<EOSSH
        echo "deploying => ${deploy_dir}"
-       ls -tdr ~/my-project/artifacts/deploy-be-* | head -n -5 | xargs rm -rf
+       ls -tdr ~/my-project/artifacts/* | head -n -5 | xargs rm -rf   # remove all but latest 5 directories
        ln -nfs "\$HOME/my-project/artifacts/${deploy_dir}/my-project-0.1.0-SNAPSHOT-standalone.jar" "\$HOME/my-project/artifacts/current.jar"
        cat ~/my-project/artifacts/current.pid | xargs kill
        java -jar ~/my-project/artifacts/current.jar &>/dev/null &
