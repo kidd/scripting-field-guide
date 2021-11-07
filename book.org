@@ -1290,8 +1290,8 @@ EOF
      echo "ECHOPIPE" | /bin/cat <(seq 5) - <<<"HERESTRING"
    #+end_src
 
-** \__DATA__
-   I loved the Perl [[https://perldoc.perl.org/perldata#Special-Literals][\__END__ and \__DATA__]], features and realized it's
+** __DATA__
+   I loved the Perl [[https://perldoc.perl.org/perldata#Special-Literals][__END__ and __DATA__]], features and realized it's
    possible to do it in shellscripts.
 
    You can append to the current file. Here's an example of a super
