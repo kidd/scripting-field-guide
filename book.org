@@ -723,7 +723,7 @@
    tools to make interaction faster builds a language that grows on
    you, and keeps improving your toolbelt.
 
-** The Toplevel Is Hopeless[fn:1]
+** The Toplevel Is Hopeless
    Shellscripts are thought as quick one-off programs, but when they
    are useful, they are sticky, so you better write them from the
    start as if it would be permanent. The upfront cost is very low
@@ -2140,6 +2140,7 @@ EOF
   - https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html
   - https://www.grymoire.com/Unix/Sh.html
   - https://github.com/dylanaraps/pure-sh-bible
+  - https://github.com/dylanaraps/pure-bash-bible
   - https://shatterealm.netlify.app/programming/2021_01_02_shiv_lets_build_a_vcs
   - https://news.ycombinator.com/item?id=24401085
   - https://git.sr.ht/~sircmpwn/shit
@@ -2167,6 +2168,3 @@ EOF
   conversations or real world examples.
 - people in https://news.ycombinator.com/item?id=24402571 which I'll
   be pulling in as time allows.
-
-* Footnotes
-[fn:1] https://gist.github.com/samth/3083053
