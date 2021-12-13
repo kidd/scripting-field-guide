@@ -914,7 +914,7 @@
    a degree of composability that allows for a nice chaining of
    commands.
 
-   here's a very simple version of =watch=. See how you can =every 2
+   Here's a very simple version of =watch=. See how you can =every 2
    ls -la=. I think that style is called Bernstein Chaining. But I'm
    not sure if it's exactly the same. It also looks like currying or
    partial evaluation to me if you squint a little bit.
@@ -941,7 +941,7 @@
      mute ls
    #+end_src
 
-   So now we can create the most stupid command composition ever:
+   So now we can create the most useless command composition ever:
 
    #+begin_src bash
      every 1 mute echo hi
@@ -2150,6 +2150,7 @@ EOF
   - https://github.com/WeilerWebServices/Bash
   - https://www.netmeister.org/blog/consistent-tools.html.
   - https://www.arp242.net/why-zsh.html. bash vs zsh differences.
+  - https://dwheeler.com/essays/filenames-in-shell.html
 
 * From shell to lisp and everything in between
   - [[https://github.com/oilshell/oil][Oil Shell]].
