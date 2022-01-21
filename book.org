@@ -1171,6 +1171,8 @@
       echo '{"nested":"{\"a\":2}"}' | jq '.nested | fromjson | .a '
     #+end_src
 
+    There are quite a few interesting commands in this [[https://medium.com/circuitpeople/aws-cli-with-jq-and-bash-9d54e2eabaf1'][AWS+JQ post]].
+
 ** pass flags as a splatted array
    There's quite a bit to chew on this example. First of all, the core
    pattern is to build up your commandline options with an array, and
