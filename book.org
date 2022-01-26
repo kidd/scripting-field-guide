@@ -1142,36 +1142,41 @@
       ! grep -Fvf <(grep -P "^# \d\.\d\.\d\.\d$" "$f" | sed -e 's/^# //') \
                   <(git tag | grep -P "^\d\.\d\.\d\.\d$")
     #+end_src
-*** jq
-    Jq is probably more powerful than you'd expect. It's not just to
-    fetch a value deep into a json dictionary.
+** jq
+   Jq is probably more powerful than you probably think. It's not just
+   to fetch a value deep into a json dictionary.
 
-    You can fetch and transform values, and interpolate values inside
-    a string template:
+   You can fetch and transform values, and interpolate values inside
+   a string template:
 
-    #+begin_src bash
-      echo '{"a":1,"b":2}' | jq '. | "a is \(.a), and b is \(.b)."'
-    #+end_src
+   #+begin_src bash
+     echo '{"a":1,"b":2}' | jq '. | "a is \(.a), and b is \(.b)."'
+   #+end_src
 
-   Or use this in a map:
-    #+begin_src bash
-      echo '[{"a":1,"b":2},{"a":3,"b":4}]' | jq -r '. |map("a is \(.a), and b is \(.b).")[]'
-    #+end_src
+  Or use this in a map:
+   #+begin_src bash
+     echo '[{"a":1,"b":2},{"a":3,"b":4}]' | jq -r '. |map("a is \(.a), and b is \(.b).")[]'
+   #+end_src
 
-    Maybe a little more spicy:
+   Maybe a little more spicy:
 
-    #+begin_src bash
-    echo '[{"host":"host1.com","user":"bob"},{"host":"host2.com","user":"alice"}]' |
-      jq  'map("scp \(.user)@\(.host):/tmp/remote-file /tmp/local-file")[]' -r |
-      xargs -d"\n" -n1 sh -c
-    #+end_src
+   #+begin_src bash
+   echo '[{"host":"host1.com","user":"bob"},{"host":"host2.com","user":"alice"}]' |
+     jq  'map("scp \(.user)@\(.host):/tmp/remote-file /tmp/local-file")[]' -r |
+     xargs -d"\n" -n1 sh -c
+   #+end_src
 
-    And, make sure to read about jq functions. for example, reading nested json
-    #+begin_src bash
-      echo '{"nested":"{\"a\":2}"}' | jq '.nested | fromjson | .a '
-    #+end_src
+   And, make sure to read about jq functions. for example, reading nested json
+   #+begin_src bash
+     echo '{"nested":"{\"a\":2}"}' | jq '.nested | fromjson | .a '
+   #+end_src
 
-    There are quite a few interesting commands in this [[https://medium.com/circuitpeople/aws-cli-with-jq-and-bash-9d54e2eabaf1'][AWS+JQ post]].
+   You can also edit values in place
+   #+begin_src bash
+     echo '{"date":1643192480}' | jq '.date|=todateiso8601' #  {"date": "2022-01-26T10:22:48Z"}
+   #+end_src
+
+   There are quite a few interesting commands in this [[https://medium.com/circuitpeople/aws-cli-with-jq-and-bash-9d54e2eabaf1'][AWS+JQ post]].
 
 ** pass flags as a splatted array
    There's quite a bit to chew on this example. First of all, the core
