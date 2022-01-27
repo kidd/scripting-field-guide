@@ -1884,6 +1884,7 @@ EOF
    - =lspdf -tr TL DM XA evince=
    - =docker exec -u root -ti $(docker ps -q H1) bash=
    - =docker ps DM P1 XA docker stop=
+   - =docker ps P1 XA docker stop= (P1 XA does an ad-hoc [[https://bash-my-aws.org/pipe-skimming/][pipe-skimming]])
 
 ** Expansion of global aliases
    Let's dig deeper.
