@@ -2059,8 +2059,8 @@ EOF
 ** Some extra shortcuts for nice things
    - =alt-'= quotes the current line. It's like =quotemeta=. great to
      help you fight double and triple quoting when writing scripts.
-   - =alt-#= comment and accept. Nice way to store the current line
-     for later.
+   - =alt-#= comment/uncomment and execute. Nice way to store the current line
+     for later and reach out to it again to run it for real.
    - =ctrl-o= kill-current-line, wait for a command, and paste.
 
 ** =()
