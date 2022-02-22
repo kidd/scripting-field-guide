@@ -1047,6 +1047,31 @@
 
    A way to peek into a huge pipe is to =tee >(cat)=
 
+
+
+** Modify a file on the fly, without changing it on disk
+   If you want to use a slightly modified version of a file for a
+   single use, and then throw it away, consider the following:
+
+   Everywhere that you should pass =file=, you could pass =<(cat
+   orig_file)= instead, because they have the same content, only the
+   second version is ephemeral.
+
+   If you want a modified version of it, we can attach more commands
+   to the subshell.
+
+   Example of a command that reuses your =~/.psqlrc= and adds a line
+   in the end to make the session read-only.
+
+   #+begin_src bash
+     ropsql() {
+       PSQLRC=<(
+         cat ~/.psqlrc &&
+         echo 'set session characteristics as transaction read only;') \
+       psql "$@"
+     }
+   #+end_src
+
 ** Use xargs
    Continuing with other ways of plumbing commands into other
    commands, there's =xargs=. Some commands work seamlessly with
