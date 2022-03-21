@@ -235,7 +235,7 @@
 
    Another point is that function names can be passed as parameters,
    because they are passed as strings, but you can call them inside as
-   functions again.
+   functions again. Maybe they are better than you [[https://news.ycombinator.com/item?][think.]]
 
    #+begin_src bash
    f() {
