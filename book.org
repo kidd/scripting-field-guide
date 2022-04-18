@@ -21,11 +21,11 @@
 * Introduction
   This booklet is intended to be a catalog of tricks and techniques
   you may want to use if you're doing some sort of complex
-  scripting. Some are just useful, some are more playful, and might
-  not have such direct impact in your day-to-day life. Some are pure
-  entertainment. You'll have to judge by yourself which things belong
-  to which category. I'll try to keep the rhetoric to the minimum to
-  maximize signal/noise.
+  scripting. Some are useful in "The Real World (TM)", some are more
+  playful, and might not have such direct impact in your day-to-day
+  life. Some are pure entertainment. You'll have to judge by yourself
+  which belong to which. I'll try to keep the rhetoric to the minimum
+  to maximize signal/noise.
 
   The git repo is at
   https://github.com/kidd/scripting-field-guide/. Any feedback is
@@ -34,18 +34,19 @@
   the contents with useful stuff I find or discover, that are not
   widely explained in usual manuals/wikis.
 
-  You probably have some amount of sh/bash/zsh in your stack that
-  probably started as one-off scripts, and probably later on started
-  growing and being copypasted everywhere in your pipelines, or your
-  coworkers use for their own use (with some variations), etc. Those
-  scripts are very difficult to kill and they have a very high
-  mutation rate.
+  You surely have some amount of sh/bash/zsh in your stack that
+  probably started as one-off scripts, and later grew and were
+  copypasted everywhere in your pipelines, repos, coworkers' ~/bin, or
+  your coworkers use for their own things (with some variations),
+  etc. Those scripts are very difficult to kill and they have a very
+  high mutation rate.
+
 * Which Shell?
   No matter if you use Linux, Mac, or Windows, you should be living
   most of the time in a shell to enjoy the content shown here. Some
-  value comes from the automated scripts, and some comes from the
-  daily usage and refinement of your helper functions, aliases,
-  etc. in interactive mode.
+  value comes from running scripts, and some comes from the daily
+  usage and refinement of your helper functions, aliases, etc. in
+  interactive mode.
 
   In general the examples here are meant to run in Bash or Zsh, which
   are compatible for the most part.
@@ -84,11 +85,6 @@
 
    Shellcheck is available on most distros, so it's just an =apt=,
    =brew=, or =nix-env= away.
-
-** Overview
-   In this section, we're covering the parts of the basics that are
-   not so basic after all, or that are more unique in shellscripting
-   languages.
 
 ** Booleans and Conditionals
    In any shell, =foo && bar= will execute =bar= only if =foo=
@@ -140,12 +136,11 @@
      main "$@"
 
      ### end ###
-
-     and I run it like this:
-
-     my_script 'a b c' d e
-
    #+end_src
+
+   and I run it like this:
+
+   =my_script 'a b c' d e=
 
 ** Pass Arrays around
    #+begin_src bash
@@ -235,7 +230,7 @@
 
    Another point is that function names can be passed as parameters,
    because they are passed as strings, but you can call them inside as
-   functions again. Maybe they are better than you [[https://news.ycombinator.com/item?][think.]]
+   functions again. Maybe they are better than you [[https://news.ycombinator.com/item?id=29058140][think.]]
 
    #+begin_src bash
    f() {
@@ -302,6 +297,7 @@
      v=banana
      # substitute one
      echo ${v/na/NA}   # baNAna
+
      # substitute many
      echo ${v//na/NA}  # baNANA
 
@@ -310,6 +306,12 @@
 
      # substitute from the end
      echo ${v/%na/NA}  # banaNA
+
+     # Capitalize
+     echo ${v^}  # Banana
+
+     # Uppercase
+     echo ${v^^}  # BANANA
    #+end_src
 
    Take a read on https://tldp.org/LDP/abs/html/manipulatingvars.html
