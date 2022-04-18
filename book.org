@@ -426,7 +426,7 @@
 
 ** Return Values for Conditionals
    =if= 's test condition can use the return values of
-   commands. That's a known thing, but lots of code you see around
+   commands. That's a known thing, but a lot of code you see around
    relies on =[[]]= to test the return values of commands/functions
    anyway.
 
