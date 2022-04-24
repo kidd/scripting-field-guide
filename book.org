@@ -1205,6 +1205,19 @@
 
    There are quite a few interesting commands in this [[https://medium.com/circuitpeople/aws-cli-with-jq-and-bash-9d54e2eabaf1'][AWS+JQ post]].
 
+   Some other cool tips from [[https://news.ycombinator.com/item?id=31141415][This HN thread]]:
+
+   #+begin_src bash
+     echo "FFFF\nDDDD" | jq -R    # reads raw text as strings. 1 line -> 1 string
+     echo "FFFF\nDDDD" | jq -R 'capture("(?<item>.*)")' # Capture groups as json elements
+   #+end_src
+
+   You can get pretty advanced with jq, and some say it's a decent
+   substitute for =sed= as a line oriented editor.
+
+   Some more advanced tutorials [[https://programminghistorian.org/en/lessons/json-and-jq][here]] and [[https://remysharp.com/drafts/jq-recipes][here]].
+
+
 ** pass flags as a splatted array
    There's quite a bit to chew on this example. First of all, the core
    pattern is to build up your commandline options with an array, and
