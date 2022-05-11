@@ -1183,7 +1183,7 @@
     More info on this [[https://stackoverflow.com/questions/3717772/regex-grep-for-multi-line-search-needed/7167115#7167115][stackoverflow thread]].
 
     Alternatively, depending on your requirements, you can leverage
-    =awk=, with =awk '/CRATE TABLE/,/;/'=.
+    =awk=, with =awk '/CREATE TABLE/,/;/'=.
 ** jq
    Jq is probably more powerful than you probably think. It's not just
    to fetch a value deep into a json dictionary.
