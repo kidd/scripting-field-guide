@@ -1169,6 +1169,21 @@
       ! grep -Fvf <(grep -P "^# \d\.\d\.\d\.\d$" "$f" | sed -e 's/^# //') \
                   <(git tag | grep -P "^\d\.\d\.\d\.\d$")
     #+end_src
+*** grep -Pzo
+    Three flags that also combine pretty nicely.
+
+    With those, we can match multiple lines using plain old grep.
+
+    This is how I get only the table structure of a postgres database.
+
+    #+begin_src bash
+      pg_dump -s | grep -Pzo "CREATE TABLE [^;]*;\n"
+    #+end_src
+
+    More info on this [[https://stackoverflow.com/questions/3717772/regex-grep-for-multi-line-search-needed/7167115#7167115][stackoverflow thread]].
+
+    Alternatively, depending on your requirements, you can leverage
+    =awk=, with =awk '/CRATE TABLE/,/;/'=.
 ** jq
    Jq is probably more powerful than you probably think. It's not just
    to fetch a value deep into a json dictionary.
