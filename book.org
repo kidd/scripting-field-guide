@@ -1185,7 +1185,7 @@
     Alternatively, depending on your requirements, you can leverage
     =awk=, with =awk '/CREATE TABLE/,/;/'=.
 ** jq
-   Jq is probably more powerful than you probably think. It's not just
+   Jq is more powerful than you probably think. It's not just
    to fetch a value deep into a json dictionary.
 
    You can fetch and transform values, and interpolate values inside
