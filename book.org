@@ -1182,8 +1182,22 @@
 
     More info on this [[https://stackoverflow.com/questions/3717772/regex-grep-for-multi-line-search-needed/7167115#7167115][stackoverflow thread]].
 
+
+    Use of this pattern will use =\0=s instead of =\n=, which is good
+    for the grepping, but maybe it's not good for your output. You can
+    convert back =\0=s to =\n= with [[https://unix.stackexchange.com/questions/121916/convert-newlines-to-null-delimited-when-using-tail][tr.]]
+
+    #+begin_src bash
+      pg_dump -s | grep -Pzo "CREATE TABLE public.($tables) [^;]*;\n" | tr '\0' '\n' | ...
+    #+end_src
+
+
     Alternatively, depending on your requirements, you can leverage
-    =awk=, with =awk '/CREATE TABLE/,/;/'=.
+    =awk=, with =awk '/CREATE TABLE/,/;/'=, that won't suffer from the
+    \0 problem. But then you need to explain the awk model to your
+    coworker.
+
+
 ** jq
    Jq is more powerful than you probably think. It's not just
    to fetch a value deep into a json dictionary.
