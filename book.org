@@ -1183,9 +1183,9 @@
     More info on this [[https://stackoverflow.com/questions/3717772/regex-grep-for-multi-line-search-needed/7167115#7167115][stackoverflow thread]].
 
 
-    Use of this pattern will use =\0=s instead of =\n=, which is good
+    Use of this pattern will use =\0='s instead of =\n=, which is good
     for the grepping, but maybe it's not good for your output. You can
-    convert back =\0=s to =\n= with [[https://unix.stackexchange.com/questions/121916/convert-newlines-to-null-delimited-when-using-tail][tr.]]
+    convert back =\0='s to =\n= with [[https://unix.stackexchange.com/questions/121916/convert-newlines-to-null-delimited-when-using-tail][tr.]]
 
     #+begin_src bash
       pg_dump -s | grep -Pzo "CREATE TABLE public.($tables) [^;]*;\n" | tr '\0' '\n' | ...
@@ -1373,6 +1373,9 @@ EOF
    #+begin_src bash
      cat <<<"HELLO"
      cat <<<$(echo "HELLO")
+     echo "ECHOPIPE" | /bin/cat
+     echo "ECHOPIPE" | /bin/cat <(seq 5)
+     echo "ECHOPIPE" | /bin/cat <(seq 5) -
      echo "ECHOPIPE" | /bin/cat <(seq 5) <<<"HERESTRING"
      echo "ECHOPIPE" | /bin/cat <(seq 5) - <<<"HERESTRING"
    #+end_src
