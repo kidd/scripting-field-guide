@@ -338,7 +338,8 @@
    This will produce =--env var1=1 --env var2=2=.  Super useful to be
    combined when building flags for docker.
 
-   Another nice trick is a portable `realpath $PWD`, which I found in [[https://github.com/picolisp/pil21/blob/master/vip][picolisp's vip]]:
+   Another nice trick is a portable =realpath $PWD= with =${0%/*}=,
+   which I found in [[https://github.com/picolisp/pil21/blob/master/vip][picolisp's vip]]:
 
    #+begin_src bash
      #!/bin/sh
