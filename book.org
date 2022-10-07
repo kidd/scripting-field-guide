@@ -1258,6 +1258,7 @@
 
    Some more advanced tutorials [[https://programminghistorian.org/en/lessons/json-and-jq][here]] and [[https://remysharp.com/drafts/jq-recipes][here]].
 
+**
 
 ** pass flags as a splatted array
    There's quite a bit to chew on this example. First of all, the core
@@ -2217,9 +2218,11 @@ EOF
    - https://www2.dmst.aueb.gr/dds/sw/dgsh/
    - https://wiki.bash-hackers.org/howto/redirection_tutorial
 ** The $0 pattern
-   https://www.reddit.com/r/oilshell/comments/f6of85/four_more_posts_in_shell_the_good_parts/
+   - https://www.reddit.com/r/oilshell/comments/f6of85/four_more_posts_in_shell_the_good_parts/
 ** use git staging area to diff outputs of commands
-   https://chrismorgan.info/blog/make-and-git-diff-test-harness/
+   - https://chrismorgan.info/blog/make-and-git-diff-test-harness/
+   - [[https://news.ycombinator.com/item?id=32896051][Content based change detection with Make]]
+
 ** coprocs
    - https://stackoverflow.com/questions/7942632/how-to-extrace-pg-backend-pid-from-postgresql-in-shell-script-and-pass-it-to-ano/8305578#8305578
    - https://unix.stackexchange.com/questions/86270/how-do-you-use-the-command-coproc-in-various-shells
@@ -2258,6 +2261,7 @@ EOF
   - https://www.evalapply.org/posts/shell-aint-a-bad-place-to-fp-part-1-doug-mcilroys-pipeline/ (from [[https://clojurians.slack.com/archives/C03RZGPG3/p1645563940203839][clojurians slack]])
   - https://github.com/adityaathalye
   - https://www.youtube.com/watch?v=BJ0uHhBkzOQ
+  - https://www.gnu.org/software/autoconf/manual/autoconf-2.60/html_node/Portable-Shell.html
 
 * From shell to lisp and everything in between
   - [[https://github.com/oilshell/oil][Oil Shell]].
