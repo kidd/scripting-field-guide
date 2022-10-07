@@ -769,6 +769,8 @@
 
    Ref: https://dougrichardson.us/2018/08/03/fail-fast-bash-scripting.html
 
+   Although... [[http://mywiki.wooledge.org/BashFAQ/105][Why doesn't set -e do what I expected?]]
+
 ** Check your deps
    Giving useful information to the users will help them using the
    script, and you debugging it. Script dependencies is a common use
