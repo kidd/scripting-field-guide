@@ -1246,6 +1246,17 @@
      echo '{"date":1643192480}' | jq '.date|=todateiso8601' #  {"date": "2022-01-26T10:22:48Z"}
    #+end_src
 
+   And we can generalize it into a filter that updates many date fields
+   #+begin_src bash
+     # usage: echo '[{"foo":1234567890,"bar":1234567891}]' | jq_pretty_dates '.[].foo' '.[].bar'
+     # => [{"foo":"2009-02-13T23:31:30Z","bar":"2009-02-13T23:31:31Z"}]
+     jq_pretty_dates() {
+       # From the default ($@) append every element (/%/) with
+       # |=todateiso8601). That, joined by |. And that becomes the "filter" to jq.
+       jq "$(join_by "|" "${@/%/|=todateiso8601}")"
+     }
+   #+end_src
+
    There are quite a few interesting commands in this [[https://medium.com/circuitpeople/aws-cli-with-jq-and-bash-9d54e2eabaf1'][AWS+JQ post]].
 
    Some other cool tips from [[https://news.ycombinator.com/item?id=31141415][This HN thread]]:
