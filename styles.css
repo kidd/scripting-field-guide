@@ -5776,12 +5776,13 @@
         background-color: #2B2B2B;
       }
 
-      a {
-        color: inherit;
-        background-color: inherit;
-        font: inherit;
-        text-decoration: inherit;
-      }
+      /* a { */
+      /*   color: inherit; */
+      /*   background-color: inherit; */
+      /*   font: inherit; */
+      /*   text-decoration: inherit; */
+      /* } */
+
       a:hover {
         text-decoration: underline;
       }
