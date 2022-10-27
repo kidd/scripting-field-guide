@@ -1248,6 +1248,7 @@
 
    And we can generalize it into a filter that updates many date fields
    #+begin_src bash
+     join_by() { local IFS="$1"; shift; echo "$*"; }
      # usage: echo '[{"foo":1234567890,"bar":1234567891}]' | jq_pretty_dates '.[].foo' '.[].bar'
      # => [{"foo":"2009-02-13T23:31:30Z","bar":"2009-02-13T23:31:31Z"}]
      jq_pretty_dates() {
