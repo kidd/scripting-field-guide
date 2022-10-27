@@ -149,7 +149,7 @@
      b=( "${a[@]}" ) # copy array
    #+end_src
 
-   Read the great Oil Shell [[http://www.oilshell.org/blog/2016/11/06.html][blogpost]].
+   Read the great [[http://www.oilshell.org/blog/2016/11/06.html][Oil Shell blogpost]].
 ** Slurping arrays
    A nice way to read a bunch of elements in one go is to use
    =readarray=.
@@ -194,7 +194,7 @@
    read a file line by line.
 
    #+begin_src bash
-     while read line; do
+     while read -r line; do
        echo $line
      done < /tmp/file.txt
    #+end_src
@@ -1637,7 +1637,7 @@ EOF
    I'm particularly fond of this trick, as it saved me tons of
    typing. But at a personal level, it was mindblowing that sharing
    this around the internet caused the most disparity of opinions.
-   Also, I recently read the greate book "Docker in Practice" by [[https://github.com/ianmiell][Ian
+   Also, I recently read the great book "Docker in Practice" by [[https://github.com/ianmiell][Ian
    Miell]] and there's a snippet that is 99.9% like the one I
    created myself. That was a very cool moment.
 
