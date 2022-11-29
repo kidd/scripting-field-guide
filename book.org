@@ -817,7 +817,7 @@
    possible. otherwise, you're on your own.
    #+begin_src bash
      # Allow sourcing of this script
-     if [[ $(basename "$(realpath "$0")") == "${BASH_SOURCE}" ]]; then
+     if [[ $(basename "$(realpath "$0")") == "$(basename "${BASH_SOURCE}")" ]]; then
        setup
        parse_args "$@"
        main
@@ -1762,13 +1762,14 @@ EOF
    If you have many functions to mock, and you want to overabstract (bad thing):
 
    #+begin_src bash
-   dry () {
-     $1() { echo $0 "$@" }
+
+   mock() {
+     for m in ${MOCKS[@]//,/ }; do
+       eval "$m() { echo \"mocked $m\" "\$@"; }"
+     done
    }
 
-   for i in {"curl", "rm", "http"}; do
-     dry $i
-   done
+   MOCKS=curl,ls script.sh
    #+end_src
 
 
