@@ -779,7 +779,7 @@
    #+begin_src bash
      deps() {
        for dep in "$@"; do
-         mute which "$dep" || die "$dep dependency missing"
+         mute command -v "$dep" || die "$dep dependency missing"
        done
      }
 
