@@ -1211,6 +1211,13 @@
     \0 problem. But then you need to explain the awk model to your
     coworker.
 
+*** Set operations
+There are lots of other "set level" operations you can perform on
+files/streams using basic unix tools.
+
+[[https://catonmat.net/ftp/setops.txt][This cheatsheet]] contains lots of them, which you should go read one by
+one, because bash, appart from being useful as it is, also has an
+Iversonian [[https://www.jsoftware.com/papers/tot.htm#1.2][suggestivity]] that gets more useful with time.
 
 ** jq
    Jq is more powerful than you probably think. It's not just
