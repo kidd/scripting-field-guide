@@ -189,6 +189,16 @@
     patch=4
    #+end_src
    https://news.ycombinator.com/item?id=24408318
+** Array slices
+
+   you can slice an array like this:
+
+   #+begin_src bash
+     a=(a b c d e f g)
+     echo "${a[@]:1}"  # tail of array
+     echo "${a[@]:1:2}"  # from position 1, take 2 elements
+   #+end_src
+
 ** Read lines from file
    The =read= command we used just above is part of the usual idiom to
    read a file line by line.
@@ -1398,6 +1408,8 @@ EOF
      EOSSH
      }
    #+end_src
+
+   Refs: https://unix.stackexchange.com/questions/60688/how-to-defer-variable-expansion
 
 ** HERESTRINGS
    It's the stripped down version of HEREDOCS. Inline a single string
