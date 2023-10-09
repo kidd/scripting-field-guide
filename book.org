@@ -1127,6 +1127,15 @@
 
    Ref: https://news.ycombinator.com/item?id=29845232
 
+** paste?
+   We just saw a use of =paste=. But this command can do all sorts of
+   crazy stuff joining lines.
+
+   #+begin_src bash
+     paste - - -d, < file   # joins every 2 lines with comma
+     paste - - - -d, < file   # joins every 3 lines with comma
+     paste -s -d",\n" file  #joins 1 and 2 lines with comma, 2 and 3 with \n
+   #+end_src
 
 ** Scripts as filters
    Strive to create scripts that can be used as filters. Perl had
@@ -1142,6 +1151,37 @@
    #+end_src
 
    Look [[https://stackoverflow.com/questions/6980090/how-to-read-from-a-file-or-standard-input-in-bash][here]] for more detailed explanations and variants.
+
+** Read or print to stdin inside a pipe
+    You can use /dev/tty to explicitly specify that some input or
+    output has to come from tty (being screen or keyboard).
+
+    This is useful for code that might be called inside a pipeline,
+    but you never want the contents of the pipe to be the ones that
+    are =read= or =echoed=.
+
+    Here's a snippet that defines a function fzf (if fzf is not
+    previously defined), that will naively replace fzf.
+
+   #+begin_src bash
+     # fzf is either fzf or a naive version of it
+     # the input is a sed line number, so it can be
+     # single number: 42
+     # range: 1,10
+     # separate lines: 10p;50p
+     mute command -v fzf ||
+       fzf() {
+         local in=$(cat)
+         for p in "${@}"; do
+           [ "$p" = "-0" ] && [ "$(echo "$in" | wc -l)" -eq 1 ] && [ ""  = "$in" ] && return 1
+           [ "$p" = "-1" ] && [ "$(echo "$in" | wc -l)" -eq 1 ] && [ "" != "$in" ] && echo "$in" && return
+         done
+         # https://superuser.com/questions/1748550/read-from-stdin-while-piping-to-next-command
+         cat -n <(echo "$in") >/dev/tty
+         read -n num </dev/tty
+         echo "$in" | sed -n "${num}p"
+       }
+   #+end_src
 
 ** change loops for "mapping/reducing" functions
 *** find
@@ -1289,7 +1329,6 @@ Iversonian [[https://www.jsoftware.com/papers/tot.htm#1.2][suggestivity]] that g
 
    Some more advanced tutorials [[https://programminghistorian.org/en/lessons/json-and-jq][here]] and [[https://remysharp.com/drafts/jq-recipes][here]].
 
-**
 
 ** pass flags as a splatted array
    There's quite a bit to chew on this example. First of all, the core
