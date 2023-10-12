@@ -1863,8 +1863,7 @@ a kind of rails generators for these helpers
     "$@"
   }
   any eq_--help "$@" && usage
-#+end
-
+#+end_src
 
 * Debugging
 ** adding =bash= to a script to debug
