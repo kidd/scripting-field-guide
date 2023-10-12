@@ -1535,6 +1535,99 @@ EOF
 
    Extra explanations: [[https://stackoverflow.com/questions/1250079/how-to-escape-single-quotes-within-single-quoted-strings][StackOverflow]]
 
+** any, every, lambdas, closures, and eval
+Bash has no closures, and it's not "functional", but we're going to
+see how we can combine some tricks and get decent high-level functions
+
+Here's an implementation of =any= and =every=
+
+#+begin_src bash
+any() {
+  local pred="$1"; shift
+  for i in "$@"; do
+    if $pred $i; then
+      return 0
+    fi
+  done
+  return 1
+}
+
+every() {
+  local pred="$1"; shift
+  for i in "$@"; do
+    if ! $pred $i; then
+      return 1
+    fi
+  done
+  return 0
+}
+#+end_src
+
+The usage is by passing a callback function that will return 0 or 1.
+
+#+begin_src bash
+  usage() {
+    echo "help message"
+  }
+
+  is_help() {
+    [ "$1" = "--help" ]
+  }
+
+  any is_help "$@" && usage
+#+end_src
+
+That's already cool.
+
+Did you know that functions can start also with dashes?
+
+#+begin_src bash
+  usage() {
+    echo "help message"
+  }
+
+  --help() {
+    [ "$1" = "--help" ]
+  }
+
+  any --help "$@" && usage
+#+end_src
+
+That also works. It's kinda obfuscated a bit, but hey....
+
+We can also, with the help of =eval=, create on demand functions. They
+are global, but as we're not going to multithread, we can assume it's
+ok.
+
+#+begin_src bash
+  usage() {
+    echo "help message"
+  }
+
+  any_eq() {
+    eval "_() { [ $1 = \$1 ] ; }"
+    shift
+    any _  "$@"
+  }
+
+  any_eq "--help" "$@" && usage
+  # or,
+  any_eq --help "$@" && usage
+#+end_src
+
+And the last trick, using =command_not_found_handle=, we can get into
+a kind of rails generators for these helpers
+
+#+begin_src bash
+  command_not_found_handle() {
+    IFS=_ read -a cmd <<<"$1"
+    [ "eq" = "${cmd[0]}" ] && eval "$1() { [ \"${cmd[1]}\" = \"\$1\" ] ; }"
+    "$@"
+  }
+  any eq_--help "$@" && usage
+#+end_src
+
+
 * Interactive
 ** Save your small scripts
    Rome wasn't built in a day, and like having a journal log, most of
@@ -1773,97 +1866,6 @@ EOF
       echo "This bit will only be executed on the first foo call"
   }
    #+end_src
-** any, every, lambdas, closures, and eval
-Bash has no closures, and it's not "functional", but we're going to
-see how we can combine some tricks and get decent high-level functions
-
-Here's an implementation of =any= and =every=
-
-#+begin_src bash
-any() {
-  local pred="$1"; shift
-  for i in "$@"; do
-    if $pred $i; then
-      return 0
-    fi
-  done
-  return 1
-}
-
-every() {
-  local pred="$1"; shift
-  for i in "$@"; do
-    if ! $pred $i; then
-      return 1
-    fi
-  done
-  return 0
-}
-#+end_src
-
-The usage is by passing a callback function that will return 0 or 1.
-
-#+begin_src bash
-  usage() {
-    echo "help message"
-  }
-
-  is_help() {
-    [ "$1" = "--help" ]
-  }
-
-  any is_help "$@" && usage
-#+end_src
-
-That's already cool.
-
-Did you know that functions can start also with dashes?
-
-#+begin_src bash
-  usage() {
-    echo "help message"
-  }
-
-  --help() {
-    [ "$1" = "--help" ]
-  }
-
-  any --help "$@" && usage
-#+end_src
-
-That also works. It's kinda obfuscated a bit, but hey....
-
-We can also, with the help of =eval=, create on demand functions. They
-are global, but as we're not going to multithread, we can assume it's
-ok.
-
-#+begin_src bash
-  usage() {
-    echo "help message"
-  }
-
-  any_eq() {
-    eval "_() { [ $1 = \$1 ] ; }"
-    shift
-    any _  "$@"
-  }
-
-  any_eq "--help" "$@" && usage
-  # or,
-  any_eq --help "$@" && usage
-#+end_src
-
-And the last trick, using =command_not_found_handle=, we can get into
-a kind of rails generators for these helpers
-
-#+begin_src bash
-  command_not_found_handle() {
-    IFS=_ read -a cmd <<<"$1"
-    [ "eq" = "${cmd[0]}" ] && eval "$1() { [ \"${cmd[1]}\" = \"\$1\" ] ; }"
-    "$@"
-  }
-  any eq_--help "$@" && usage
-#+end_src
 
 * Debugging
 ** adding =bash= to a script to debug
