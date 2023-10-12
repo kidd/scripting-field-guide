@@ -1074,7 +1074,6 @@
    A way to peek into a huge pipe is to =tee >(cat)=
 
 
-
 ** Modify a file on the fly, without changing it on disk
    If you want to use a slightly modified version of a file for a
    single use, and then throw it away, consider the following:
@@ -1328,7 +1327,6 @@ Iversonian [[https://www.jsoftware.com/papers/tot.htm#1.2][suggestivity]] that g
    substitute for =sed= as a line oriented editor.
 
    Some more advanced tutorials [[https://programminghistorian.org/en/lessons/json-and-jq][here]] and [[https://remysharp.com/drafts/jq-recipes][here]].
-
 
 ** pass flags as a splatted array
    There's quite a bit to chew on this example. First of all, the core
@@ -1775,6 +1773,99 @@ EOF
       echo "This bit will only be executed on the first foo call"
   }
    #+end_src
+** any, every, lambdas, closures, and eval
+Bash has no closures, and it's not "functional", but we're going to
+see how we can combine some tricks and get decent high-level functions
+
+Here's an implementation of =any= and =every=
+
+#+begin_src bash
+any() {
+  local pred="$1"; shift
+  for i in "$@"; do
+    if $pred $i; then
+      return 0
+    fi
+  done
+  return 1
+}
+
+every() {
+  local pred="$1"; shift
+  for i in "$@"; do
+    if ! $pred $i; then
+      return 1
+    fi
+  done
+  return 0
+}
+#+end_src
+
+The usage is by passing a callback function that will return 0 or 1.
+
+#+begin_src bash
+  usage() {
+    echo "help message"
+  }
+
+  is_help() {
+    [ "$1" = "--help" ]
+  }
+
+  any is_help "$@" && usage
+#+end_src
+
+That's already cool.
+
+Did you know that functions can start also with dashes?
+
+#+begin_src bash
+  usage() {
+    echo "help message"
+  }
+
+  --help() {
+    [ "$1" = "--help" ]
+  }
+
+  any --help "$@" && usage
+#+end_src
+
+That also works. It's kinda obfuscated a bit, but hey....
+
+We can also, with the help of =eval=, create on demand functions. They
+are global, but as we're not going to multithread, we can assume it's
+ok.
+
+#+begin_src bash
+  usage() {
+    echo "help message"
+  }
+
+  any_eq() {
+    eval "_() { [ $1 = \$1 ] ; }"
+    shift
+    any _  "$@"
+  }
+
+  any_eq "--help" "$@" && usage
+  # or,
+  any_eq --help "$@" && usage
+#+end_src
+
+And the last trick, using =command_not_found_handle=, we can get into
+a kind of rails generators for these helpers
+
+#+begin_src bash
+  command_not_found_handle() {
+    IFS=_ read -a cmd <<<"$1"
+    [ "eq" = "${cmd[0]}" ] && eval "$1() { [ \"${cmd[1]}\" = \"\$1\" ] ; }"
+    "$@"
+  }
+  any eq_--help "$@" && usage
+#+end
+
+
 * Debugging
 ** adding =bash= to a script to debug
    You can add =bash= inside any script, and it'll add a sort of
