@@ -1725,7 +1725,7 @@ a kind of rails generators for these helpers
 
    - unhist. functions can create aliases, and functions can receive
      functions as parameters (as a string (function name)), so we can
-     combine them to advise existing functions.
+     combine them to advice existing functions.
      #+begin_src bash
        unhist () {
          alias $1=" $1"
@@ -1782,7 +1782,7 @@ a kind of rails generators for these helpers
    #   muter ls
    #   ls
    # #+end_src
-** Override (advise?) common functions
+** Override (advice?) common functions
    Overriding commands is generally a bad practice as it violates the
    principle of least surprise, but there might be occasions (mostly
    in your local machine) where you can integrate awesome finetunnings
