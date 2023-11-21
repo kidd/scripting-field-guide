@@ -1196,6 +1196,23 @@
        }
    #+end_src
 
+   Well... after implementing this, I discovered `select`, which allows for these kinds of flows:
+
+   #+begin_src bash
+     mute command -v fzf ||
+     fzf() {
+       local in=$(cat)
+       for p in "${@}"; do
+         [ "$p" = "-0" ] && [ "$(echo "$in" | wc -l)" -eq 1 ] && [ ""  = "$in" ] && return 1
+         [ "$p" = "-1" ] && [ "$(echo "$in" | wc -l)" -eq 1 ] && [ "" != "$in" ] && echo "$in" && return
+       done
+       select opt in $(echo "$in"); do
+         [ -n "$opt" ] && break
+       done >/dev/tty </dev/tty
+       echo $opt
+     }
+   #+end_src
+
 ** change loops for "mapping/reducing" functions
 *** find
     Many times we want to run the same operation or test to lots of
@@ -1641,6 +1658,9 @@ a kind of rails generators for these helpers
   any eq_--help "$@" && usage
 #+end_src
 
+All these last metaprogramming tricks are not thread safe, and even
+though it's mostly ok if you use them in isolation, maybe pipes or
+coprocs would mess up your inline functions.
 
 * Interactive
 ** Save your small scripts
