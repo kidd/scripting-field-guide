@@ -1087,6 +1087,13 @@
 
    A way to peek into a huge pipe is to =tee >(cat)=
 
+** Modify behavior by linking files
+   Imagine you want to remove the =.bash_history= file and not record
+   history of commands.  You don't can't avoid bash to write to that
+   file, but what you can do is to link =.bash_history= to
+   =/dev/null=. That way, bash will keep appending things to the
+   expected output file, without noticing that it is really writing to
+   =/dev/null=. The trick is to use: =ln -sf /dev/null .bash_history=.
 
 ** Modify a file on the fly, without changing it on disk
    If you want to use a slightly modified version of a file for a
