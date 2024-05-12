@@ -199,8 +199,19 @@
      echo "${a[@]:1:2}"  # from that, take 2 elements
    #+end_src
 
+   This is a [[https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html][parameter expansion]], same as =${a/foo/bar}= and similar
+   replacements. As such, The =$@= and =$*= are treated a bit
+   differently.
+
+   Look at =${parameter:offset:length}= in the parameter expansion
+   bash manual and be amazed by the specialcasing :).
+
+   This concrete case is when the parameter is an indexed array name
+   subscripted by '@' or '*'.
+
    Don't ask me why, but when the array is =$@=, it seems that it
-   behaves a bit differently (would be great to know why):
+   behaves a bit differently. It's 'explained' in that same part of
+   the docs.
 
    #+begin_src bash
      a=(a b c d e f g)
@@ -313,7 +324,7 @@
    | 4 |
    | 3 |
    | 4 |
-** Variable Expansions
+** Variable/Parameter Expansions
    They offer some variable manipulations using shell only, not having
    to create another process =sed,awk,perl=.
 
