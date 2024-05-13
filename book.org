@@ -1939,7 +1939,7 @@ coprocs would mess up your inline functions.
      docker run -it mycomplex-image bash
 
      # Runs /tmp/file.sh from the host inside. That's cool to make the
-     # container less hermetic. Even if the image is not originally ment
+     # container less airtight. Even if the image is not originally meant
      # to, you can even override it and 'monkeypatch' the file with the one
      # from the host anyway.
      docker run -it -v $PWD:/tmp/ mycomplex-image /tmp/file.sh
@@ -2439,6 +2439,8 @@ coprocs would mess up your inline functions.
 ** use git staging area to diff outputs of commands
    - https://chrismorgan.info/blog/make-and-git-diff-test-harness/
    - [[https://news.ycombinator.com/item?id=32896051][Content based change detection with Make]]
+   - https://news.ycombinator.com/item?id=40333481
+   - https://news.ycombinator.com/item?id=32441602
 
 ** coprocs
    - https://stackoverflow.com/questions/7942632/how-to-extrace-pg-backend-pid-from-postgresql-in-shell-script-and-pass-it-to-ano/8305578#8305578
