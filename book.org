@@ -1377,6 +1377,21 @@ Iversonian [[https://www.jsoftware.com/papers/tot.htm#1.2][suggestivity]] that g
 
    Some more advanced tutorials [[https://programminghistorian.org/en/lessons/json-and-jq][here]] and [[https://remysharp.com/drafts/jq-recipes][here]].
 
+** use jq . <<<"$var"
+   Newlines aren't allowed in json strings, and you might get a jq
+   error like:
+
+   "parse error: Invalid string: control characters from U+0000 through U+001F must be escaped at line 148, column 99"
+
+   Sometimes, strings inside json might have encoded newlines like =\n=. If you would use
+
+   =echo $var | jq .= , bash would interpolate the \n inside the json
+   string and when it gets to jq, it's an invalid json.
+
+   If instead you use =echo -E=, or =<<<"$var"=, things go smoothly.
+
+   =jq . <<<"$var"=
+
 ** pass flags as a splatted array
    There's quite a bit to chew on this example. First of all, the core
    pattern is to build up your commandline options with an array, and
