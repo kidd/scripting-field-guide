@@ -384,6 +384,13 @@
    =${0%/*}/bin/picolisp= will replace keep the path of the current
    script and append =/bin/picolisp=. A cool way to get a realpath.
 
+** Conditional Expansion
+
+   #+begin_src bash
+   local  foo=${var:-${default:-}}
+   local  foo=${var:+&key=var}
+   #+end_src
+
 ** Interpolation
    We previously saw that functions can be passed around as strings,
    and be called later on.
@@ -1182,6 +1189,13 @@
    #+end_src
 
    Look [[https://stackoverflow.com/questions/6980090/how-to-read-from-a-file-or-standard-input-in-bash][here]] for more detailed explanations and variants.
+
+   Another way to create filters is to use `"${@:-cat}"`.
+
+   #+begin_src bash
+     o2e     () { 1>&2 "${@:-cat}"; } # out to err
+     e2o     () { 2>&1 "${@:-cat}"; } # err to out
+   #+end_src
 
 ** Read or print to stdin inside a pipe
     You can use /dev/tty to explicitly specify that some input or

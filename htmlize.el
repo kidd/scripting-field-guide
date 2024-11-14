@@ -5,7 +5,7 @@
 ;; Author: Hrvoje Niksic <hniksic@gmail.com>
 ;; Homepage: https://github.com/hniksic/emacs-htmlize
 ;; Keywords: hypermedia, extensions
-;; Version: 1.57
+;; Version: 1.58
 ;; Package-Requires: ((emacs "25.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -1043,8 +1043,7 @@ If no rgb.txt file is found, return nil."
     (while head
       (let ((inherit (face-attribute (car head) :inherit)))
         (cond ((listp inherit)
-               (setcdr tail (cl-copy-list inherit))
-               (setq tail (last tail)))
+               (setq tail (last inherit)))
               ((eq inherit 'unspecified))
               (t
                (setcdr tail (list inherit))
