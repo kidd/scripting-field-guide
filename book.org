@@ -1323,6 +1323,39 @@
     \0 problem. But then you need to explain the awk model to your
     coworker.
 
+*** grep -Ec
+    Say you want to find lines that match 2 words, not just 1. in whatever order.
+
+    #+begin_src bash
+      echo "foo bar" | grep foo | grep bar # That works, but it only works for very fixed inputs.
+
+      echo "foo bar" | grep -E 'foo.*bar'  # That doesn't , because order matters.
+
+      echo "foo baz" | grep -E '(foo|bar)' | grep -E '(foo|bar)' # That is not going to work either, because if only one word matches, it will match twice.
+    #+end_src
+
+    Here's how we can match multiple things from a list.
+    =echo "foo bar" | tr ' ' '\n' |grep -Ec "(foo|bar)"=
+
+    #+begin_src bash
+
+      match_two () {
+        while read line; do
+          if [ "$(tr ' ' '\n' <<<"$line" | rg -Uc "^($search)$")" = 2 ]; then
+            echo "$line"
+          fi
+        done
+      }
+
+      cat file_with_two_words_per_line.txt | match_two "foo|bar|baz"
+    #+end_src
+
+    With this, you can find out how many matches happened in that
+    line. The example above filters lines which have 2 words from the
+    'foo|bar|baz' regex.
+
+
+
 *** Set operations
 There are lots of other "set level" operations you can perform on
 files/streams using basic unix tools.
