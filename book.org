@@ -223,7 +223,6 @@
     foo "${a[@]}"
    #+end_src
 
-
 ** Read lines from file
    The =read= command we used just above is part of the usual idiom to
    read a file line by line.
@@ -1353,9 +1352,6 @@
     With this, you can find out how many matches happened in that
     line. The example above filters lines which have 2 words from the
     'foo|bar|baz' regex.
-
-
-
 *** Set operations
 There are lots of other "set level" operations you can perform on
 files/streams using basic unix tools.
@@ -1966,7 +1962,15 @@ coprocs would mess up your inline functions.
    and if the user forgets any, the shell will barf.
 
 ** Idempotent functions
+Being able to call the same function multiple times even if you just
+called it, without having to account for "oh, did this already happen
+or not?" but instead have a mental model of "I need this to have
+happened after this function call", and consider it done, is very
+liberating from the code perspective.
 
+Also, there are subgoals, like caching slow functions, downloads, etc.
+
+*** nop subsequent calls
    "My favourite shell scripting function definition technique:
    idempotent functions by redefining the function as a noop inside
    its body:
@@ -1980,6 +1984,64 @@ coprocs would mess up your inline functions.
       echo "This bit will only be executed on the first foo call"
   }
    #+end_src
+*** Download once
+A function might be sideffecty, as in "download files". These sort of
+cases, you want to download the file only if you haven't downloaded it
+yet.
+
+=cache= here gets a cache "id" where it'll store the results of =http=
+and next time, when called with the same param, it will reuse the saved version.
+
+This pattern applies to many kinds of functions, so with slight
+modifications you can adapt it.
+
+#+begin_src bash
+cache() {
+  local path=$CACHE_DIR/$1
+  [[ -f $path ]] && cat $path && return 0
+
+  shift
+  $@ | tee $path
+
+  return 1
+}
+
+get_repos() {
+  local url="https://api.github.com/search/repositories?q=user:$USER&access_token=$GITHUB_TOKEN&per_page=100&page=$1"
+  cache $USER-repos-$1 http $url
+}
+#+end_src
+
+*** memoize with ttl, with ttl
+What if you want to cache for some time?
+
+The tricks here:
+
+- Use a file as a sentinel for the cache.
+- Create a file, set it's modification date to now()+12hours
+- check with `-nt` (newer than) and a temporary file (to have a
+  =now()= value in "file" format).
+
+#+begin_src bash
+  hmacache="/tmp/.hmacache"
+  is_recent_cache() {
+    [ "$hmacache" -nt <(echo 1) ]
+  }
+  update_cache() {
+    touch -m -t "$(date -v+12H +"%Y%m%d%H%M.%S")" "$hmacache"
+  }
+
+  main() {
+    #...
+    if ! is_recent_cache ; then
+      if ! curl -s https://hello.ts.net > /dev/null; then
+        die "Tailscale must be connected to start Harbormaster"
+      fi
+      # other slow checks
+      update_cache
+    fi
+  }
+#+end_src
 
 * Debugging
 ** adding =bash= to a script to debug
