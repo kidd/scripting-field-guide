@@ -142,6 +142,7 @@
 
    =my_script 'a b c' d e=
 
+   Do you want a more advanced way to use arrays in shell? use =jq=. [[https://alurm.github.io/blog/2025-08-07-first-class-lists-in-shells.html][Link]]
 ** Pass Arrays around
    #+begin_src bash
      a=('Track 01.mp3' 'Track 02.mp3')
@@ -2508,6 +2509,48 @@ The tricks here:
     docker run --rm -ti -v =(echo "OHAI"):/tmp/foo ubuntu cat /tmp/foo
   #+end_src
 
+
+** =(), the crazy stuff
+  The problem to solve here is to
+  `echo "A\nB" | { grep 'B' ; grep 'A' }`.
+
+  With `tee >(grep 'B') >(grep 'A')` it doesn't maintain the order.
+
+  echo -e "A\nB" | tee >(grep "B") | grep "A" it doesn't maintain order either
+
+  Another approach is:
+  foo() {                                                                                                                                0s  - [25-03-25 14:52]
+    grep 'B' /dev/stdin
+    grep A /dev/stdin
+  }
+
+  but the problem there is that stdin gets consumed and the second doesn't get anything.
+
+  foo() {                                                                                                                                0s  - [25-03-25 14:52]
+    grep 'B' $1
+    grep A $1
+  }
+  and then call it with foo <(echo "A\nB") . but doesn't work, because <() creates a pipe.
+  and then call it with foo =(echo "A\nB") . This works. Ok, we have a way.
+
+  foo() {
+   grep 'B' =(cat /dev/stdin)
+   grep A =(cat /dev/stdin)
+  }
+  that still doesn't work, because the moment you do `cat /dev/stdin`, /dev/stdin gets emptied
+
+  So we can create a function that makes /dev/stdin a file instead of a pipe
+
+  bar() {
+   grep 'B' $1
+   grep A $1
+  }
+
+  foo() {
+   bar =(cat /dev/stdin)
+  }
+
+  echo "A\nB"| foo . AND IT WORKS NOW
 * TODO patterns
 ** just use cat/netcat/pipes with <()
 
